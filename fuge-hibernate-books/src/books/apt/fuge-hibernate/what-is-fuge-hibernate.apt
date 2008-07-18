@@ -46,7 +46,7 @@ Background
   * a set of Plain Old Java Object (POJO) entity classes representing FuGE UML entities
 
   * a set of Data Access Object (DAO) POJO classes that facilitate and encapsulate access to entity classes
-   
+
   []
   
   A persistence layer bridges the gap between a relational database and POJOs, abstracting the low-level database

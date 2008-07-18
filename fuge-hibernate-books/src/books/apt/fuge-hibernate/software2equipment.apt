@@ -5,7 +5,7 @@
  ---
  July 2008
 
- Linking Table Between Software and Equipment is Not Getting Filled
+Linking Table Between Software and Equipment is Not Getting Filled
 
  Within the FuGE-OM, the Software entity is linked to the Equipment entity with a Many2Many relationship. For some
  reason, the spring-controlled Hibernate session is not properly flushing the session after setting up an association
