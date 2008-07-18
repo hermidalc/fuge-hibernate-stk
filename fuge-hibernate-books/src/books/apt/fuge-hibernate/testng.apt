@@ -1,0 +1,10 @@
+ ---
+ TestNG
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+
+ This STK uses {{{http://testng.org/}TestNG}} for its test suite. Maven has an integrated test suite plugin called
+ Surefire, which has {{{http://maven.apache.org/plugins/maven-surefire-plugin/testng.html}Testng support}}.

@@ -1,0 +1,35 @@
+ ---
+ Installing a Supported Database
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Installing a Supported Database
+
+                You must choose a database supported by Hibernate. Databases used in the creation of the Hibernate STK
+                include PostgreSQL and MySQL. Hibernate STK has been extensively tested on PostgreSQL and
+                less extensively tested on MySQL. In fact, many users (especially Windows users) have reported problems
+                in the past with using MySQL together with earlier versions of this project on Windows. In these cases,
+                we recommend PostgreSQL. 
+
+* PostgreSQL
+
+                    You can download PostgreSQL from
+                    {{{http://www.postgresql.org/download/}http://www.postgresql.org/download/}}.
+                    <<It is the recommended database>>. It is not
+                    required, but it is recommended that you also install a graphical
+                    database browser such as pgAdminIII or PhpPgAdmin, both available from
+                    the url above. The JDBC driver should come with the download. Alternatively the PostgreSQL jdbc
+                    driver can be downloaded from
+                    {{{http://jdbc.postgresql.org/}http://jdbc.postgresql.org/}}
+
+* MySQL
+
+                You can download MySQL from 
+                {{{http://dev.mysql.com/downloads/}http://dev.mysql.com/downloads/}}.
+                phpMyAdmin
+                ({{{http://www.phpmyadmin.net/home_page/downloads.php}http://www.phpmyadmin.net/home_page/downloads.php}}) is
+                suggested as the GUI for MySQL. If using MySQL, the jdbc driver can be
+                downloaded at:
+                {{{http://dev.mysql.com/downloads/connector/j/3.1.html}http://dev.mysql.com/downloads/connector/j/3.1.html}}

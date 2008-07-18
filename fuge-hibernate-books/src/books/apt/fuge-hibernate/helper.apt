@@ -1,0 +1,23 @@
+ ---
+ DatabaseObjectHelper: Making Your Life Easier
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+
+ The DatabaseObjectHelper class contains some convienience methods to help access to the database services. These are
+ described below:
+
+ * <<getOrCreate>>: Use when you're not sure if your object is already in the database. It will either retrieve your
+  object or create a new one. Checks to see if the identifier provided is already in the database. If it is, return the
+  associated object. If it isn't, then create the object with the provided identifier and return it. If no identifier
+  was provided, then create a fresh identifier and return the new object. This does NOT create any object in the
+  database.
+
+ * <<assignAndSave>>: Should only be used if you want to re-assign an identifier to an already existing object and then
+  load that object into the database, as it does NOT create a new object but assumes a pre-existing one. You may pass
+  a Person object as the person who should be marked as the audit trail owner. This person must already be loaded in
+  the database, if used. However, the method will deal properly with null values in the person argument, therefore if
+  you don't have person information, just pass a null value for that argument and the audit information will be
+  created without it.

@@ -1,0 +1,9 @@
+<mappings name="JavaExtension">
+    <extends>Java</extends>
+    <mapping>
+        <!--Allyson Lister 6/2008: This datatype::URI mapping has been created to force URIs to be stored as a string:
+         otherwise problems with PostgreSQL occur-->
+        <from>datatype::URI</from>
+        <to>java.lang.String</to>
+    </mapping>
+</mappings>

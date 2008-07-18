@@ -1,0 +1,94 @@
+ ---
+ Installing Maven
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Download and Install Maven 2.0.7 or Later
+
+                Download and install Maven 2.0.7 or later from this site:
+                {{{http://maven.apache.org/download.html}http://maven.apache.org/download.html}}
+
+Maven Setup
+
+                Create a directory in your home directory called .m2 with a single file inside called
+                <<<settings.xml>>>. This is what
+                my<<<settings.xml>>>looks like:
+
++---+
+                <settings>
+                <localRepository>/media/share/synched/Documents/.m2/repository/</localRepository>
+
+                <proxies>
+
+                <proxy>
+                <active>true</active>
+
+                <protocol>http</protocol>
+
+
+                <host>my.proxy.host</host>
+                <port>8080</port>
+                </proxy>
+
+                </proxies>
+                <mirrors>
+                <mirror>
+
+                <id>ibiblio.org</id>
+
+                <name>ibiblio Mirror of http://repo1.maven.org/maven2/
+                </name>
+
+                <url>http://mirrors.ibiblio.org/pub/mirrors/maven2</url>
+
+
+                <mirrorOf>central</mirrorOf>
+                </mirror>
+
+                </mirrors>
+                </settings>
++---+
+
+                All sections are optional. However, depending on your circumstances, you may
+                wish to use one or more of these settings. The "localRepository" element
+                names a location separate from the default home directory for the Maven2
+                repository. This may be beneficial if you have limited space on your home
+                directory, as this repository directory can grow quite large. The "proxies"
+                element should only be used for those developers who must access the
+                internet via a proxy. The "mirrors" section is useful to have in case the
+                primary central Maven2 server is offline for some reason.
+
+Environment Variables and Settings for Maven
+
+                Set up the environment variable M2_HOME to point to your maven installation
+                directory, and then ensure that both $M2_HOME/bin and $JAVA_HOME/bin are
+                present in your PATH. Also set M2_REPO, which is the location of your Maven2 repository. Not only is
+                it recommended by Maven, it is also a variable used by this project later on.
+
+Test Maven (Part One)
+
+                Test that you've instaled maven correctly by running<<<mvn --version>>>.
+                You should see something similar (but not necessarily identical) to the following:
+
++---+
+                $ mvn --version
+                Maven version: 2.0.7
+                Java version: 1.5.0_08
+                OS name: "linux" version: "2.6.17-12-386" arch: "i386"
++---+
+
+Test Maven (Part Two)
+
+                Check that Maven2 is working properly by creating a temporary, empty project with
+                the following command:
+
+---
+                mvn archetype:create -DgroupId=testapp -DartifactId=testapp
+---
+
+                Check for the
+                <<<BUILD SUCCESSFUL>>>
+                message and, once you have received this message, please
+                delete the created <<<testapp>>> folder.

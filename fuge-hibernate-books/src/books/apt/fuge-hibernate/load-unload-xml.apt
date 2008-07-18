@@ -1,0 +1,22 @@
+ ---
+ Loading and Unloading FuGE-ML Into the Database
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+ There are various helper classes available to help you load and unload XML into the database. These classes make
+ use of the net.sourceforge.symba.mapping.hibernatejaxb2.helper mapping classes.
+
+PeopleUnmarshaler (Example Main in UnmarshalPeople)
+
+ Allows you to load the contents of a FuGE-ML AuditCollection into the database. This is useful if you wish to
+ pre-fill the database with the members of an organization or group.
+
+XMLUnmarshaler (Example Main in UnmarshalXML and XMLRoundtrip)
+
+ Allows you to load the contents of a full FuGE-ML file into the database.
+
+XMLMarshaler (Example Main in MarshalXML and XMLRoundtrip)
+
+ Allows you to extract a full FuGE experiment from the database and write it out in FugE-ML.

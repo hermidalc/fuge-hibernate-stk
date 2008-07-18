@@ -1,0 +1,15 @@
+ ---
+ Getting Started
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+First Steps
+
+    If you're interested in FuGE, you can
+    {{{http://fuge.sourceforge.net/dev/V1Final/FuGE-v1-profile.mdzip} download the FuGE-OM}} and view it in
+    {{{http://galaxy.andromda.org/docs/getting-started/java/resources/uml-tools/magicdraw/install.html} MagicDraw 15.0}}.
+    The Community Edition can be downloaded for free, if you are an academic.
+
+    If you wish to develop a database based on FuGE, then this Hibernate Software ToolKit (STK) may be right for you.

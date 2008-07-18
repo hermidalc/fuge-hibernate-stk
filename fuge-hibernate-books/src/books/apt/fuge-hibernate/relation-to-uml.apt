@@ -1,0 +1,24 @@
+ ---
+ The FuGE-OM and the FuGE XSD
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+What is the relationship between the FuGE Hibernate STK and the FuGE-OM?
+
+    In the FuGE development process, the master version of the FuGE structure is the Object Model, written with UML
+    and, using Maven 2 and AndroMDA, translated into a variety of tools. The FuGE XSD STK is available as a separate
+    project, whose purpose is to create either a plain FuGE XSD or aid in the creation of specific community
+    extensions of the FuGE-OM. This Hibernate STK depends upon jars created within the FuGE XSD STK and has been
+    developed for those who wish to work with a FuGE RDBMS with a Hibernate and Spring persistence layer.
+    Additionally, there is a EJB2 STK for FuGE, which uses EJB3 rather than Hibernate and Spring.
+
+    The Hibernate STK has, in addition to the auto-generated code for the persistence layer, a set of manually-created
+    mapping code that links the JAXB2 objects present in the FuGE XSD STK to the Hibernate FuGE classes. This allows
+    the user to read FuGE-ML directly into the database.
+
+    There are a number of changes made to the officially-sanctioned FuGE-OM as provided in the main download pages.
+    These changes are generally to low-level AndroMDA tags and are required to make sure that access to the database
+    is straightforward and clear. A full list of the changes can be found on the page within this documentation entitled
+    {{{fugeom-modifications.html} FuGE-OM Modifications for the Hibernate Implementation}}.

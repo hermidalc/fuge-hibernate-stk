@@ -1,0 +1,81 @@
+ ---
+ What is the FuGE Hibernate STK?
+ ---
+ Allyson Lister
+ Leandro Hermida
+ ---
+ July 2008
+
+Background
+
+  All FuGE Database STKs utilize Version 1.0 of the FuGE Standard. Each database toolkit provides a database and
+  persistence layer based on the FuGE Object Model (FuGE-OM), together with other helper classes. These are ideal for
+  community developers wishing to store their FuGE-related data in a more structured way than XML files provide, and
+  as a foundation to build FuGE tools or a FuGE-based system. These databases may also be extended by specific
+  communities to produce community database implementations. There are currently two types of database STK built on
+  Version 1, and a single legacy Milestone 3 STK:
+
+  * Hibernate + Spring Database STK
+
+  * EJB 3.0 Database STK (not yet available)
+
+  * Legacy FuGE Milestone 3, Hibernate + Spring Database STK: Utilizes Milestone 3 of the FuGE Standard.
+
+ []
+
+  Now that FuGE Version 1.0 has been released, we suggest that all new developers begin with the Version 1.0 STKs.
+  However, the Milestone 3 STK is retained for legacy reasons, as there may still be some developers utilizing that
+  version.
+
+  All current STKs are built with Apache Maven 2, a software project management and build system similar to, but more
+  comprehensive than other build tools such as Apache Ant or GNU Make. They also utilize AndroMDA, a model-driven
+  architecture (MDA) and code generation system, to build a variety of Java classes, configuration files, documents
+  and database scripts. AndroMDA plugs into Maven and during the build process parses a developer's UML Object Model
+  (OM) and generates the appropriate output. It is the core tool used within all FuGE toolkits, and is highly
+  configurable. The type of output can be tailored using different AndroMDA conversion tools, called 'cartridges'.
+  These encapsulated cartridges each do a separate task: for instance, there is an XML Schema cartridge that builds
+  XSDs from UML, and there are Hibernate and Spring or EJB3 cartridges that build a database and persistence layer
+  based on the provided UML.
+
+  The Hibernate STK provides:
+
+  * a FuGE-structured relational database
+
+  * a object-relational persistence and query layer
+
+  * a set of Plain Old Java Object (POJO) entity classes representing FuGE UML entities
+
+  * a set of Data Access Object (DAO) POJO classes that facilitate and encapsulate access to entity classes
+   
+  []
+  
+  A persistence layer bridges the gap between a relational database and POJOs, abstracting the low-level database
+  code by providing the programmer with an object-oriented interface. Using AndroMDA-generated classes in conjunction
+  with Hibernate + Spring allows the developer to work only with POJOs, and, when ready to populate, query or
+  modify the database, the persistence layer handles the underlying database commands.
+
+
+Purpose of the Hibernate STK and its relation to the greater FuGE Toolkit Project
+
+  The FuGE software tools are separated based on their development goals. The FuGE Hibernate Project has been
+  specifically created to aid
+
+  * those who wish to be able re-create or modify the FuGE Object Model in database form for their own purposes
+  
+  * those who wish to use a {{{http://www.hibernate.org}Hibernate persistence layer}} to perform database functions
+
+  []
+
+ The FuGE Hibernate STK makes use of the jars created by the
+ {{{http://fuge.sourceforge.net/stks/xsd-stk/index.html}FuGE XSD STK}} to perform a number of tasks. Shortly,
+ a Maven 2 repository specifically holding these jars will be available, but until then, please visit the STK
+ pages, and install the FuGE XSD STK prior to starting work with this STK. You will need the jars created by that
+ project.
+
+  When you check-out the <<<hibernate-stk>>> subversion repository, you will get a {{{http://maven.apache.org} Maven2 }}
+  project. As provided, this project builds a FuGE database plus a Hibernate and Spring persistence layer.
+  Full instructions for compiling this project and generating and accessing the FuGE database are included in this
+  documentation.
+
+
+

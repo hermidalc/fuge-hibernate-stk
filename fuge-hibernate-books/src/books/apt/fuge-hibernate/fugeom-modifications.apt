@@ -1,0 +1,512 @@
+ ---
+ Changes to the FuGE-OM
+ ---
+ Allyson Lister
+ Leandro Hermida
+ ---
+ July 2008
+
+Modifications to the FuGE-OM for the Hibernate and the EJB3 STK
+
+
+  This document contains the changes to the reference FuGE v1 UML Object model required to properly generate the
+  Hibernate code using the AndroMDA Hibernate+Spring cartridge. It is based extensively on Leandro Hermida's
+  similar document for the FuGE EJB3 STK, so that the two UML documents will be similar. Deviations from his
+  modifications are noted.
+  
+  * Rename the copied package to net.sourceforge.fuge
+
+  * Within the net.sourceforge.fuge package change ALL the packages in the entire FuGE hierarchy to
+    lowercase so that it will later produce JavaBeans standard package names (e.g. ConceptualMolecule -->
+    conceptualmolecule)
+
+  * (This step was not needed in the Hibernate STK UML Diagram, as it is already fixed there: Fix typos in UML model,
+    where +referenceAbleCollection between FuGE and ReferenceableCollection should read +referenceableCollection)
+
+  * (This step was also not needed within the Hibernate FuGE-OM) Search and remove all <<AbstractAssociation>> stereotyped associations (20 of 26 instances) EXCEPT the following (which don't seem to have a concrete partner - am still checking with developers about this)
+    * +dimensionElements : net.sourceforge.fuge::bio::data::DimensionElement
+
+    * +dimensions : net.sourceforge.fuge::bio::data::Dimension
+
+    * +inputPartitions : net.sourceforge.fuge::bio::data::DataPartition
+
+    * +outputPartitions : net.sourceforge.fuge::bio::data::DataPartition
+
+    * +partitionPairs : net.sourceforge.fuge::bio::data::PartitionPair
+
+    * +supportingData : net.sourceforge.fuge::bio::data::Data
+
+  * Look through all of the associations in the FuGE model and remove any association name numbers that got added
+    during copying (e.g. Provider1 --> Provider)
+
+    * net.sourceforge.fuge.Provider1
+
+    * net.sourceforge.fuge.bio.data.DimensionElementSet1
+
+    * net.sourceforge.fuge.bio.data.PartitionedData1
+
+    * net.sourceforge.fuge.bio.investigation.Conclusion1
+
+    * net.sourceforge.fuge.bio.investigation.Hypothesis1
+
+    * net.sourceforge.fuge.bio.material.Components1
+
+    * net.sourceforge.fuge.bio.material.MeasuredMaterial1
+
+    * net.sourceforge.fuge.common.protocol.Actions1
+
+    * net.sourceforge.fuge.common.protocol.ChildProtocol1
+
+    * net.sourceforge.fuge.common.protocol.Equipment1
+
+    * net.sourceforge.fuge.common.protocol.EquipmentParts1
+
+    * net.sourceforge.fuge.common.protocol.InputCompleteMaterials1
+
+    * net.sourceforge.fuge.common.protocol.ParameterPairs1
+
+    * net.sourceforge.fuge.common.protocol.Parameters1
+
+    * net.sourceforge.fuge.common.protocol.Parameters2
+
+    * net.sourceforge.fuge.common.protocol.Parameters3
+
+    * net.sourceforge.fuge.common.protocol.Parameters4
+
+    * net.sourceforge.fuge.common.protocol.Parameters5
+
+    * net.sourceforge.fuge.common.protocol.Protocol1
+
+    * net.sourceforge.fuge.common.protocol.Software1
+
+    * net.sourceforge.fuge.common.protocol.Software2Equipment1
+
+    * net.sourceforge.fuge.common.protocol.Value1
+
+  * All many-to-many associations with two-way navigability MUST have an aggregation (or composition) end
+
+    * (added to end labelled "equipment", though it then appears on the end labelled "software" in the diagram!)
+      Software2Equipment (between GenericSoftware and GenericEquipment) should be "shared" on +equipment end
+
+  * Fix database table name clashes between certain associations and classes using @andromda.persistence.table
+    tagged value
+    
+*--*--*--*--*
+Association|Tagged Value|Location|Reason
+*--
+Equipment|PROTOCOL_EQUIPMENT|between GenericEquipment and GenericProtocol|clashes with Equipment class
+*--
+Software|PROTOCOL_SOFTWARE|between GenericSoftware and GenericProtocol|clashes with Software class|
+*--
+Provider|PARAMETERIZABLE_PROVIDER|between Parameterizable and ContactRole|clashes with Provider class|
+*--
+
+[]
+
+  * Create custom table names for classes and associations using @andromda.persistence.table tagged value
+
+*--*--*--*
+Class|Tagged Value|Reason
+*--
+FuGE|F_U_G_E|instead of FU_G_E
+*--
+Software2Equipment (between GenericSoftware and GenericEquipment)|SOFTWARE2EQUIPMENT|instead of SOFTWARE2_EQUIPMENT
+*--
+Database|EXTERNAL_DATABASE|DATABASE is SQL reserved word
+*--
+
+[]
+
+  * Certain associations need better/corrected table names using @andromda.persistence.table tagged value
+
+*--*--*--*
+Association|Tagged Value|Location|Reason
+*--
+Actions|PROTOCOL_ACTION|between GenericProtocol and Action|clearer DB notation
+*--
+ActionApplications|PROTO_APPL_ACTION_APPL|between ProtocolApplication and ActionApplication|clearer DB notation
+*--
+Affiliations|AFFILIATION|between Person and Organization|clearer DB notation
+*--
+AllBibliographicReferences|REF_COLLECT_BIBLIO_REFERENCE|ReferenceableCollection and BibliographicReference|clearer DB notation|
+*--
+AllContacts|AUDIT_COLLECT_CONTACT|between AuditCollection and Contact|clearer DB notation
+*--
+AllData|DATA_COLLECT_DATA|between DataCollection and Data|clearer DB notation
+*--
+AllDatabases|REF_COLLECT_EXT_DATABASE|between ReferenceableCollection and Database|clearer DB notation
+*--
+AllDataPartitions|DATA_COLLECT_DATA_PARTITION|between DataCollection and DataPartition|clearer DB notation
+*--
+AllDimensions|DATA_COLLECT_DIMENSION|between DataCollection and Dimension|clearer DB notation
+*--
+AllEquipment|PROTO_COLLECT_EQUIPMENT|between ProtocolCollection and Equipment|clearer DB notation
+*--
+AllProtocolApplications|INVEST_COMPONENT_PROTO_APPL|between InvestigationComponent and ProtocolApplication|clearer DB notation
+*--
+AllSequenceAnnotations|CONCEP_MOL_COLLECT_SEQ_ANNOT|between ConceptualMoleculeCollection and SequenceAnnotationSet|clearer DB notation
+*--
+AllSoftware|PROTO_COLLECT_SOFTWARE|between ProtocolCollection and Software|clearer DB notation|
+*--
+Annotations|DESCRIBABLE_ANNOTATION|between Describable and OntologyTerm|clearer DB notation
+*--
+BibliographicReferences|IDENT_BIBLIO_REFERENCE|Identifiable and BibliographicReference|clearer DB notation
+*--
+Characteristics|MATERIAL_CHARACTERISTIC|between Material and OntologyTerm|clearer DB notation
+*--
+Components|MATERIAL_COMPONENT|between GenericMaterial and GenericMaterial|clearer DB notation
+*--
+ComponentDesignTypes|COMPONENT_DESIGN_TYPE|between InvestigationComponent and OntologyTerm|clearer DB notation
+*--
+ConceptualMolecules|CONCEP_MOL_COLLECT_CONCEP_MOL|betweeen ConceptualMoleculeCollection and ConceptualMolecule|clearer DB notation
+*--
+Contacts|MATERIAL_CONTACT|between Material and ContactRole|clearer DB notation
+*--
+DatabaseReferences|IDENT_DB_REFERENCE|between Identifiable and DatabaseReference|clearer DB notation
+*--
+DataPartitions|FACTOR_VALUE_DATA_PARTITION|between FactorValue and DataPartition|clearer DB notation
+*--
+Descriptions|DESCRIBABLE_DESCRIPTION|between Describable and Description|clearer DB notation
+*--
+Dimensions|DATA_DIMENSION|between Data and Dimension|clearer DB notation
+*--
+DimensionElements|DIMENSION_DIMENSION_ELEMENT|between Dimension and DimensionElement|clearer DB notation
+*--
+EquipmentApplications|PROTO_APPL_EQUIP_APPL|between ProtocolApplication and EquipmentApplication|clearer DB notation
+*--
+EquipmentParts|EQUIPMENT_PART|between GenericEquipment and GenericEquipment|clearer DB notation
+*--
+Factors|INVEST_COMPONENT_FACTOR|between InvestigationComponent and Factor|clearer DB notation
+*--
+FactorCollection|INVEST_COLLECT_FACTOR|between InvestigationCollection and Factor|clearer DB notation
+*--
+FactorValues|FACTOR_FACTOR_VALUE|between Factor and FactorValue|clearer DB notation
+*--
+HigherLevelAnalyses|DATA_COLLECT_HIGHER_LEV_ANAL|between DataCollection and HigherLevelAnalysis|clearer DB notation
+*--
+InputCompleteMaterials|INPUT_COMPLETE_MATERIAL|between GenericProtocolApplication and Material|clearer DB notation
+*--
+InputMaterials|INPUT_MATERIAL|between GenericProtocolApplication and GenericMaterialMeasurement|clearer DB notation
+*--
+InputPartitions|INPUT_PARTITION|between PartitionPair and DataPartition|clearer DB notation
+*--
+InputTypes|INPUT_TYPE|between Protocol and OntologyTerm|clearer DB notation
+*--
+Investigations|INVEST_COLLECT_INVESTIGATION|between InvestigationCollection and Investigation|clearer DB notation
+*--
+InvestigationComponents|INVEST_INVEST_COMPONENT|between Investigation and InvestigationComponent|clearer DB notation
+*--
+InvestigationTypes|INVESTIGATION_TYPE|between Investigation and OntologyTerm|clearer DB notation
+*--
+Materials|MATERIAL_COLLECT_MATERIAL|between MaterialCollection and Material|clearer DB notation
+*--
+Members|SECURITY_GROUP_MEMBER|between SecurityGroup and Contact|clearer DB notation
+*--
+OntologySources|ONTOLOGY_COLLECT_SOURCE|between OntologyCollection and OntologySource|clearer DB notation
+*--
+OntologyTerms|ONTOLOGY_COLLECT_TERM|between OntologyCollection and OntologyTerm|clearer DB notation
+*--
+OutputMaterials|OUTPUT_MATERIAL|between GenericProtocolApplication and Material|clearer DB notation
+*--
+OutputPartitions|OUTPUT_PARTITION|between PartitionPair and DataPartition|clearer DB notation
+*--
+OutputTypes|OUTPUT_TYPE|between Protocol and OntologyTerm|clearer DB notation
+*--
+Owners|SECURITY_OWNER|between Security and Contact|clearer DB notation
+*--
+Parameters|EQUIPMENT_PARAMETER|between GenericEquipment and GenericParameter|incorrect table merging by persistence provider??
+*--
+Parameters|SOFTWARE_PARAMETER|between GenericSoftware and GenericParameter|incorrect table merging by persistence provider??
+*--
+Parameters|PROTOCOL_PARAMETER|between GenericProtocol and GenericParameter|incorrect table merging by persistence provider??
+*--
+Parameters|ACTION_PARAMETER|between GenericAction and GenericParameter|incorrect table merging by persistence provider??
+*--
+ParameterPairs|ACTION_PARAMETER_PAIR|between GenericAction and ParameterPair|clearer DB notation
+*--
+ParameterValues|PARAM_APPL_PARAM_VALUE|between ParameterizableApplication and ParameterValue|clearer DB notation
+*--
+PartitionPairs|PROTO_APPL_PARTITION_PAIR|between ProtocolApplication and PartitionPair|clearer DB notation
+*--
+Performers|PROTO_APPL_PERFORMER|between ProtocolApplication and ContactRole|clearer DB notation
+*--
+Properties|ONTOLOGY_INDIVIDUAL_PROPERTY|between OntologyIndividual and OntologyProperty|clearer DB notation
+*--
+PropertySets|DESCRIBABLE_PROPERTY_SET|between Describable and NameValueType|clearer DB notation
+*--
+Protocols|PROTO_COLLECT_PROTOCOL|between ProtocolCollection and Protocol|clearer DB notation|
+*--
+ProtocolApplications|PROTO_COLLECT_PROTO_APPL|between ProtocolCollection and ProtocolApplication|clearer DB notation
+*--
+Providers|INVESTIGATION_PROVIDER|between Investigation and ContactRole|clearer DB notation
+*--
+QualityControlStatistics|QUALITY_CONTROL_STATISTIC|between Material and OntologyTerm|clearer DB notation
+*--
+RangeDescriptors|RANGE_DESCRIPTOR|between Range and OntologyTerm|clearer DB notation
+*--
+SecurityGroups|AUDIT_COLLECT_SECURITY_GROUP|between AuditCollection and SecurityGroup|clearer DB notation
+*--
+SecurityRights|SECURITY_RIGHT|between Security and SecurityAccess|clearer DB notation
+*--
+SoftwareApplications|PROTO_APPL_SOFTWARE_APPL|between ProtocolApplication and SoftwareApplication|clearer DB notation
+*--
+SourceMaterials|SOURCE_MATERIAL|between Investigation and Material|clearer DB notation
+*--
+SummaryResults|SUMMARY_RESULT|between Investigation and HigherLevelAnalysis|clearer DB notation
+*--
+Types|PARAMETERIZABLE_TYPE|between Parameterizable and OntologyTerm|incorrect table merging by persistence provider??
+*--
+Types|SEQUENCE_ANNOTATION_SET_TYPE|between SequenceAnnotationSet and OntologyTerm|incorrect table merging by persistence provider??
+*--
+
+[]
+
+  * Certain associations ends need better/corrected column names using @andromda.persistence.column tagged value
+
+*--*--*--*--*
+Association End|Tagged Value|Location|Reason|
+*--
++parameters|PARAMETER_ID|Parameters association between GenericAction and GenericParameter|override plural association end name
+*--
++parameterPairs|PARAMETER_PAIR_ID|ParameterPairs association between GenericAction and ParameterPair|override plural association end name
+*--
++affiliations|AFFILIATION_ID|Affliliations association between Person and Organization|override plural association end name
+*--
++allContacts|CONTACT_ID|AllContacts association between AuditCollection and Contact|override plural association end name
+*--
++securityGroups|SECURITY_GROUP_ID|SecurityGroups association between AuditCollection and SecurityGroup|override plural association end name
+*--
++componentDesignTypes|COMPONENT_DESIGN_TYPE_ID|ComponentDesignTypes association between InvestigationComponent and OntologyTerm|override plural association end name
+*--
++conceptualMolecules|CONCEPTUAL_MOLECULE_ID|ConceptualMolecules association between ConceptualMoleculeCollection and ConceptualMolecule|override plural association end name
+*--
++allSequenceAnnotations|SEQUENCE_ANNOTATION_ID|AllSequenceAnnotations association between ConceptualMoleculeCollection and SequenceAnnotationSet|override plural association end name
+*--
++allData|DATA_ID|AllData association between DataCollection and Data|override plural association end name|
+*--
++allDataPartitions|DATA_PARTITION_ID|AllDataPartitions association between DataCollection and DataPartition|override plural association end name
+*--
++allDimensions|DIMENSION_ID|AllDimensions association between DataCollection and Dimension|override plural association end name
+*--
++higherLevelAnalyses|HIGHER_LEVEL_ANALYSIS_ID|HigherLevelAnalyses association between DataCollection and HigherLevelAnalysis|override plural association end name
+*--
++dimensions|DIMENSION_ID|Dimensions association between Data and Dimension|override plural association end name
+*--
++annotations|ANNOTATION_ID|Annotations association between Describable and OntologyTerm|override plural association end name
+*--
++descriptions|DESCRIPTION_ID|Descriptions association between Describable and Description|override plural association end name
+*--
++propertySets|PROPERTY_SET_ID|PropertySets assocation between Describable and NameValueType|override plural association end name
+*--
++dimensionElements|DIMENSION_ELEMENT_ID|DimensionElements association between Dimension and DimensionElement|override plural association end name
+*--
++parameters|PARAMETER_ID|Parameters association between GenericEquipment and GenericParameter|override plural association end name
+*--
++equipmentParts|EQUIPMENT_PART_ID|EquipmentParts association between GenericEquipment and GenericEquipment|override plural association end name
+*--
++factorCollection|FACTOR_ID|FactorCollection association between InvestigationCollection and Factor|override plural association end name
+*--
++factorValues|FACTOR_VALUE_ID|FactorValues association between Factor and FactorValue|override plural association end name
+*--
++dataPartitions|DATA_PARTITION_ID|DataPartitions association between FactorValue and DataPartition|override plural association end name
+*--
++bibliographicReferences|BIBLIOGRAPHIC_REFERENCE_ID|BibliographicReferences association between Identifiable and BibliographicReference|override plural association end name
+*--
++databaseReferences|DATABASE_REFERENCE_ID|DatabaseReferences association between Identifiable and DatabaseReference|override plural association end name
+*--
++inputCompleteMaterials|INPUT_COMPLETE_MATERIAL_ID|InputCompleteMaterials association between GenericProtocolApplication and Material|override plural association end name
+*--
++inputMaterials|INPUT_MATERIAL_ID|InputMaterials association between GenericProtocolApplication and GenericMaterialMeasurement|override plural association end name
+*--
++inputPartitions|INPUT_PARTITION_ID|InputPartitions association between ParitionPair and DataPartition|override plural association end name
+*--
++inputTypes|INPUT_TYPE_ID|InputTypes association between Protocol and OntologyTerm|override plural association end name
+*--
++providers|PROVIDER_ID|Providers assoication between Investigation and ContactRole|override plural association end name
+*--
++investigationTypes|INVESTIGATION_TYPE_ID|InvestigationTypes association between Investigation and OntologyTerm|override plural association end name
+*--
++investigations|INVESTIGATION_ID|Investigations association between InvestigationCollection and Investigations|override plural association end name
+*--
++factors|FACTOR_ID|Factors association between InvestigationComponent and Factor|override plural association end name
+*--
++allProtocolApplications|PROTOCOL_APPLICATION_ID|AllProtocolApplications association between InvestigationComponent and ProtocolApplication|override plural association end name
+*--
++investigationComponents|INVESTIGATION_COMPONENT_ID|InvestigationComponents association between Investigation and InvestigationComponent|override plural association end name
+*--
++characteristics|CHARACTERISTIC_ID|Characteristics association between Material and OntologyTerm|override plural association end name|
+*--
++materials|MATERIAL_ID|Materials association between MaterialCollection and Material|override plural association end name|
+*--
++components|COMPONENT_ID|Components association between GenericMaterial and GenericMaterial|override plural association end name
+*--
++contacts|CONTACT_ID|Contacts association between Material and ContactRole|override plural association end name
+*--
++sources|SOURCE_ID|Sources association between OntologyCollection and OntologySource|override plural association end name
+*--
++ontologyTerms|ONTOLOGY_TERM_ID|OntologyTerms association between OntologyCollection and OntologyTerm|override plural association end name
+*--
++properties|PROPERTY_ID|Properties association between OntologyIndividual and OntologyProperty|override plural association end name
+*--
++outputMaterials|OUTPUT_MATERIAL_ID|OutputMaterials association between GenericProtocolApplication and Material|override plural association end name
+*--
++outputPartitions|OUTPUT_PARTITION_ID|OutputPartitions association between PartitionPair and DataPartition|override plural association end name
+*--
++outputTypes|OUTPUT_TYPE_ID|OutputTypes association between Protocol and OntologyTerm|override plural association end name|
+*--
++types|TYPE_ID|Types association between Parameterizable and OntologyTerm|override plural association end name
+*--
++parameterValues|PARAMETER_VALUE_ID|ParameterValues association between ParameterizableApplication and ParameterValue|override plural association end name
+*--
++actions|ACTION_ID|Actions association between GenericProtocol and Action|override plural association end name
+*--
++parameters|PARAMETER_ID|Parameters association between GenericProtocol and GenericParameter|override plural association end name
+*--
++actionApplications|ACTION_APPLICATION_ID|ActionApplications between ProtocolApplication and ActionApplication|override plural association end name
+*--
++equipmentApplications|EQUIPMENT_APPLICATION_ID|EquipmentApplications between ProtocolApplication and EquipmentApplication|override plural association end name
+*--
++partitionPairs|PARTITION_PAIR_ID|PartitionPairs association between ProtocolApplication and PartitionPair|override plural association end name
+*--
++performers|PERFORMER_ID|Performers association between ProtocolApplication and ContactRole|override plural association end name
+*--
++softwareApplications|SOFTWARE_APPLICATION_ID|SoftwareApplications association between ProtocolApplication and SoftwareApplications|override plural association end name
+*--
++allEquipment|EQUIPMENT_ID|AllEquipment association between ProtocolCollection and Equipment|override plural association end name
+*--
++protocols|PROTOCOL_ID|Protocols association between ProtocolCollection and Protocol|override plural association end name
+*--
++protocolApplications|PROTOCOL_APPLICATION_ID|ProtocolApplications association between ProtocolCollection and ProtocolApplications|override plural association end name
+*--
++allSoftwares|SOFTWARE_ID|AllSoftwares association between ProtcolCollection and Software|override plural association end name
+*--
++qualityControlStatistics|QUALITY_CONTROL_STATISTIC_ID|QualityControlStatistics association between Material and OntologyTerm|override plural association end name
+*--
++rangeDescriptors|RANGE_DESCRIPTOR_ID|RangeDescriptor association between Range and OntologyTerm|override plural association end name|
+*--
++allBibliographicReferences|BIBLIOGRAPHIC_REFERENCE_ID|AllBibliographicReferences association between ReferenceableCollection and BibliographicReference|override plural association end name
+*--
++allDatabases|DATABASE_ID|AllDatabases association between ReferenceableCollection and Database|override plural association end name
+*--
++members|MEMBER_ID|Members association between SecurityGroup and Contact|override plural association end name
+*--
++owners|OWNER_ID|Owners association between Security and Contact|override plural association end name
+*--
++securityRights|SECURITY_RIGHT_ID|SecurityRights association between Security and SecurityAccess|override plural association end name
+*--
++types|TYPE_ID|Types association between SequenceAnnotationSet and OntologyTerm|override plural association end name
+*--
++parameters|PARAMETER_ID|Parameters association between GenericSoftware and GenericParameter|override plural association end name
+*--
++sourceMaterials|SOURCE_MATERIAL_ID|SourceMaterials association between Investigation and Material|override plural association end name
+*--
++summaryResults|SUMMARY_RESULT_ID|SummaryResults association between Investigation and HigherLevelAnalysis|override plural association end name
+*--
+
+ []
+
+ * datatype::Object[] within GenericInternalData.storage has been changed to datatype::Blob. Some mapping of this 
+    type is required to temporarily fix the inability of PostgreSQL to deal with Object arrays, as there is no
+    default mapping.
+
+Hibernate-only FuGE-OM Modifications
+
+  These modifications were only performed on the Hibernate STK's version of the FuGE-OM.
+
+* Changes to the standard PostgreSQL Mapping
+
+  There is a file, PostgreSQLExtension.xml, within fuge-hibernate/src/main/uml/config/mappings, which specifies any
+  additional mappings between UML data types and Postgres types. Below are a summary of the contents of the file:
+
+  * datatype::Date is mapped to TIMESTAMP WITH TIME ZONE\\
+    I originally tried to map datatype::URI to CHARACTER VARYING(1024) (this datatype::URI mapping has been created to
+    force URIs to be stored as a string, as there is no default mapping). However, this didn't work as it was still
+    being passed as a java.net.URI and ultimately caused exceptions that looked a bit like:
+    "org.springframework.orm.hibernate3.HibernateSystemException: could not deserialize; nested exception is
+    org.hibernate.type.SerializationException: could not deserialize at
+    net.sourceforge.fuge.service.EntityServiceBase.getIdentifiable(EntityServiceBase.java:1113)". Therefore I changed
+    both the PostgreSQL and Java mapping so that both in the database and in Java, the datatype::URI is mapped to
+    CHARACTER VARYING(1024) (for PostgreSQL) and java.lang.String (for Java). This isn't ideal, but until I can figure
+    out a way to have the URI dealt with correctly, at least it doesn't cause problems. This meant that the following
+    URIs are actually strings within the API, though the UML has not changed:
+    
+    * net.sourceforge.fuge.common.references.Database.URI
+
+    * net.sourceforge.fuge.common.description.Uri.location
+
+    * net.sourceforge.fuge.bio.data.ExternalData.location
+
+    * net.sourceforge.fuge.common.ontology.OntologySource.ontologyURI
+
+* Changes to column attributes
+
+  * Had to set the Unique stereotype for Identifiable.identifier, as this hadn't been done, and without it we cannot
+    retrieve objects based on their identifier.
+
+* Changes to entity names
+
+  * The "URI" entity is problematic for Spring, as any class name whose second letter is upper case can cause problems.
+    The best way to solve it is to change the name of this entity to "Uri".
+
+* Changes to entity column/property names
+
+  * Certain property names of entities needed to be changed because they were PostgreSQL reserved words. This can be
+    done with the @andromda.persistence.column tagged value.
+
+*--*--*--*
+*--
+Property/Column Name|Tagged Value|Comments
+*--
++end (hibernate implementation only)|END_DATE|It is the +end property of the Investigation entity|
+*--
++end (hibernate implementation only)|END_POSITION|It is the +end property of the Sequence entity
+*--
+
+[]
+
+* Changes from lazy to eager loading
+
+  * The association between AuditCollection and SecurityGroup is composition, but it is still lazily fetched.
+    This is perhaps because it is a 0...* association, and can therefore can have more than one security group? In any
+    case, have set UML to be eager fetched. This means setting @andromda.hibernate.lazy to false within the tag for
+    the association end "securityGroups".
+
+  * In the same way, the following association ends were set to @andromda.hibernate.lazy to false:
+  
+    * association end (AE): "securityGroups" (the first instance above)
+
+    * AE: "securityCollection"
+
+    * AE: "securityRights"
+
+    * AE: "annotations" for Describable
+
+    * AE: bibliographicReferences for Identifiable
+
+    * AE: parent for Organization
+
+    * AE: affiliations for Person
+
+    * AE: members for SecurityGroups
+
+    * AE: outputMaterials, inputData, inputCompleteMaterials, outputData for GenericProtocolApplication
+
+    * AE: performer for Audit
+
+    * AE: equipment for GenericSoftware
+
+    * AE: equipment for GenericProtocol
+
+    * AE: software for GenericProtocol
+
+    * AE: inputTypes, outputTypes for Protocol
+
+    * AE: contact for ContactRole
+
+    * AE: ontologySource for OntologyTerm
+
+* Change to Cardinalities
+
+  The back cardinality (the side with the diamond in it) of GenericAction to Protocol (named childProtocol)
+  should be 0...* rather than 0...1 . ﻿It doesn't affect the XSD because these aren't checked but will affect
+  the database. This is something that probably should be fixed in the UML.

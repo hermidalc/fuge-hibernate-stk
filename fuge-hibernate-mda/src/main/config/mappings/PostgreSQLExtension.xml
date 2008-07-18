@@ -1,0 +1,13 @@
+<mappings name="PostgreSQLExtension">
+    <extends>PostgreSQL</extends>
+    <mapping>
+        <!--Allyson Lister 2/2007: This datatype::Date mapping has been changed from the original DATE to TIMESTAMP WITH TIME ZONE-->
+        <from>datatype::Date</from>
+        <to>TIMESTAMP WITH TIME ZONE</to>
+    </mapping>
+    <mapping>
+        <!--Allyson Lister 6/2008: This datatype::URI mapping has been created to force URIs to be stored as a string -->
+        <from>datatype::URI</from>
+        <to>CHARACTER VARYING(1024)</to>
+    </mapping>
+</mappings>

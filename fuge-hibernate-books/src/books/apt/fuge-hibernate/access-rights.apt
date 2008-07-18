@@ -1,0 +1,27 @@
+ ---
+ The "Access Right" Assocation between SecurityAccess and OntologyTerm
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+The Chicken and the Egg
+
+ Within the FuGE-OM, the AccessRight association (visible within the AuditMain class diagram) links the SecurityAccess
+ entity to the OntologyTerm entity with a 0...1 relationship. You will find within the XmlDbRoundtripTest that
+ any reference to the "accessRight" association end is removed before comparing the original XML file and the
+ XML file that was generated from the database information. This is because of a basic chicken-and-the-egg problem
+ between AuditCollection and OntologyCollection.
+
+ This attribute of SecurityAccess links to an item in the OntologyCollection. However, the AuditCollection *must*
+ be loaded in the database before we can proceed to parsing the OntologyCollection, as the OntologyCollection may have
+ Audit Trails that are referenced by the AuditCollection. However, if the ontology term that is referenced by the
+ accessRight association is not yet in the database, that association simply cannot be set within the SecurityAccess
+ class.
+
+ In normal use, such ontology terms would already be present in the database, however for a unit test round trip which
+ is generating a new random XML file for each unit test, the ontology term is NOT yet in the database. Hence the
+ chicken-and-the-egg situation. Therefore, this association is purposely removed from the XML file prior to running
+ the comparison of the before and after XML files, so that a known bug won't shield an unknown one.
+
+ Any suggestions on resolving this situation would be most appreciated.

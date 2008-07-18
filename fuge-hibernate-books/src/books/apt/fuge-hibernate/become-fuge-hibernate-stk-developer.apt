@@ -1,0 +1,15 @@
+ ---
+ Becoming a FuGE Developer
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Do you wish to contribute to the FuGE Hibernate STK?
+
+    If you have enjoyed using this STK, but also have some ideas for improvement, or perhaps wish to include some of
+    your own code in this project, please begin by contacting fuge-devel@lists.sourceforge.net. Explain what things
+    you would like to see included, and whether or not you would like to help add them.
+
+    If appropriate, the FuGE Administrators could add you as a developer, allowing you to commit code back to the
+    FuGE subversion repository. There are some guidelines to follow, however, and please read on to see them.

@@ -1,0 +1,22 @@
+ ---
+ Speedy Creation of OntologyCollections
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+ The GenerateOntologyIndividuals class within the net.sourceforge.symba.mapping.hibernatejaxb2 package allows the
+ user to generate quickly a FuGE-ML OntologyCollection file that can then be loaded into the database as part of
+ a FuGE-ML file.
+
+ The input file is of the type:
+
++---+
+ accession1::name1
+ accession2::name2
+ [...]
+ accessionN::nameN
++---+
+
+ And you'll get out some FuGE-ML to load into your database. The ontologySource URI and the URN namespace are
+ hard-coded right now, so you will need to modify that to suit your needs.

@@ -1,0 +1,29 @@
+ ---
+ Installing SSH
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Installing SSH
+
+  While the STK does NOT require SSH, if your database server will be running on a different machine from where
+  you have this project installed, you may wish to be able to log on to that remote machine.
+
+  * <<Ubuntu.>> In Ubuntu, you can just run the following command to install ssh if you don't have it yet
+    on the appropriate two machines:
+
++---+
+  sudo apt-get install ssh
++---+
+
+  * <<Other OSs.>> You may already have ssh installed on the appropriate machines. You can use either commercial SSH
+    or the open alternative, OpenSSH (this is what Ubuntu installs using the above command).
+
+  * <<Windows.>> There are a couple of options for installing an OpenSSH server on your windows machine, though
+    neither are particularly easy. (This is another reason we recommend running the webapp from a *nix environment.)
+
+    * One option for OpenSSH is to install {{{http://sshwindows.sourceforge.net/}OpenSSH for Windows}}, which installs
+      a minimal cygwin package.
+      
+    * Fully install cygwin, and then install OpenSSH within cygwin. Might be overkill.

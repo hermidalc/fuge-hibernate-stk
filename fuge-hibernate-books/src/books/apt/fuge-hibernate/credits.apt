@@ -1,0 +1,28 @@
+ ---
+ Credits
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Contributors to Documentation
+
+  Special thanks goes to Frank Gibson Rainer Scoepf, and Joerg Servos for helping find bugs in and
+  suggesting additions to the installation docs.
+
+Resources used in the creation of this document
+
+
+
+            [1]
+            {{{http://symba.sourceforge.net}}}. A large part of this documentation was originally developed for
+            the SyMBA project. The developers of this project have kindly allowed the transfer of much of the
+            documentation across from SyMBA to the FuGE Version 1 STK.
+
+            [2]
+            {{{http://wiki.ficcs.org/ficcs/FuGE-to-XSD}http://wiki.ficcs.org/ficcs/FuGE-to-XSD}},
+            accessed 6 August 2007.
+
+            [3]
+            {{{http://galaxy.andromda.org/index.php?option=com_content&amp;task=view&amp;id=105&amp;Itemid=89}http://galaxy.andromda.org/index.php?option=com_content&amp;task=view&amp;id=105&amp;Itemid=89}},
+            accessed 6 August 2007.

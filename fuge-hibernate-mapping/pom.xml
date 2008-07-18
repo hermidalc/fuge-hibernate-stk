@@ -1,0 +1,67 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>net.sourceforge.fuge</groupId>
+        <artifactId>fuge-hibernate</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>fuge-hibernate-mapping</artifactId>
+    <packaging>jar</packaging>
+    <name>FuGE Hibernate STK Code: Mapping Between Hibernate and JAXB2</name>
+    <dependencies>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>fuge-hibernate-core</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${pom.groupId}</groupId>
+            <artifactId>fuge-hibernate-identification</artifactId>
+            <version>${pom.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sourceforge.fuge</groupId>
+            <artifactId>fuge-jaxb2</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>jdom</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>8.2-504.jdbc3</version>
+            <!--<version>8.1-407.jdbc3</version>-->
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>5.8</version>
+            <classifier>jdk15</classifier>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <!-- mvn exec:java -Dexec.mainClass="net.sourceforge.symba.util.RetrieveLsid" -Dexec.args="GenericProtocol" -->
+    <repositories>
+        <repository>
+            <id>repo1.maven.org/maven2</id>
+            <name>Official Maven 2 Repository</name>
+            <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+    </repositories>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <groups>hibernate, pojos, unmarshal</groups>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

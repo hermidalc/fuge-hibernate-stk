@@ -1,0 +1,10 @@
+ ---
+ Extending the UML: SyMBA
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+ {{{http://symba.sf.net}SyMBA}} is an implementation of Milestone 3 FuGE, which will be upgraded to Version 1 within
+ a couple of weeks of the production of this STK. It extends the FuGE-OM to allow for more complex versioning as well
+ as a LSID implementation and a web interface for users. 

@@ -1,0 +1,24 @@
+ ---
+ Integrating This Project with your IDE
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+ You can auto-generate the Java IDE project files using Maven 2. The auto-generation step should
+ be performed for the first time <after> successfully installing and compiling the STK.
+ If you need to update the auto-generated files at any time, you can just re-run the command.
+
+ For example, to autogenerate IntelliJ files ({{{http://www.jetbrains.com/idea/}}}), change directory to within the
+ top-level trunk directory and run the following command:
+
+---
+                mvn idea:idea
+---
+
+            There are other {{{http://maven.apache.org/plugins/maven-eclipse-plugin/}similar commands}} for IDEs
+            such as Eclipse. Details can be found on the {{{http://maven.apache.org}Maven}} website.
+
+  If you are using IntelliJ 7.x or higher, the first time you use the project files, IntelliJ will tell you it needs
+  to upgrade the project files. Just agree to all dialog boxes.
+

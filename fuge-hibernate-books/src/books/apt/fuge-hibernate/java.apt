@@ -1,0 +1,64 @@
+ ---
+ Installing Java 5
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Installing Sun Java 5 or Java 6
+
+  The FuGE STK has been tested on both Sun Java 5 and Java 6, so feel free to use whichever version suits you.
+
+* Install Sun J2SE Development Kit 6.0 (JDK 6.0)
+
+  Otherwise, if you are using Ubuntu 7.04 or higher (or similar), you can install Sun Java 6 simply with an
+  apt-get command. The following commands show the installation of the binaries, and of the JDK (the latter is
+  required for Tomcat):
+
++---+
+  sudo apt-get install sun-java6-bin
+  sudo apt-get install sun-java6-jdk
++---+
+
+  and then optionally set the default version in your system with
+
++---+
+  sudo update-java-alternatives
++---+
+
+  <<Full details of the installation of Sun Java on Ubuntu 7.04 or higher is available at
+  {{https://help.ubuntu.com/community/Java}}>>.
+
+  Alternatively, you can download the latest Java from
+  {{{http://java.sun.com/javase/downloads/index.jsp}Sun directly}}.
+
+* Install Sun J2SE Development Kit 5.0 (JDK 5.0)
+
+  If you are using Ubuntu 7.04 or higher, you can install Sun Java 5 simply with an apt-get command. The following
+  commands show the installation of the binaries, and of the JDK (the latter is required for Tomcat):
+
++---+
+  sudo apt-get install sun-java5-bin
+  sudo apt-get install sun-java5-jdk
++---+
+
+  and then optionally set the default version in your system with
+
++---+
+  sudo update-java-alternatives
++---+
+
+  <<Full details of the installation of Sun Java on Ubuntu 7.04 or higher is available at
+  {{https://help.ubuntu.com/community/Java}}>>. These instructions are for
+  java 6, so just replace any instance of the number "6" in the instructions with the number "5".
+
+  Alternatively, you can download Java 1.5.x from {{{http://java.sun.com/j2se/1.5.0/download.jsp}Sun directly}}.
+
+* Check Your Installation
+
+  Make sure that the <<<JAVA_HOME>>> environment variable is pointing to the directory where you installed
+  the JDK.
+
+  If using the "apt-get install" method for Ubuntu described above combined with the update-java-alternatives
+  command, you should already have this variable set.
+

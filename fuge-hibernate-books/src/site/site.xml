@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<project name="FuGE Hibernate Toolkit">
+    <version position="right"/>
+    <bannerLeft>
+        <name>FuGE</name>
+        <src>images/logo-80x80.jpg</src>
+        <href>http://fuge.sourceforge.net/</href>
+    </bannerLeft>
+    <!--<bannerRight>-->
+    <!--<src>images/symba-text.png</src>-->
+    <!--<href>http://symba.sourceforge.net/</href>-->
+    <!--</bannerRight>-->
+    <body>
+        <links>
+            <item name="FuGE Home" href="http://fuge.sourceforge.net"/>
+            <item name="FuGE Hibernate STK Documentation" href="../index.html"/>
+        </links>
+
+        <menu name="FuGE Hibernate Information">
+            <item name="Hibernate STK Home" href="../index.html"/>
+            <item name="Manual" href="fuge-hibernate/index.html"/>
+            <!--<item name="Future Plans" href="plans.html"/>-->
+        </menu>
+    </body>
+</project>

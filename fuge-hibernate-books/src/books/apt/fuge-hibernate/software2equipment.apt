@@ -1,0 +1,20 @@
+ ---
+ The Many2Many Software to Equipment Association
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+ Linking Table Between Software and Equipment is Not Getting Filled
+
+ Within the FuGE-OM, the Software entity is linked to the Equipment entity with a Many2Many relationship. For some
+ reason, the spring-controlled Hibernate session is not properly flushing the session after setting up an association
+ of this type. Because of this, the Software2Equipment table within the database, meant to hold such links, is
+ never populated. This behaviour is shown in the GenericSoftwareMappingHelperTest class, which currently fails.
+
+ A full explaination of this error is present in the
+ {{{http://galaxy.andromda.org/forum/viewtopic.php?t=5837}Andromda forums}},
+ where I have yet to receive a response. This part of the code will be fixed as soon as I can figure out how to add the
+ appropriate <<<session.flush()>>> statement.
+
+ Any suggestions on resolving this situation would be most appreciated.

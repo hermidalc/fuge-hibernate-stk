@@ -1,0 +1,49 @@
+ ---
+ Building a Community Extension of the FuGE UML
+ ---
+ Allyson Lister
+ Junmin Liu
+ ---
+ July 2008
+
+Extending the FuGE-OM
+
+* To Get You Started
+
+    You will need to look in your <<<mda/src/main/uml>>> for the MagicDraw 15.0 zip file (<<<.mdzip>>>) called
+    <<<NewFuGEExtension.mdzip>>>. This is an empty template UML diagram that imports the FuGE-OM. New modellers should
+    start with this UML version.
+
+    [[1]] <<Rename>> the file to match the name of your community extension.
+
+    [[top-level list item]] <<Open>> the file in MagicDraw 15 and start editing. You build your extension on FuGE by
+    altering the NewFuGEExtension package. You will want to rename the package name, and then put all of your
+    extensions in this package.
+
+* Full Documentation
+
+    Extensive directions on extending the UML are available in the documents on the
+    {{{http://fuge.sourceforge.net/dev/index.php} FuGE Developers'}} website. This includes the full
+    {{{http://fuge.sourceforge.net/dev/V1Final/FuGE-v1-SpecDoc.doc} Specification}} as well as the
+    {{{http://fuge.sourceforge.net/dev/V1Final/FuGEv1-refManual.html} Reference Manual}}. Further, there is a FuGE paper
+    in {{{http://www.nature.com/nbt/journal/v25/n10/full/nbt1347.html} Nature Biotechnology}}.
+
+
+Update the FuGE-OM from previous version
+
+* Steps
+
+    If you have already built an extension based on previous FuGE-OM, and you want to upgrade it to latest FuGE-OM,
+    follow the below steps.
+
+    [[1]] download all of the andromda profiles from the {{{http://team.andromda.org/maven2/org/andromda/profiles/uml2/} andromda's maven2 }} site, put them all in one directory called andromda-profiles.
+
+    [[top-level list item]] create new MagicDraw project named it like "magev2"
+
+    [[top-level list item]] select MagicDraw menu File->use module, choose andromda-profile-3.2-.xml.zip in the "andromda-profiles" directory. MagicDraw will then ask for the androMDA's xml, webservice, service, process profile files, find them in that "andromda-profiles" directory.
+
+    [[top-level list item]] select MagicDraw menu File->use module, choose FuGE-v1-profile.mdzip
+
+    [[top-level list item]] select MagicDraw menu File->import MagicDraw project, choose your extension's MagicDraw project file which uses previous version of FuGE-OM, the MagicDraw will load it, automatically figure out the dependence on latest FuGE profile, update the project root name and import the MAGE package.
+	
+	

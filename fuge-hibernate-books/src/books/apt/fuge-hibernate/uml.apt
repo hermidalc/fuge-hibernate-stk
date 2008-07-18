@@ -1,0 +1,17 @@
+ ---
+ Choosing a UML Tool
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Choosing a UML Tool
+
+                You will probably want a UML tool to use if you wish to
+                manipulate the UML at all. If this is important to you, AndroMDA has been
+                tested with both
+                {{{http://galaxy.andromda.org/docs/getting-started/java/resources/uml-tools/argouml/install.html}ArgoUML}}
+                and
+                {{{http://galaxy.andromda.org/docs/getting-started/java/resources/uml-tools/magicdraw/install.html}MagicDraw}},
+                though the FuGE STK only recommends the MagicDraw line of editors. You must use MagicDraw 15.0
+                or higher. A free version of the Community Edition of this UML editor is available.

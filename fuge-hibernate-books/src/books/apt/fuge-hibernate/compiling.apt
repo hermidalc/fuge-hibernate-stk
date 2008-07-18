@@ -1,0 +1,44 @@
+ ---
+ Compiling the Hibernate STK
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Optional Modification of the UML
+
+ OPTIONAL: If you wish to make changes to the FuGE UML prior to generating the code, the UML may be found in
+ trunk/fuge-hibernate-mda/src/main/uml/FuGE-v1-profile.mdzip. Any changes you make in the UML
+ must be converted from this MagicDraw proprietary file type to a standard UML2 file type. Within MagicDraw,
+ you will need to choose File -> Export -> "EMF UML2 (v1.x) XMI" and save the resulting files to the same directory
+ that the mdzip resides in. Do not commit these exported files back to Subversion: the master version of the file is
+ the mdzip.
+ 
+Compilation
+
+* Default (Local) Profile
+
+                Change into the top-level trunk/ directory. Generate all of the
+                automatically-generated AndroMDA sources:
+
+---
+                mvn install
+---
+
+                You should see a "BUILD SUCCESSFUL" message at the end of it.
+                <<You must be connected to the internet for this step to work, as there will be many jars that need to
+                be downloaded.>>
+
+                You now have all auto-generated code.
+
+* Testing (Validation) Profile
+
+ This is the same as the Default profile, except you have to explicitly state that you want to compile using the
+ Validation profile. Further, during the initial install, you don't want the unit tests to be run, as you want all
+ jars to be made first.
+
+---
+                mvn -Denv=val -DskipTests install
+---
+
+ The Validation profile has now been used to make all FuGE Hibernate STK jars.

@@ -1,0 +1,28 @@
+ ---
+ Recommendations
+ ---
+ Allyson Lister
+ ---
+ July 2008
+
+Recommendations
+
+* Operating Systems
+
+  The FuGE Hibernate STK can be installed on either Windows or Linux, but we highly recommend a
+  Linux system, specifically Ubuntu Gutsy Gibbon and higher.
+
+  If you use Ubuntu, it is simple to apt-get the components required. Alternatively, you could create a Virtual
+  Machine and install the latest Ubuntu Server (or Standard) release (8.04, Hardy Heron) on it. This has the
+  advantage that it has postgresql 8.3 and maven 2.0.8 in its package repository. During the installation it even
+  asks whether you want to install a database server.
+
+* Database Choice
+
+  We also recommend PostgreSQL or MySQL for the database choice, as these are the only two that have been tested with
+  this STK. Of these, PostgreSQL is the preferred choice as it is the one used by the main developer of this STK.
+
+  These instructions were originally and loosely based on those found in the {{{credits.html}Credits Section}},
+  but have been modified to suit the needs of this latest version of the STK.
+
+
