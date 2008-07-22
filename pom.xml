@@ -132,7 +132,7 @@
      3. go back up to the top-level directory
      4. run "mvn site:site"
      5. run "mvn site:deploy" first on your local test then, once you're happy, to the FuGE website.
-     7. manually copy books/target/generated-site/pdf/fuge-hibernate/fuge-hibernate.pdf to shell.sf.net in the directory
+     7. manually copy fuge-hibernate-books/target/generated-site/pdf/fuge-hibernate/fuge-hibernate.pdf to shell.sf.net in the directory
      /home/groups/f/fu/fuge/htdocs/stks/hibernate-stk/
      -->
     <distributionManagement>
