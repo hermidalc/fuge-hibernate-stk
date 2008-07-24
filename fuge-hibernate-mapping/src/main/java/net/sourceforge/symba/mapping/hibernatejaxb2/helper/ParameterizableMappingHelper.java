@@ -8,6 +8,7 @@ import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolParameterizableType;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -64,7 +65,7 @@ public class ParameterizableMappingHelper implements MappingHelper<Parameterizab
 
         for ( FuGECommonAuditContactRoleType contactRoleXML : parameterizableXML.getContactRole() ) {
             ContactRole cr = ccr.unmarshal( contactRoleXML, ( ContactRole ) entityService.createDescribable( "net.sourceforge.fuge.common.audit.ContactRole" ), performer );
-            contactRoles.add( ( ContactRole ) entityService.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer ) );
+            contactRoles.add( ( ContactRole ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer ) );
         }
         parameterizable.setProvider( contactRoles );
 

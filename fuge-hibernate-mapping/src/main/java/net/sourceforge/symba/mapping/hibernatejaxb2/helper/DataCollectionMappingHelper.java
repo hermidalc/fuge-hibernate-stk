@@ -71,7 +71,7 @@ public class DataCollectionMappingHelper implements MappingHelper<DataCollection
         datColl = unmarshalCollectionContents( datCollXML, datColl, performer );
 
         // load the fuge object into the database
-        entityService.save( "net.sourceforge.fuge.collection.DataCollection", datColl, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.DataCollection", datColl, performer );
 
         return datColl;
     }
@@ -91,7 +91,7 @@ public class DataCollectionMappingHelper implements MappingHelper<DataCollection
                     dataXML.getName(),
                     "net.sourceforge.fuge.bio.data.ExternalData" );
             externalData = ( ExternalData ) cdat.unmarshal( dataXML, externalData, performer );
-            entityService.save( "net.sourceforge.fuge.bio.data.ExternalData", externalData, null );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.data.ExternalData", externalData, null );
             datas.add( externalData );
 
         }

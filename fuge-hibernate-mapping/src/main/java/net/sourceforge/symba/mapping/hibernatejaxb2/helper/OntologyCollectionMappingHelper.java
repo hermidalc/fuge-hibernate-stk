@@ -72,7 +72,7 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
         ontoColl = unmarshalCollectionContents( ontoCollXML, ontoColl, performer );
 
         // set collection in database
-        entityService.save( "net.sourceforge.fuge.collection.OntologyCollection", ontoColl, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.OntologyCollection", ontoColl, performer );
 
         return ontoColl;
     }
@@ -93,7 +93,7 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
 
             ontologySource.setOntologyURI( ontoSourceXML.getOntologyURI() );
 
-            entityService.save( "net.sourceforge.fuge.common.ontology.OntologySource", ontologySource, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.ontology.OntologySource", ontologySource, performer );
             ontologySources.add( ontologySource );
         }
         ontoColl.setSources( ontologySources );
@@ -258,7 +258,7 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
 
                 objectProperty.setContent( smallOis );
                 objectProperty.setName( objectPropertyXML.getName() );
-                entityService.save( "net.sourceforge.fuge.common.ontology.ObjectProperty", objectProperty, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.ontology.ObjectProperty", objectProperty, performer );
 
                 ontologyProperties.add( objectProperty );
 
@@ -277,13 +277,13 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
                 dataProperty = ( DataProperty ) unmarshalOntologyTerm( dataPropertyXML, dataProperty, performer );
                 dataProperty.setDataType( dataPropertyXML.getDataType() );
                 dataProperty.setName( dataPropertyXML.getName() );
-                entityService.save( "net.sourceforge.fuge.common.ontology.DataProperty", dataProperty, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.ontology.DataProperty", dataProperty, performer );
                 ontologyProperties.add( dataProperty );
             }
         }
         ontologyIndividual.setProperties( ontologyProperties );
         ontologyIndividual.setName( ontologyIndividualXML.getName() );
-        entityService.save( "net.sourceforge.fuge.common.ontology.OntologyIndividual", ontologyIndividual, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.ontology.OntologyIndividual", ontologyIndividual, performer );
         return ontologyIndividual;
     }
 
@@ -376,7 +376,7 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
             ontologyCollection.setSources( fuge.getOntologyCollection().getSources() );
         }
         // load the fuge object into the database
-        entityService.save( "net.sourceforge.fuge.collection.OntologyCollection", ontologyCollection, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.OntologyCollection", ontologyCollection, performer );
         fuge.setOntologyCollection( ontologyCollection );
 
         return fuge;

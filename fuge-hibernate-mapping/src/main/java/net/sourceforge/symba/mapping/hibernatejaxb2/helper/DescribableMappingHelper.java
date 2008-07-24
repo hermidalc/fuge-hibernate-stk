@@ -8,11 +8,11 @@ import net.sourceforge.fuge.common.description.Uri;
 import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.*;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.DatatypeConfigurationException;
 import java.util.*;
-import java.net.URISyntaxException;
 
 /**
  * Copyright Notice
@@ -97,7 +97,7 @@ public class DescribableMappingHelper implements MappingHelper<Describable, FuGE
                     audit.setPerformer( ( Contact ) entityService.getIdentifiable( auditXML.getContactRef() ) );
 
                 // load fuge object in database
-                entityService.save( "net.sourceforge.fuge.common.audit.Audit", audit, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Audit", audit, performer );
 
                 // add to collection
                 auditTrail.add( audit );
@@ -122,7 +122,7 @@ public class DescribableMappingHelper implements MappingHelper<Describable, FuGE
                         "net.sourceforge.fuge.common.description.Description" );
                 description = ( Description ) unmarshal( descriptionXML, description, performer );
                 description.setText( descriptionXML.getText() );
-                entityService.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
                 descriptions.add( description );
             }
             // load fuge object into describable
@@ -157,7 +157,7 @@ public class DescribableMappingHelper implements MappingHelper<Describable, FuGE
             uri.setLocation( uriXML.getLocation() );
 
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.common.description.Uri", uri, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Uri", uri, performer );
 
             // load fuge object into describable
             describable.setUri( uri );
@@ -186,7 +186,7 @@ public class DescribableMappingHelper implements MappingHelper<Describable, FuGE
                 nameValueType.setValue( nameValueTypeXML.getValue() );
 
                 // load fuge object into database
-                entityService.save( "net.sourceforge.fuge.common.description.NameValueType", nameValueType, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.NameValueType", nameValueType, performer );
 
                 // load fuge object into collection
                 propertySets.add( nameValueType );

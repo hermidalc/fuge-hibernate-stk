@@ -11,6 +11,7 @@ import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioMaterialGenericMaterialTy
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioMaterialMaterialType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -98,7 +99,7 @@ public class MaterialMappingHelper implements MappingHelper<Material, FuGEBioMat
         Set<ContactRole> contactRoles = new HashSet<ContactRole>();
         for ( FuGECommonAuditContactRoleType contactRoleXML : materialXML.getContactRole() ) {
             ContactRole cr = ccr.unmarshal( contactRoleXML, ( ContactRole ) entityService.createDescribable( "net.sourceforge.fuge.common.audit.ContactRole" ), performer );
-            contactRoles.add( ( ContactRole ) entityService.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer ) );
+            contactRoles.add( ( ContactRole ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer ) );
         }
         material.setContacts( contactRoles );
 

@@ -12,7 +12,6 @@ import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.net.URISyntaxException;
 
 /**
  * Copyright Notice
@@ -98,7 +97,7 @@ public class ReferenceableCollectionMappingHelper implements MappingHelper<Refer
             if ( bibRefXML.getYear() != null )
                 bibRef.setYear( bibRefXML.getYear() );
 
-            entityService.save( "net.sourceforge.fuge.common.references.BibliographicReference", bibRef, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.references.BibliographicReference", bibRef, performer );
             bibRefs.add( bibRef );
         }
 
@@ -126,18 +125,18 @@ public class ReferenceableCollectionMappingHelper implements MappingHelper<Refer
             Set<ContactRole> contactRoles = new HashSet<ContactRole>();
             for ( FuGECommonAuditContactRoleType contactRoleXML : dbXML.getContactRole() ) {
                 ContactRole cr = ccr.unmarshal( contactRoleXML, ( ContactRole ) entityService.createDescribable( "net.sourceforge.fuge.common.audit.ContactRole" ), performer );
-                cr = ( ContactRole ) entityService.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer );
+                cr = ( ContactRole ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.ContactRole", cr, performer );
                 contactRoles.add( cr );
             }
 
             db.setDatabaseContact( contactRoles );
-            entityService.save( "net.sourceforge.fuge.common.references.Database", db, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.references.Database", db, performer );
             dbs.add( db );
         }
 
         refColl.setAllDatabases( dbs );
 
-        entityService.save( "net.sourceforge.fuge.collection.ReferenceableCollection", refColl, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.ReferenceableCollection", refColl, performer );
 
         return refColl;
     }

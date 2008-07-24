@@ -9,6 +9,7 @@ import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProviderType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 /**
  * Copyright Notice
@@ -71,7 +72,7 @@ public class ProviderMappingHelper implements MappingHelper<Provider, FuGECollec
         // contact
         ContactRole contactRole = ( ContactRole ) entityService.createDescribable( "net.sourceforge.fuge.common.audit.ContactRole" );
         contactRole = ccr.unmarshal( providerXML.getContactRole(), contactRole, performer );
-        entityService.save( "net.sourceforge.fuge.common.audit.ContactRole", contactRole, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.ContactRole", contactRole, performer );
         provider.setProvider( contactRole );
 
         // provider type

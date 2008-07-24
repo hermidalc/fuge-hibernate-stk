@@ -1,9 +1,6 @@
 package net.sourceforge.symba.mapping.hibernatejaxb2;
 
 import org.testng.annotations.Test;
-import net.sourceforge.fuge.service.EntityService;
-import net.sourceforge.fuge.ServiceLocator;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditOrganizationType;
 import net.sourceforge.fuge.common.audit.Organization;
 
 public class DatabaseObjectHelperTest {
@@ -13,16 +10,12 @@ public class DatabaseObjectHelperTest {
 
         // Assume the test database has already been created
 
-        // run getOrCreate twice: once to create, the second time it will get.
-
-        EntityService es = ServiceLocator.instance().getEntityService();
-
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( null, "Test Organization for getOrCreate()", "net.sourceforge.fuge.common.audit.Organization" );
 
         assert (organization.getId() == null) : "organization's database id should be null until the object is loaded into the database";
 
         // Save the object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
 

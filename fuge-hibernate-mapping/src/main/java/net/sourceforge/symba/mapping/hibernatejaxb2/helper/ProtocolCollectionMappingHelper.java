@@ -77,7 +77,7 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
         protocolCollection = unmarshalCollectionContents( protocolCollectionXML, protocolCollection, performer );
 
         // load the fuge object into the database
-        entityService.save( "net.sourceforge.fuge.collection.ProtocolCollection", protocolCollection, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.ProtocolCollection", protocolCollection, performer );
 
         return protocolCollection;
     }
@@ -98,7 +98,7 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
                                 elementXML.getValue().getIdentifier(),
                                 elementXML.getValue().getName(),
                                 "net.sourceforge.fuge.common.protocol.GenericEquipment" ), performer );
-                entityService.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, performer );
                 equipments.add( genericEquipment );
             }
         }
@@ -114,7 +114,7 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
                         protocolSoftwareXML.getIdentifier(),
                         protocolSoftwareXML.getName(),
                         "net.sourceforge.fuge.common.protocol.GenericSoftware" ), performer );
-                entityService.save( "net.sourceforge.fuge.common.protocol.GenericSoftware", gs, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericSoftware", gs, performer );
                 softwares.add( gs );
             }
         }
@@ -130,7 +130,7 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
                         protocolXML.getIdentifier(),
                         protocolXML.getName(),
                         "net.sourceforge.fuge.common.protocol.GenericProtocol" ), performer );
-                entityService.save( "net.sourceforge.fuge.common.protocol.GenericProtocol", genericProtocol, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericProtocol", genericProtocol, performer );
                 protocols.add( genericProtocol );
             }
         }
@@ -146,7 +146,7 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
                             protocolApplicationXML.getIdentifier(),
                             protocolApplicationXML.getName(),
                             "net.sourceforge.fuge.common.protocol.GenericProtocolApplication" ), performer );
-            entityService.save( "net.sourceforge.fuge.common.protocol.GenericProtocolApplication", gpa, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericProtocolApplication", gpa, performer );
             protocolApplications.add( gpa );
         }
         protocolCollection.setProtocolApplications( protocolApplications );

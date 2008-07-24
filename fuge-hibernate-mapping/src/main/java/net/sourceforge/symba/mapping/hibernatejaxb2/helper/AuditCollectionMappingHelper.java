@@ -68,7 +68,7 @@ public class AuditCollectionMappingHelper implements MappingHelper<AuditCollecti
         auditColl = unmarshalCollectionContents( auditCollXML, auditColl, performer );
 
         // Once all of the AuditCollection is full, add it to the database.
-        entityService.save( "net.sourceforge.fuge.collection.AuditCollection", auditColl, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.AuditCollection", auditColl, performer );
 
         return auditColl;
     }
@@ -102,7 +102,7 @@ public class AuditCollectionMappingHelper implements MappingHelper<AuditCollecti
                 organization = unmarshalOrganization( organizationXML, organization, performer );
 
                 // load fuge object into database
-                entityService.save( "net.sourceforge.fuge.common.audit.Organization", organization, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, performer );
 
                 // add fuge object into collection of objects
                 contacts.add( organization );
@@ -126,7 +126,7 @@ public class AuditCollectionMappingHelper implements MappingHelper<AuditCollecti
                 person = unmarshalPerson( personXML, person, performer );
 
                 // load fuge object into database
-                entityService.save( "net.sourceforge.fuge.common.audit.Person", person, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Person", person, performer );
 
                 // add fuge object into collection of objects
                 contacts.add( person );
@@ -157,7 +157,7 @@ public class AuditCollectionMappingHelper implements MappingHelper<AuditCollecti
             sg.setMembers( cs );
 
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.common.audit.SecurityGroup", sg, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.SecurityGroup", sg, performer );
             sgs.add( sg );
         }
         auditColl.setSecurityGroups( sgs );
@@ -199,13 +199,13 @@ public class AuditCollectionMappingHelper implements MappingHelper<AuditCollecti
                 if ( accessXML.getSecurityGroupRef() != null ) {
                     access.setAccessGroup( ( SecurityGroup ) entityService.getIdentifiable( accessXML.getSecurityGroupRef() ) );
                 }
-                entityService.save( "net.sourceforge.fuge.common.audit.SecurityAccess", access, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.SecurityAccess", access, performer );
                 accesses.add( access );
             }
             security.setSecurityRights( accesses );
 
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.common.audit.Security", security, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Security", security, performer );
             securities.add( security );
         }
 

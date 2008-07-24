@@ -92,7 +92,7 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                         typeXML.getName(), "net.sourceforge.fuge.common.protocol.SoftwareApplication" );
                 application = ( SoftwareApplication ) ci.unmarshal( typeXML, application, performer );
                 application.setAppliedSoftware( ( Software ) entityService.getIdentifiable( typeXML.getSoftwareRef() ) );
-                entityService.save( "net.sourceforge.fuge.common.protocol.SoftwareApplication", application, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.SoftwareApplication", application, performer );
                 set.add( application );
             }
             genericProtocolApplication.setSoftwareApplications( set );
@@ -113,7 +113,7 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                             typeXML, application, performer );
                 }
 
-                entityService.save( "net.sourceforge.fuge.common.protocol.EquipmentApplication", application, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.EquipmentApplication", application, performer );
                 set2.add( application );
             }
             genericProtocolApplication.setEquipmentApplications( set2 );
@@ -133,10 +133,10 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                 description = ( Description ) cd
                         .unmarshal( typeXML.getActionDeviation().getDescription(), description, performer );
                 description.setText( typeXML.getActionDeviation().getDescription().getText() );
-                entityService.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
                 application.setActionDeviation( description );
 
-                entityService.save( "net.sourceforge.fuge.common.protocol.ActionApplication", application, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.ActionApplication", application, performer );
                 set3.add( application );
             }
             genericProtocolApplication.setActionApplications( set3 );
@@ -146,7 +146,7 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                 description = ( Description ) cd.unmarshal(
                         protocolApplicationXML.getProtocolDeviation().getDescription(), description, performer );
                 description.setText( protocolApplicationXML.getProtocolDeviation().getDescription().getText() );
-                entityService.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
                 genericProtocolApplication.setProtocolDeviation( description );
             }
 

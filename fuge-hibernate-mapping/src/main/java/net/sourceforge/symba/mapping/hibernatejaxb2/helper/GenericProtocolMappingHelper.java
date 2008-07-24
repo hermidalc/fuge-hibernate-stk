@@ -71,7 +71,7 @@ public class GenericProtocolMappingHelper implements MappingHelper<GenericProtoc
                                 genericActionXML.getValue().getIdentifier(),
                                 genericActionXML.getValue().getName(),
                                 "net.sourceforge.fuge.common.protocol.GenericAction" ), performer );
-                entityService.save( "net.sourceforge.fuge.common.protocol.GenericAction", genericAction, performer);
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericAction", genericAction, performer);
                 actions.add( genericAction );
             }
         }
@@ -84,7 +84,7 @@ public class GenericProtocolMappingHelper implements MappingHelper<GenericProtoc
                     genericParameterXML.getIdentifier(),
                     genericParameterXML.getName(),
                     "net.sourceforge.fuge.common.protocol.GenericParameter" ), performer );
-            entityService.save( "net.sourceforge.fuge.common.protocol.GenericParameter", gp, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericParameter", gp, performer );
             genericParameters.add( gp );
         }
         genericProtocol.setParameters( genericParameters );

@@ -5,9 +5,7 @@ import net.sourceforge.fuge.collection.FuGE;
 import net.sourceforge.symba.mapping.hibernatejaxb2.helper.FuGEMappingHelper;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.service.EntityService;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.ServiceLocator;
 import net.sourceforge.fuge.common.audit.Person;
 import org.xml.sax.SAXException;
 
@@ -63,13 +61,10 @@ import java.net.URISyntaxException;
 
 public class XMLUnmarshaler {
     private final String schemaFilename, XMLFilename;
-    private final EntityService entityService;
 
     public XMLUnmarshaler( String sf, String xf ) {
-        ServiceLocator serviceLocator = ServiceLocator.instance();
         this.schemaFilename = sf;
         this.XMLFilename = xf;
-        this.entityService = serviceLocator.getEntityService();
     }
 
     /**
@@ -79,10 +74,8 @@ public class XMLUnmarshaler {
      * @param xf the input XML file
      */
     public XMLUnmarshaler( String xf ) {
-        ServiceLocator serviceLocator = ServiceLocator.instance();
         this.schemaFilename = null;
         this.XMLFilename = xf;
-        this.entityService = serviceLocator.getEntityService();
     }
 
     public String Jaxb2ToFuGE( Person performer ) throws JAXBException, SAXException, EntityServiceException, URISyntaxException, FileNotFoundException {
@@ -121,7 +114,7 @@ public class XMLUnmarshaler {
         fr = cf.unmarshal( frXML, fr, performer );
 
         // Load the entire fuge entry into the database
-        entityService.save( "net.sourceforge.fuge.collection.FuGE", fr, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.FuGE", fr, performer );
         return fr.getIdentifier();
     }
 }

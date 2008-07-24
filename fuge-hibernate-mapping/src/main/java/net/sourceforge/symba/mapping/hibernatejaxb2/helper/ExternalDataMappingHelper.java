@@ -8,6 +8,7 @@ import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioDataExternalDataType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonDescriptionURIType;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 /**
  * Copyright Notice
@@ -79,7 +80,7 @@ public class ExternalDataMappingHelper implements MappingHelper<ExternalData, Fu
             externalFormatURI.setLocation( externalFormatURIXML.getLocation() );
 
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.common.description.Uri", externalFormatURI, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Uri", externalFormatURI, performer );
 
             // load fuge object into describable
             externalData.setExternalFormatDocumentation( externalFormatURI );

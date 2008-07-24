@@ -22,8 +22,8 @@ public class StoreAndRetrieveTest {
 
         EntityService es = ServiceLocator.instance().getEntityService();
 
-        // Create a Describable object
-        Description description = ( Description ) es.createDescribable( "net.sourceforge.fuge.common.description.Description" );
+        // Create a Describable object: normally here you would use the return value in some other code
+        es.createDescribable( "net.sourceforge.fuge.common.description.Description" );
     }
 
     @Test( groups = { "hibernate" } )
@@ -37,7 +37,7 @@ public class StoreAndRetrieveTest {
         Description description = ( Description ) es.createDescribable( "net.sourceforge.fuge.common.description.Description" );
 
         // Save the Describable object in the database
-        es.save( "net.sourceforge.fuge.common.description.Description", description, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, null );
     }
 
     @Test( groups = { "pojos" } )
@@ -45,8 +45,8 @@ public class StoreAndRetrieveTest {
 
         // Assume the test database has already been created
 
-        // Create an Identifiable Object locally
-        Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "createIdentifiable:Organization:" + String.valueOf( Math.random() ), "createIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Organization" );
+        // Create an Identifiable Object locally: normally here you would use the return value in some other code
+        DatabaseObjectHelper.getOrCreate( "createIdentifiable:Organization:" + String.valueOf( Math.random() ), "createIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Organization" );
     }
 
     @Test( groups = { "hibernate" } )
@@ -54,13 +54,11 @@ public class StoreAndRetrieveTest {
 
         // Assume the test database has already been created
 
-        EntityService es = ServiceLocator.instance().getEntityService();
-
         // Create the Identifiable Object locally
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "saveIdentifiable:Organization:" + String.valueOf( Math.random() ), "saveIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Organization" );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
     }
@@ -76,7 +74,7 @@ public class StoreAndRetrieveTest {
         Person performer = ( Person ) DatabaseObjectHelper.getOrCreate( "saveDescribableWithPerformer:Performer:" + String.valueOf( Math.random() ), "saveDescribableWithPerformer", "net.sourceforge.fuge.common.audit.Person" );
 
         // Save the Performer
-        performer = ( Person ) es.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
+        performer = ( Person ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
 
         assert ( performer.getId() != null ) : "performer must have a database id.";
 
@@ -84,7 +82,7 @@ public class StoreAndRetrieveTest {
         Description description = ( Description ) es.createDescribable( "net.sourceforge.fuge.common.description.Description" );
 
         // Save the Describable object in the database
-        description = ( Description ) es.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+        description = ( Description ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
 
         assert ( description.getId() != null ) : "description must have a database id.";
     }
@@ -104,7 +102,7 @@ public class StoreAndRetrieveTest {
         uri.setLocation( "http://some.random.url/saveIdentifiableWithURI/" + String.valueOf( Math.random() ) );
 
         // load fuge object into database
-        es.save( "net.sourceforge.fuge.common.description.Uri", uri, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Uri", uri, null );
 
         // Create the Identifiable Object locally
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "saveIdentifiableWithPerformer:Organization:" + String.valueOf( Math.random() ), "saveIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Organization" );
@@ -113,7 +111,7 @@ public class StoreAndRetrieveTest {
         organization.setUri( uri );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
         assert ( organization.getUri() != null ) : "organization must have a URI.";
@@ -130,13 +128,11 @@ public class StoreAndRetrieveTest {
 
         // Assume the test database has already been created
 
-        EntityService es = ServiceLocator.instance().getEntityService();
-
         // Create the performer
         Person performer = ( Person ) DatabaseObjectHelper.getOrCreate( "saveIdentifiableWithPerformer:Performer:" + String.valueOf( Math.random() ), "saveIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Person" );
 
         // Save the Performer
-        performer = ( Person ) es.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
+        performer = ( Person ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
 
         assert ( performer.getId() != null ) : "performer must have a database id.";
 
@@ -144,7 +140,7 @@ public class StoreAndRetrieveTest {
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "saveIdentifiableWithPerformer:Organization:" + String.valueOf( Math.random() ), "saveIdentifiableWithPerformer", "net.sourceforge.fuge.common.audit.Organization" );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, performer );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, performer );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
     }
@@ -161,7 +157,7 @@ public class StoreAndRetrieveTest {
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "getIdentifiableById:Organization:" + String.valueOf( Math.random() ), "getIdentifiableById", "net.sourceforge.fuge.common.audit.Organization" );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
 
@@ -183,7 +179,7 @@ public class StoreAndRetrieveTest {
         Organization organization = ( Organization ) DatabaseObjectHelper.getOrCreate( "getIdentifiableByIdentifier:Organization:" + String.valueOf( Math.random() ), "getIdentifiableByIdentifier", "net.sourceforge.fuge.common.audit.Organization" );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
 
@@ -214,7 +210,7 @@ public class StoreAndRetrieveTest {
         organization.setPropertySets( propertySets );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
 
@@ -244,7 +240,7 @@ public class StoreAndRetrieveTest {
         organization.setPropertySets( propertySets );
 
         // Save the Identifiable object in the database
-        organization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
+        organization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", organization, null );
 
         assert ( organization.getId() != null ) : "organization must have a database id.";
 
@@ -263,7 +259,7 @@ public class StoreAndRetrieveTest {
         propertySets.add( ( NameValueType ) es.getDescribable( nameValueType2.getId() ) );
         retrievedOrganization.setPropertySets( propertySets );
 
-        retrievedOrganization = ( Organization ) es.save( "net.sourceforge.fuge.common.audit.Organization", retrievedOrganization, null );
+        retrievedOrganization = ( Organization ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Organization", retrievedOrganization, null );
 
         assert ( retrievedOrganization.getId() != null ) : "retrievedOrganization must have a database id.";
         assert ( retrievedOrganization.getPropertySets().size() == 2 ) : "retrievedOrganization must have 2 items in the property set.";
@@ -287,7 +283,7 @@ public class StoreAndRetrieveTest {
         nameValueType.setValue( "3" );
 
         // load fuge object into database
-        es.save( "net.sourceforge.fuge.common.description.NameValueType", nameValueType, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.NameValueType", nameValueType, null );
 
         return nameValueType;
     }

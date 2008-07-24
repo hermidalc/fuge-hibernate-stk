@@ -4,6 +4,7 @@ import net.sourceforge.fuge.common.protocol.*;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.*;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -70,7 +71,7 @@ public class ParameterizableApplicationMappingHelper implements MappingHelper<Pa
 
             pv.setValue( measurementMappingHelper.unmarshal( parameterValueXML.getMeasurement().getValue(), null, performer ) );
 
-            entityService.save( "net.sourceforge.fuge.common.protocol.ParameterValue", pv, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.ParameterValue", pv, performer );
             parameterValues.add( pv );
 
         }

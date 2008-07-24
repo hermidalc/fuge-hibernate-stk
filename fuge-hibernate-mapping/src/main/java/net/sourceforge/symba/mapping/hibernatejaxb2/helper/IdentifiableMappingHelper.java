@@ -9,6 +9,7 @@ import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonIdentifiableType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonReferencesDatabaseReferenceType;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -83,7 +84,7 @@ public class IdentifiableMappingHelper implements MappingHelper<Identifiable, Fu
                 DatabaseReference
                         .setDatabase( ( Database ) entityService.getIdentifiable( DatabaseReferenceXML.getDatabaseRef() ) );
             }
-            entityService.save( "net.sourceforge.fuge.common.references.DatabaseReference", DatabaseReference, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.references.DatabaseReference", DatabaseReference, performer );
             databaseEntries.add( DatabaseReference );
         }
 

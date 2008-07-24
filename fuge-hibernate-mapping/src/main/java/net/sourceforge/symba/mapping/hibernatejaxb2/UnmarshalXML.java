@@ -2,8 +2,6 @@ package net.sourceforge.symba.mapping.hibernatejaxb2;
 
 import net.sourceforge.symba.mapping.hibernatejaxb2.xml.XMLUnmarshaler;
 import net.sourceforge.fuge.common.audit.Person;
-import net.sourceforge.fuge.service.EntityService;
-import net.sourceforge.fuge.ServiceLocator;
 
 import java.util.Date;
 
@@ -52,9 +50,7 @@ public class UnmarshalXML {
 
         Person performer = ( Person ) DatabaseObjectHelper.getOrCreate( null, "Example Person " + new Date(), "net.sourceforge.fuge.common.audit.Person" );
 
-        EntityService entityService = ServiceLocator.instance().getEntityService();
-
-        entityService.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.audit.Person", performer, null );
 
         unmarshalTest.Jaxb2ToFuGE( performer );
     }

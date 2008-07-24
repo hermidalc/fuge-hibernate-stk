@@ -66,7 +66,7 @@ public class GenericEquipmentMappingHelper implements MappingHelper<GenericEquip
                     genericParameterXML.getIdentifier(),
                     genericParameterXML.getName(),
                     "net.sourceforge.fuge.common.protocol.GenericParameter" ), performer );
-            entityService.save( "net.sourceforge.fuge.common.protocol.GenericParameter", gp, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericParameter", gp, performer );
             genericParameters.add( gp );
         }
         if ( !genericParameters.isEmpty() )

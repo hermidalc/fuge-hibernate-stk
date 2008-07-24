@@ -5,6 +5,7 @@ import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.*;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 /**
  * Copyright Notice
@@ -78,7 +79,7 @@ public class MeasurementMappingHelper implements MappingHelper<Measurement, FuGE
 
             // get atomic value attributes
             value = cav.unmarshal( ( FuGECommonMeasurementAtomicValueType ) measurementXML, value, performer );
-            entityService.save( "net.sourceforge.fuge.common.measurement.AtomicValue", value, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.measurement.AtomicValue", value, performer );
             return value;
         } else if ( measurementXML instanceof FuGECommonMeasurementBooleanValueType ) {
             BooleanValue value = ( BooleanValue ) entityService.createDescribable( "net.sourceforge.fuge.common.measurement.BooleanValue" );
@@ -87,7 +88,7 @@ public class MeasurementMappingHelper implements MappingHelper<Measurement, FuGE
 
             // get boolean value attributes
             value = cbv.unmarshal( ( FuGECommonMeasurementBooleanValueType ) measurementXML, value, performer );
-            entityService.save( "net.sourceforge.fuge.common.measurement.BooleanValue", value, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.measurement.BooleanValue", value, performer );
             return value;
         } else if ( measurementXML instanceof FuGECommonMeasurementComplexValueType ) {
             ComplexValue value = ( ComplexValue ) entityService.createDescribable( "net.sourceforge.fuge.common.measurement.ComplexValue" );
@@ -96,7 +97,7 @@ public class MeasurementMappingHelper implements MappingHelper<Measurement, FuGE
 
             // get complex value attributes
             value = ccv.unmarshal( ( FuGECommonMeasurementComplexValueType ) measurementXML, value, performer );
-            entityService.save( "net.sourceforge.fuge.common.measurement.ComplexValue", value, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.measurement.ComplexValue", value, performer );
             return value;
         } else if ( measurementXML instanceof FuGECommonMeasurementRangeType ) {
             Range value = ( Range ) entityService.createDescribable( "net.sourceforge.fuge.common.measurement.Range" );
@@ -105,7 +106,7 @@ public class MeasurementMappingHelper implements MappingHelper<Measurement, FuGE
 
             // get range attributes
             value = cr.unmarshal( ( FuGECommonMeasurementRangeType ) measurementXML, value, performer );
-            entityService.save( "net.sourceforge.fuge.common.measurement.Range", value, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.common.measurement.Range", value, performer );
             return value;
         }
         return null; // shouldn't get here as there is currently only these types of Default Values allowed.

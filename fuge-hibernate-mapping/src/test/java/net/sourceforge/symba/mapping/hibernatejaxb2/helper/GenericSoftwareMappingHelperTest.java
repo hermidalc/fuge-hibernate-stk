@@ -33,14 +33,14 @@ public class GenericSoftwareMappingHelperTest {
                 "net.sourceforge.fuge.common.protocol.GenericEquipment" );
 
         // Save the GenericEquipment object in the database
-        es.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, null );
 
         Set<GenericEquipment> genericEquipments = new HashSet<GenericEquipment>();
         genericEquipments.add( genericEquipment );
         genericSoftware.setEquipment( genericEquipments );
 
         // Save the GenericSoftware object in the database
-        genericSoftware = ( GenericSoftware ) es.save( "net.sourceforge.fuge.common.protocol.GenericSoftware",
+        genericSoftware = ( GenericSoftware ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericSoftware",
                 genericSoftware, null );
 
         // retrieve the software from the database, and check for the link to the equipment
@@ -66,7 +66,6 @@ public class GenericSoftwareMappingHelperTest {
         GenericSoftware genericSoftware;
         GenericEquipment genericEquipment;
         {
-        EntityService es = ServiceLocator.instance().getEntityService();
 
         // Create a GenericSoftware object locally
         genericSoftware = ( GenericSoftware ) DatabaseObjectHelper.getOrCreate( null,
@@ -79,14 +78,14 @@ public class GenericSoftwareMappingHelperTest {
                 "net.sourceforge.fuge.common.protocol.GenericEquipment" );
 
         // Save the GenericEquipment object in the database
-        es.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, null );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericEquipment", genericEquipment, null );
 
         Set<GenericEquipment> genericEquipments = new HashSet<GenericEquipment>();
         genericEquipments.add( genericEquipment );
         genericSoftware.setEquipment( genericEquipments );
 
         // Save the GenericSoftware object in the database
-        genericSoftware = ( GenericSoftware ) es.save( "net.sourceforge.fuge.common.protocol.GenericSoftware",
+        genericSoftware = ( GenericSoftware ) DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.GenericSoftware",
                 genericSoftware, null );
 
         // force session flush by closing the entity service. 

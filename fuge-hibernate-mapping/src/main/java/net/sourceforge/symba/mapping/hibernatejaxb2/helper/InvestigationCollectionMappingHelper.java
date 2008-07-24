@@ -104,13 +104,13 @@ public class InvestigationCollectionMappingHelper implements MappingHelper<Inves
                     dataPartitions.add( dataPartition );
                 }
                 factorValue.setDataPartitions( dataPartitions );
-                entityService.save( "net.sourceforge.fuge.bio.investigation.FactorValue", factorValue, performer );
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.investigation.FactorValue", factorValue, performer );
                 factorValues.add( factorValue );
             }
             factor.setFactorValues( factorValues );
 
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.bio.investigation.Factor", factor, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.investigation.Factor", factor, performer );
             factors.add( factor );
         }
         investigationCollection.setFactorCollection( factors );
@@ -123,12 +123,12 @@ public class InvestigationCollectionMappingHelper implements MappingHelper<Inves
                     "net.sourceforge.fuge.bio.investigation.Investigation" );
             investigation = ( Investigation ) ci.unmarshal( investigationXML, investigation, performer );
             // load fuge object into database
-            entityService.save( "net.sourceforge.fuge.bio.investigation.Investigation", investigation, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.investigation.Investigation", investigation, performer );
             investigations.add( investigation );
         }
         investigationCollection.setInvestigations( investigations );
 
-        entityService.save( "net.sourceforge.fuge.collection.InvestigationCollection", investigationCollection, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.InvestigationCollection", investigationCollection, performer );
         return investigationCollection;
     }
 
@@ -152,7 +152,6 @@ public class InvestigationCollectionMappingHelper implements MappingHelper<Inves
             factorXML.setFactorType( categoryValueXML );
 
             MeasurementMappingHelper measurementMappingHelper = new MeasurementMappingHelper();
-            ObjectFactory factory = new ObjectFactory();
             for ( FactorValue factorValue : factor.getFactorValues() ) {
                 FuGEBioInvestigationFactorValueType factorValueXML = new FuGEBioInvestigationFactorValueType();
 

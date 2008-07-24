@@ -67,7 +67,7 @@ public class MaterialCollectionMappingHelper implements MappingHelper<MaterialCo
         matColl = unmarshalCollectionContents( matCollXML, matColl, performer );
 
         // load the fuge object into the database
-        entityService.save( "net.sourceforge.fuge.collection.MaterialCollection", matColl, performer );
+        DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.MaterialCollection", matColl, performer );
 
         return matColl;
     }
@@ -90,7 +90,7 @@ public class MaterialCollectionMappingHelper implements MappingHelper<MaterialCo
                         materialXML.getName(),
                         "net.sourceforge.fuge.bio.material.GenericMaterial" );
                 gmaterial = (GenericMaterial) cm.unmarshal( materialXML, gmaterial, performer );
-                entityService.save( "net.sourceforge.fuge.bio.material.GenericMaterial", gmaterial, performer);
+                DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.material.GenericMaterial", gmaterial, performer);
 
                 materials.add( gmaterial );
             }

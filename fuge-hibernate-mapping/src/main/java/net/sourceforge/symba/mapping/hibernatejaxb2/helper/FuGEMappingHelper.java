@@ -123,7 +123,7 @@ public class FuGEMappingHelper implements MappingHelper<FuGE, FuGECollectionFuGE
                     frXML.getProvider().getIdentifier(),
                     frXML.getProvider().getName(),
                     "net.sourceforge.fuge.collection.Provider" ), performer );
-            entityService.save( "net.sourceforge.fuge.collection.Provider", provider, performer );
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.collection.Provider", provider, performer );
             fr.setProvider( provider );
 
         }
