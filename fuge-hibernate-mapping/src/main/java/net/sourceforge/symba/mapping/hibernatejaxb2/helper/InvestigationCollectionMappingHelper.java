@@ -52,7 +52,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class InvestigationCollectionMappingHelper implements MappingHelper<InvestigationCollection, FuGECollectionInvestigationCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final IdentifiableMappingHelper ci;
     private final DescribableMappingHelper cd;
 
@@ -191,67 +190,5 @@ public class InvestigationCollectionMappingHelper implements MappingHelper<Inves
         }
 
         return investigationCollectionXML;
-    }
-
-    // does not add factors, as they need to be passed a fuge object. See generateRandomXMLWithLinksOut for that code
-    public FuGECollectionInvestigationCollectionType generateRandomXML( FuGECollectionInvestigationCollectionType investigationCollectionXML ) {
-
-        investigationCollectionXML = ( FuGECollectionInvestigationCollectionType ) cd.generateRandomXML(
-                investigationCollectionXML );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGEBioInvestigationInvestigationType investigationXML = new FuGEBioInvestigationInvestigationType();
-
-            investigationXML = ( FuGEBioInvestigationInvestigationType ) ci.generateRandomXML( investigationXML );
-            investigationCollectionXML.getInvestigation().add( investigationXML );
-        }
-        return investigationCollectionXML;
-    }
-
-    // todo investigation incomplete
-    public FuGECollectionFuGEType generateRandomXMLWithLinksOut( FuGECollectionFuGEType fuGEType ) {
-        FuGECollectionInvestigationCollectionType investigationCollectionXML = generateRandomXML( new FuGECollectionInvestigationCollectionType() );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGEBioInvestigationFactorType factorXML = new FuGEBioInvestigationFactorType();
-
-            factorXML = ( FuGEBioInvestigationFactorType ) ci.generateRandomXML( factorXML );
-
-            // set the non-identifiable traits
-
-            if ( fuGEType.getOntologyCollection() != null ) {
-                FuGEBioInvestigationFactorType.FactorType categoryValueXML = new FuGEBioInvestigationFactorType.FactorType();
-                categoryValueXML.setOntologyTermRef(
-                        fuGEType.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                factorXML.setFactorType( categoryValueXML );
-            }
-
-            MeasurementMappingHelper measurementMappingHelper = new MeasurementMappingHelper();
-            ObjectFactory factory = new ObjectFactory();
-            for ( int ii = 0; ii < NUMBER_ELEMENTS; ii++ ) {
-                FuGEBioInvestigationFactorValueType factorValueXML = new FuGEBioInvestigationFactorValueType();
-                factorValueXML = ( FuGEBioInvestigationFactorValueType ) cd.generateRandomXML( factorValueXML );
-                if ( fuGEType.getOntologyCollection() != null ) {
-                    FuGECommonMeasurementBooleanValueType valueXML = ( FuGECommonMeasurementBooleanValueType )
-                            measurementMappingHelper.generateRandomXMLWithLinksOut( new FuGECommonMeasurementBooleanValueType(), fuGEType );
-                    factorValueXML.setMeasurement( factory.createBooleanValue( valueXML ) );
-                }
-
-// todo still not sure where datapartitions fit in, so won't make them for now.
-//                for ( int iii = 0; iii < NUMBER_ELEMENTS; iii++ ) {
-//                    FuGEBioInvestigationFactorValueType.DataPartitions dataPartitionXML = new FuGEBioInvestigationFactorValueType.DataPartitions();
-//                    if ( fuGEType.getDataCollection() != null ) {
-//                        dataPartitionXML.setDataPartitionRef( fuGEType.getDataCollection().getData().get( iii ).getValue().getIdentifier() );
-//                        // todo not sure how to set the dimension element here. can't get it from dataPartitionXML
-//                        factorValueXML.getDataPartitions().add( dataPartitionXML );
-//                    }
-//                }
-                factorXML.getFactorValue().add( factorValueXML );
-            }
-            investigationCollectionXML.getFactor().add( factorXML );
-        }
-
-        fuGEType.setInvestigationCollection( investigationCollectionXML );
-        return fuGEType;
     }
 }

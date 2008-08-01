@@ -4,7 +4,6 @@ import net.sourceforge.fuge.common.protocol.GenericParameter;
 import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericParameterType;
 
 /**
@@ -70,25 +69,6 @@ public class GenericParameterMappingHelper implements MappingHelper<GenericParam
             genericParameterXML.setParameterType( ptXML );
         }
 
-        return genericParameterXML;
-    }
-
-    // currently there is nothing to generate that isn't connected with the top-level fuge object
-    public FuGECommonProtocolGenericParameterType generateRandomXML( FuGECommonProtocolGenericParameterType genericParameterXML ) {
-        return genericParameterXML;
-    }
-
-    public FuGECommonProtocolGenericParameterType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolGenericParameterType genericParameterXML, FuGECollectionFuGEType frXML ) {
-
-        genericParameterXML = generateRandomXML( genericParameterXML );
-
-        if ( frXML.getOntologyCollection() != null ) {
-            FuGECommonProtocolGenericParameterType.ParameterType ptXML = new FuGECommonProtocolGenericParameterType.ParameterType();
-            ptXML.setOntologyTermRef(
-                    frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-            genericParameterXML.setParameterType( ptXML );
-        }
         return genericParameterXML;
     }
 }

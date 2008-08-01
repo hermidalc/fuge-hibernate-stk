@@ -185,49 +185,4 @@ public class MeasurementMappingHelper implements MappingHelper<Measurement, FuGE
         }
         return null; // shouldn't get here as there is currently only these types of Default Values allowed.
     }
-
-    public FuGECommonMeasurementMeasurementType generateRandomXML( FuGECommonMeasurementMeasurementType defaultXML ) {
-
-        defaultXML = ( FuGECommonMeasurementMeasurementType ) cd.generateRandomXML( defaultXML );
-
-        if ( defaultXML instanceof FuGECommonMeasurementAtomicValueType ) {
-            // get atomic value attributes
-            defaultXML = cav.generateRandomXML( ( FuGECommonMeasurementAtomicValueType ) defaultXML );
-            return ( defaultXML );
-        } else if ( defaultXML instanceof FuGECommonMeasurementBooleanValueType ) {
-            // get boolean value attributes
-            defaultXML = cbv.generateRandomXML( ( FuGECommonMeasurementBooleanValueType ) defaultXML );
-            return ( defaultXML );
-        }
-
-        return defaultXML;
-    }
-
-    /**
-     * As there are different types of measurements, you should pass which type you want to be generated
-     * as the argument to this method.
-     *
-     * @param defaultXML the type of measurement to generate
-     * @param frXML      the fuge xml object to reference ontology terms from
-     * @return the filled measurement xml object
-     */
-    public FuGECommonMeasurementMeasurementType generateRandomXMLWithLinksOut(
-            FuGECommonMeasurementMeasurementType defaultXML, FuGECollectionFuGEType frXML ) {
-
-        defaultXML = generateRandomXML( defaultXML );
-
-        if ( defaultXML instanceof FuGECommonMeasurementComplexValueType ) {
-            // get complex value attributes
-            defaultXML = ccv.generateRandomXMLWithLinksOut( ( FuGECommonMeasurementComplexValueType ) defaultXML, frXML );
-            return ( defaultXML );
-        } else if ( defaultXML instanceof FuGECommonMeasurementRangeType ) {
-            // get Range attributes
-            // todo:implement with the proper random xml, with ranges and ontology references.
-            defaultXML = cr.generateRandomXML( ( FuGECommonMeasurementRangeType ) defaultXML );
-            return ( defaultXML );
-        }
-
-        return defaultXML;
-    }
-
 }

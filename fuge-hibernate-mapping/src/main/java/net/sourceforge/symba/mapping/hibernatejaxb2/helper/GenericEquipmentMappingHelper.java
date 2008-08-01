@@ -4,7 +4,6 @@ package net.sourceforge.symba.mapping.hibernatejaxb2.helper;
 import net.sourceforge.fuge.common.protocol.*;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericEquipmentType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericParameterType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -48,7 +47,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class GenericEquipmentMappingHelper implements MappingHelper<GenericEquipment, FuGECommonProtocolGenericEquipmentType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final ParameterMappingHelper cp;
 
     public GenericEquipmentMappingHelper() {
@@ -115,43 +113,6 @@ public class GenericEquipmentMappingHelper implements MappingHelper<GenericEquip
             genericEquipmentXML.getSoftware().add( softwareXML );
         }
 
-        return genericEquipmentXML;
-    }
-
-    // there is currently no part of generating generic equipment that does not involve a fuge object, therefore
-    // ensure you use generateRandomXMLWithLinksOut
-    public FuGECommonProtocolGenericEquipmentType generateRandomXML( FuGECommonProtocolGenericEquipmentType genericEquipmentXML ) {
-        return genericEquipmentXML;
-    }
-
-    public FuGECommonProtocolGenericEquipmentType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolGenericEquipmentType genericEquipmentXML,
-            FuGECommonProtocolGenericEquipmentType partXML,
-            FuGECollectionFuGEType frXML ) {
-
-        genericEquipmentXML = generateRandomXML( genericEquipmentXML );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGECommonProtocolGenericParameterType parameterXML = new FuGECommonProtocolGenericParameterType();
-            genericEquipmentXML.getGenericParameter()
-                    .add( ( FuGECommonProtocolGenericParameterType ) cp.generateRandomXMLWithLinksOut( parameterXML, frXML ) );
-        }
-
-        if ( partXML != null ) {
-            // parts list of one
-            FuGECommonProtocolGenericEquipmentType.EquipmentParts parts = new FuGECommonProtocolGenericEquipmentType.EquipmentParts();
-            parts.setGenericEquipmentRef( partXML.getIdentifier() );
-            genericEquipmentXML.getEquipmentParts().add( parts );
-        }
-
-        if ( frXML.getProtocolCollection() != null ) {
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolGenericEquipmentType.Software softwareXML = new FuGECommonProtocolGenericEquipmentType.Software();
-                softwareXML.setGenericSoftwareRef(
-                        frXML.getProtocolCollection().getSoftware().get( i ).getValue().getIdentifier() );
-                genericEquipmentXML.getSoftware().add( softwareXML );
-            }
-        }
         return genericEquipmentXML;
     }
 }

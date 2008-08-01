@@ -7,8 +7,6 @@ import net.sourceforge.fuge.common.protocol.Protocol;
 import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericActionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericParameterType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -53,7 +51,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class GenericActionMappingHelper implements MappingHelper<GenericAction, FuGECommonProtocolGenericActionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final ParameterMappingHelper cp;
 
     public GenericActionMappingHelper() {
@@ -128,43 +125,6 @@ public class GenericActionMappingHelper implements MappingHelper<GenericAction, 
             // set fuge object
             genericActionXML.getGenericParameter()
                     .add( ( FuGECommonProtocolGenericParameterType ) cp.marshal( new FuGECommonProtocolGenericParameterType(), parameter ) );
-        }
-
-        return genericActionXML;
-    }
-
-    public FuGECommonProtocolGenericActionType generateRandomXML( FuGECommonProtocolGenericActionType genericActionXML ) {
-        // action text
-        genericActionXML.setActionText( String.valueOf( Math.random() ) );
-
-        return genericActionXML;
-    }
-
-    public FuGECommonProtocolGenericActionType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolGenericActionType genericActionXML,
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-
-        genericActionXML = generateRandomXML( genericActionXML );
-
-        // action term
-        if ( frXML.getOntologyCollection() != null ) {
-            FuGECommonProtocolGenericActionType.ActionTerm aterm = new FuGECommonProtocolGenericActionType.ActionTerm();
-            aterm.setOntologyTermRef(
-                    frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-            genericActionXML.setActionTerm( aterm );
-        }
-
-        // protocol ref
-        if ( protocolCollectionXML.getProtocol().size() > 0 ) {
-            genericActionXML.setProtocolRef( protocolCollectionXML.getProtocol().get( 0 ).getValue().getIdentifier() );
-        }
-
-        // you can only have a GenericParameter here
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            genericActionXML.getGenericParameter().add(
-                    ( FuGECommonProtocolGenericParameterType ) cp
-                            .generateRandomXMLWithLinksOut( new FuGECommonProtocolGenericParameterType(), frXML ) );
         }
 
         return genericActionXML;

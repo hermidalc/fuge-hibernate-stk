@@ -64,9 +64,4 @@ public class AtomicValueMappingHelper implements MappingHelper<AtomicValue,FuGEC
         return valueXML;
     }
 
-    public FuGECommonMeasurementAtomicValueType generateRandomXML(
-            FuGECommonMeasurementAtomicValueType valueXML ) {
-        valueXML.setValue( "5" );
-        return valueXML;
-    }
 }

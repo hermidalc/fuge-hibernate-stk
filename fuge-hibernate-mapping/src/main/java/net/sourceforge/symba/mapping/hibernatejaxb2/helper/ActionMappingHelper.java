@@ -4,8 +4,6 @@ import net.sourceforge.fuge.common.protocol.Action;
 import net.sourceforge.fuge.common.protocol.GenericAction;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolActionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericActionType;
 
@@ -112,31 +110,6 @@ public class ActionMappingHelper implements MappingHelper<Action, FuGECommonProt
             return genericActionXML;
         }
         return null; // shouldn't get here as there is currently only one type of Action allowed.
-    }
-
-    // you should use generateRandomXMLWithLinksOut, as it is to complicated to perform without more arguments.
-    public FuGECommonProtocolActionType generateRandomXML( FuGECommonProtocolActionType actionXML ) {
-        return actionXML;
-    }
-
-    // at this stage, frXML may not have the new equipment and software - the protocol collection may be the only one to have it
-    public FuGECommonProtocolActionType generateRandomXMLWithLinksOut( FuGECommonProtocolActionType actionXML,
-                                                                       int ordinal,
-                                                                       FuGECollectionProtocolCollectionType protocolCollectionXML,
-                                                                       FuGECollectionFuGEType frXML ) {
-
-        FuGECommonProtocolGenericActionType genericActionXML = ( FuGECommonProtocolGenericActionType ) actionXML;
-
-        // get action attributes
-        genericActionXML = ( FuGECommonProtocolGenericActionType ) ci.generateRandomXML( genericActionXML );
-
-        // action ordinal
-        genericActionXML.setActionOrdinal( ordinal );
-
-        // get generic action attributes
-        genericActionXML = cga.generateRandomXMLWithLinksOut( genericActionXML, protocolCollectionXML, frXML );
-
-        return genericActionXML;
     }
 
     // We are NOT printing the collection itself, just the contents of the collection.

@@ -71,11 +71,6 @@ public class ComplexValueMappingHelper implements MappingHelper<ComplexValue, Fu
         return valueXML;
     }
 
-    // currently there is no parts to generate that aren't generated via information from the fuge object
-    public FuGECommonMeasurementComplexValueType generateRandomXML( FuGECommonMeasurementComplexValueType valueXML ) {
-        return valueXML;
-    }
-
     public FuGECommonMeasurementComplexValueType generateRandomXMLWithLinksOut( FuGECommonMeasurementComplexValueType valueXML,
                                                                                FuGECollectionFuGEType frXML ) {
         if ( frXML.getOntologyCollection() != null ) {

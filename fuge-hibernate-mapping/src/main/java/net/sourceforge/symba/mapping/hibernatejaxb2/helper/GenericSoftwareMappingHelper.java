@@ -4,8 +4,6 @@ package net.sourceforge.symba.mapping.hibernatejaxb2.helper;
 import net.sourceforge.fuge.common.protocol.*;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericParameterType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericSoftwareType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -49,7 +47,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class GenericSoftwareMappingHelper implements MappingHelper<GenericSoftware, FuGECommonProtocolGenericSoftwareType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final ParameterMappingHelper cp;
 
     public GenericSoftwareMappingHelper() {
@@ -103,36 +100,6 @@ public class GenericSoftwareMappingHelper implements MappingHelper<GenericSoftwa
             FuGECommonProtocolGenericSoftwareType.Equipment referencedEquipmentXML = new FuGECommonProtocolGenericSoftwareType.Equipment();
             referencedEquipmentXML.setGenericEquipmentRef( equipment.getIdentifier() );
             genericSoftwareXML.getEquipment().add( referencedEquipmentXML );
-        }
-        return genericSoftwareXML;
-    }
-
-    // there is no part of generating random xml that does not include passing fuge and protocol objects.
-    public FuGECommonProtocolGenericSoftwareType generateRandomXML( FuGECommonProtocolGenericSoftwareType genericSoftwareXML ) {
-        return genericSoftwareXML;
-    }
-
-    public FuGECommonProtocolGenericSoftwareType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolGenericSoftwareType genericSoftwareXML,
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-        // todo - do I need to add a generate identifiable parts here?
-        genericSoftwareXML = generateRandomXML( genericSoftwareXML );
-
-        // you can only have a GenericParameter here
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            genericSoftwareXML.getGenericParameter().add(
-                    ( FuGECommonProtocolGenericParameterType ) cp.generateRandomXMLWithLinksOut(
-                            new FuGECommonProtocolGenericParameterType(), frXML ) );
-        }
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGECommonProtocolGenericSoftwareType.Equipment parts = new FuGECommonProtocolGenericSoftwareType.Equipment();
-            if ( !protocolCollectionXML.getEquipment().isEmpty() && protocolCollectionXML.getEquipment().size() > i ) {
-                parts.setGenericEquipmentRef(
-                        protocolCollectionXML.getEquipment().get( i ).getValue().getIdentifier() );
-                genericSoftwareXML.getEquipment().add( parts );
-            }
         }
         return genericSoftwareXML;
     }

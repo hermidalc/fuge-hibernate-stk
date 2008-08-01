@@ -50,7 +50,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class DataCollectionMappingHelper implements MappingHelper<DataCollection, FuGECollectionDataCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final DataMappingHelper cdat;
 
@@ -125,34 +124,5 @@ public class DataCollectionMappingHelper implements MappingHelper<DataCollection
             }
         }
         return datCollXML;
-    }
-
-    public FuGECollectionDataCollectionType generateRandomXML( FuGECollectionDataCollectionType datCollXML ) {
-        // set describable information
-        datCollXML = ( FuGECollectionDataCollectionType ) cd.generateRandomXML( datCollXML );
-
-        return datCollXML;
-    }
-
-    // todo deal with InternalData
-    public FuGECollectionFuGEType generateRandomXMLWithLinksOut( FuGECollectionFuGEType frXML ) {
-
-        // create the jaxb Data collection object
-        FuGECollectionDataCollectionType datCollXML = generateRandomXML( new FuGECollectionDataCollectionType() );
-
-        // set up the factory
-        ObjectFactory factory = new ObjectFactory();
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-
-            // As RawData objects do not appear in the XML, there is no need to code it here.
-            datCollXML.getData().add(
-                    factory.createExternalData(
-                            ( FuGEBioDataExternalDataType ) cdat.generateRandomXMLWithLinksOut(
-                                    new FuGEBioDataExternalDataType(), frXML ) ) );
-        }
-
-        frXML.setDataCollection( datCollXML );
-        return frXML;
     }
 }

@@ -193,61 +193,6 @@ public class FuGEMappingHelper implements MappingHelper<FuGE, FuGECollectionFuGE
         return frXML;
     }
 
-    public FuGECollectionFuGEType generateRandomXML() {
-        return generateRandomXML( new FuGECollectionFuGEType() );
-    }
-
-    public FuGECollectionFuGEType generateRandomXML( FuGECollectionFuGEType frXML ) {
-
-        // generate identifiable traits
-        frXML = ( FuGECollectionFuGEType ) ci.generateRandomXML( frXML );
-
-        // generate AuditCollection information
-        if ( frXML.getAuditCollection() == null ) {
-            frXML = cac.generateRandomXMLwithLinksOut( frXML );
-        }
-
-        // generate OntologyCollection information
-        if ( frXML.getOntologyCollection() == null ) {
-            frXML.setOntologyCollection( coc.generateRandomXML( new FuGECollectionOntologyCollectionType() ) );
-        }
-
-        // generate ReferenceableCollection information
-        if ( frXML.getReferenceableCollection() == null ) {
-            frXML = crc.generateRandomXMLwithLinksOut( frXML );
-        }
-
-        // Get all MaterialCollection information
-        if ( frXML.getMaterialCollection() == null ) {
-            frXML = cmc.generateRandomXMLWithLinksOut( frXML );
-        }
-
-        // Get all data collection information - MUST BE DONE before Protocol and after Material
-        if ( frXML.getDataCollection() == null ) {
-            frXML = cdc.generateRandomXMLWithLinksOut( frXML );
-        }
-
-        // Get all protocol collection information
-        if ( frXML.getProtocolCollection() == null ) {
-            // marshall the fuge object into a jaxb object
-            frXML = cpc.generateRandomXML( frXML );
-        }
-
-        // Get all Provider information
-        if ( frXML.getProvider() == null ) {
-            // marshall the fuge object into a jaxb object
-            frXML = cpr.generateRandomXMLWithLinksOut( frXML );
-        }
-
-        // Get an Investigation, if present
-        if ( frXML.getInvestigationCollection() == null ) {
-            // unmarshall the jaxb object into a fuge object, then set the fuge object within the top level fuge root object
-            frXML = cinv.generateRandomXMLWithLinksOut( frXML );
-        }
-
-        return frXML;
-    }
-
     public void prettyHtml( FuGE fuge, PrintWriter printStream ) throws EntityServiceException {
 
         printStream.println( "<h3>" );

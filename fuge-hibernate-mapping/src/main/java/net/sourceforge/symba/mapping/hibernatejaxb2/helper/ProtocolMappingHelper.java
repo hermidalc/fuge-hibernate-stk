@@ -5,8 +5,6 @@ import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.common.protocol.*;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericProtocolType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolProtocolType;
 
@@ -50,7 +48,6 @@ import java.util.*;
  * $HeadURL: $
  */
 public class ProtocolMappingHelper implements MappingHelper<Protocol, FuGECommonProtocolProtocolType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final IdentifiableMappingHelper ci;
     private final ParameterizableMappingHelper cparam;
     private final GenericProtocolMappingHelper cgp;
@@ -142,47 +139,6 @@ public class ProtocolMappingHelper implements MappingHelper<Protocol, FuGECommon
             return genericProtocolXML;
         }
         return null;  // shouldn't get here as there is currently only one type of Protocol allowed.
-    }
-
-    public FuGECommonProtocolProtocolType generateRandomXML( FuGECommonProtocolProtocolType protocolXML ) {
-        // get protocol attributes
-        protocolXML = ( FuGECommonProtocolProtocolType ) ci.generateRandomXML( protocolXML );
-
-        return protocolXML;
-    }
-
-    // at this stage, frXML may not have the new equipment and software - the protocol collection may be the only one to have it
-    public FuGECommonProtocolProtocolType generateRandomXML( FuGECommonProtocolProtocolType protocolXML,
-                                                             FuGECollectionProtocolCollectionType protocolCollectionXML,
-                                                             FuGECollectionFuGEType frXML ) {
-
-        FuGECommonProtocolGenericProtocolType genericProtocolXML = ( FuGECommonProtocolGenericProtocolType ) generateRandomXML( protocolXML );
-
-
-        genericProtocolXML = ( FuGECommonProtocolGenericProtocolType ) cparam
-                .generateRandomXMLWithLinksOut( genericProtocolXML, frXML );
-
-        if ( frXML.getOntologyCollection() != null ) {
-            // input types
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolProtocolType.InputTypes inputTypesXML = new FuGECommonProtocolProtocolType.InputTypes();
-                inputTypesXML.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                genericProtocolXML.getInputTypes().add( inputTypesXML );
-            }
-
-            // output types
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolProtocolType.OutputTypes outputTypesXML = new FuGECommonProtocolProtocolType.OutputTypes();
-                outputTypesXML.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                genericProtocolXML.getOutputTypes().add( outputTypesXML );
-            }
-        }
-
-        genericProtocolXML = cgp.generateRandomXML( genericProtocolXML, protocolCollectionXML, frXML );
-
-        return genericProtocolXML;
     }
 
     // We are NOT printing the collection itself, just the contents of the collection.

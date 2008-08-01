@@ -51,7 +51,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCollection, FuGECollectionProtocolCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final ProtocolMappingHelper cpr;
     private final EquipmentMappingHelper ceq;
@@ -218,60 +217,6 @@ public class ProtocolCollectionMappingHelper implements MappingHelper<ProtocolCo
         }
 
         return protocolCollectionXML;
-    }
-
-    public FuGECollectionProtocolCollectionType generateRandomXML( FuGECollectionProtocolCollectionType protocolCollectionXML ) {
-
-        protocolCollectionXML = ( FuGECollectionProtocolCollectionType ) cd
-                .generateRandomXML( protocolCollectionXML );
-
-        return protocolCollectionXML;
-    }
-
-    public FuGECollectionFuGEType generateRandomXML( FuGECollectionFuGEType frXML ) {
-        FuGECollectionProtocolCollectionType protocolCollectionXML = generateRandomXML( new FuGECollectionProtocolCollectionType() );
-
-        if ( protocolCollectionXML.getEquipment().isEmpty() ) {
-            // equipment
-            protocolCollectionXML = ceq.generateRandomXMLWithLinksOut( protocolCollectionXML, frXML );
-        }
-
-        if ( protocolCollectionXML.getSoftware().isEmpty() ) {
-            // software
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolGenericSoftwareType genericSoftwareXML = new FuGECommonProtocolGenericSoftwareType();
-                genericSoftwareXML = ( FuGECommonProtocolGenericSoftwareType ) csw.generateRandomXMLWithLinksOut( genericSoftwareXML, protocolCollectionXML, frXML );
-                JAXBElement<? extends FuGECommonProtocolGenericSoftwareType> element = ( new ObjectFactory() )
-                        .createGenericSoftware( genericSoftwareXML );
-                protocolCollectionXML.getSoftware().add( element );
-            }
-        }
-
-        if ( protocolCollectionXML.getProtocol().isEmpty() ) {
-            // protocol
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolGenericProtocolType genericProtocolXML = new FuGECommonProtocolGenericProtocolType();
-                genericProtocolXML = ( FuGECommonProtocolGenericProtocolType ) cpr
-                        .generateRandomXML( genericProtocolXML, protocolCollectionXML, frXML );
-                JAXBElement<? extends FuGECommonProtocolGenericProtocolType> element = ( new ObjectFactory() )
-                        .createGenericProtocol( genericProtocolXML );
-                protocolCollectionXML.getProtocol().add( element );
-            }
-        }
-
-        if ( protocolCollectionXML.getProtocolApplication().isEmpty() ) {
-            // protocol application
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                JAXBElement<? extends FuGECommonProtocolGenericProtocolApplicationType> element = ( new ObjectFactory() )
-                        .createGenericProtocolApplication(
-                                ( FuGECommonProtocolGenericProtocolApplicationType ) capp
-                                        .generateRandomXMLWithLinksOut( i, protocolCollectionXML, frXML ) );
-                protocolCollectionXML.getProtocolApplication().add( element );
-            }
-        }
-
-        frXML.setProtocolCollection( protocolCollectionXML );
-        return frXML;
     }
 
     // We go through all equipment referenced in the protocols in protocolSet, retrieving all present.

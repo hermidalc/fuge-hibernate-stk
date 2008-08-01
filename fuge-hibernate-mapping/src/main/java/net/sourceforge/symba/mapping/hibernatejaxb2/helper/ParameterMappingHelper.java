@@ -120,27 +120,4 @@ public class ParameterMappingHelper implements MappingHelper<Parameter, FuGEComm
         }
         return null; // shouldn't get here as there is currently only one type of Parameter allowed.
     }
-
-    public FuGECommonProtocolParameterType generateRandomXML( FuGECommonProtocolParameterType parameterXML ) {
-        // get parameter attributes
-        parameterXML = ( FuGECommonProtocolParameterType ) ci.generateRandomXML( parameterXML );
-
-        return parameterXML;
-    }
-
-    public FuGECommonProtocolParameterType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolParameterType parameterXML,
-            FuGECollectionFuGEType frXML ) {
-
-        parameterXML = generateRandomXML( parameterXML );
-
-        // measurement
-        MeasurementMappingHelper measurementMappingHelper = new MeasurementMappingHelper();
-        FuGECommonMeasurementComplexValueType measurementXML = ( FuGECommonMeasurementComplexValueType ) measurementMappingHelper.generateRandomXMLWithLinksOut( new FuGECommonMeasurementComplexValueType(), frXML );
-        parameterXML.setMeasurement( ( new ObjectFactory() ).createComplexValue( measurementXML ) );
-
-        // get generic parameter attributes
-        parameterXML = cgp.generateRandomXMLWithLinksOut( ( FuGECommonProtocolGenericParameterType ) parameterXML, frXML );
-        return parameterXML;
-    }
 }

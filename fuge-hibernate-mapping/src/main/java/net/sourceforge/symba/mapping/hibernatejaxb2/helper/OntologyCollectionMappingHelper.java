@@ -55,7 +55,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCollection, FuGECollectionOntologyCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final IdentifiableMappingHelper ci;
 
@@ -143,79 +142,6 @@ public class OntologyCollectionMappingHelper implements MappingHelper<OntologyCo
         }
 
         return ontoCollXML;
-    }
-
-    public FuGECollectionOntologyCollectionType generateRandomXML( FuGECollectionOntologyCollectionType ontoCollXML ) {
-
-        ontoCollXML = ( FuGECollectionOntologyCollectionType ) cd.generateRandomXML( ontoCollXML );
-
-        // set ontology sources
-        FuGECommonOntologyOntologySourceType ontoSourceXML = null;
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            ontoSourceXML = new FuGECommonOntologyOntologySourceType();
-            ontoSourceXML = ( FuGECommonOntologyOntologySourceType ) ci.generateRandomXML( ontoSourceXML );
-            ontoSourceXML.setOntologyURI( String.valueOf( Math.random() ) );
-            ontoCollXML.getOntologySource().add( ontoSourceXML );
-        }
-
-        // set ontology terms
-        ObjectFactory factory = new ObjectFactory();
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            ontoCollXML.getOntologyTerm()
-                    .add( factory.createOntologyIndividual( generateRandomOntologyIndividualXML( ontoSourceXML ) ) );
-        }
-
-        return ontoCollXML;
-    }
-
-    private FuGECommonOntologyOntologyIndividualType generateRandomOntologyIndividualXML(
-            FuGECommonOntologyOntologySourceType ontoSourceXML ) {
-        return generateRandomOntologyIndividualXML( ontoSourceXML, false );
-    }
-
-    private FuGECommonOntologyOntologyIndividualType generateRandomOntologyIndividualXML(
-            FuGECommonOntologyOntologySourceType ontoSourceXML, boolean inner ) {
-
-        FuGECommonOntologyOntologyIndividualType ontologyIndividualXML = new FuGECommonOntologyOntologyIndividualType();
-        ontologyIndividualXML = ( FuGECommonOntologyOntologyIndividualType ) generateRandomOntologyTermXML(
-                ontologyIndividualXML, ontoSourceXML );
-
-        if ( !inner ) {
-            ObjectFactory factory = new ObjectFactory();
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-
-                FuGECommonOntologyObjectPropertyType objectPropertyXML = new FuGECommonOntologyObjectPropertyType();
-                objectPropertyXML = ( FuGECommonOntologyObjectPropertyType ) ci.generateRandomXML( objectPropertyXML );
-                objectPropertyXML = ( FuGECommonOntologyObjectPropertyType ) generateRandomOntologyTermXML(
-                        objectPropertyXML, ontoSourceXML );
-                for ( int ii = 0; ii < NUMBER_ELEMENTS; ii++ ) {
-                    objectPropertyXML.getOntologyIndividual()
-                            .add( generateRandomOntologyIndividualXML( ontoSourceXML, true ) );
-                }
-                ontologyIndividualXML.getOntologyProperty().add( factory.createObjectProperty( objectPropertyXML ) );
-
-                FuGECommonOntologyDataPropertyType dataPropertyXML = new FuGECommonOntologyDataPropertyType();
-                dataPropertyXML = ( FuGECommonOntologyDataPropertyType ) ci.generateRandomXML( dataPropertyXML );
-                dataPropertyXML = ( FuGECommonOntologyDataPropertyType ) generateRandomOntologyTermXML(
-                        dataPropertyXML, ontoSourceXML );
-                dataPropertyXML.setDataType( String.valueOf( Math.random() ) );
-                ontologyIndividualXML.getOntologyProperty().add( factory.createDataProperty( dataPropertyXML ) );
-            }
-        }
-        return ontologyIndividualXML;
-    }
-
-    private FuGECommonOntologyOntologyTermType generateRandomOntologyTermXML(
-            FuGECommonOntologyOntologyTermType ontologyTermXML,
-            FuGECommonOntologyOntologySourceType ontoSourceXML ) {
-
-        ontologyTermXML = ( FuGECommonOntologyOntologyTermType ) ci.generateRandomXML( ontologyTermXML );
-
-        ontologyTermXML.setTerm( String.valueOf( Math.random() ) );
-        ontologyTermXML.setTermAccession( String.valueOf( Math.random() ) );
-        ontologyTermXML.setOntologySourceRef( ontoSourceXML.getIdentifier() );
-
-        return ontologyTermXML;
     }
 
     private OntologyIndividual unmarshalOntologyIndividual(

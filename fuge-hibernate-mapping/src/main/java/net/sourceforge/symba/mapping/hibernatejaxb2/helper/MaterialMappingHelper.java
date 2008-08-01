@@ -9,7 +9,6 @@ import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioMaterialGenericMaterialType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioMaterialMaterialType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
@@ -52,7 +51,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class MaterialMappingHelper implements MappingHelper<Material, FuGEBioMaterialMaterialType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final IdentifiableMappingHelper ci;
     private final GenericMaterialMappingHelper cgm;
     private final ContactRoleMappingHelper ccr;
@@ -144,69 +142,6 @@ public class MaterialMappingHelper implements MappingHelper<Material, FuGEBioMat
             return genericMaterialXML;
         }
         return null;  // shouldn't get here as there is currently only one type of Material allowed.
-    }
-
-    public FuGEBioMaterialMaterialType generateRandomXML( FuGEBioMaterialMaterialType materialXML ) {
-        return generateRandomXML( materialXML, null );
-    }
-
-    public FuGEBioMaterialMaterialType generateRandomXML( FuGEBioMaterialMaterialType materialXML,
-                                                          FuGEBioMaterialGenericMaterialType genXML ) {
-
-        materialXML = ( FuGEBioMaterialMaterialType ) ci.generateRandomXML( materialXML );
-
-        // set the generic material attributes
-        if ( genXML == null ) {
-            materialXML = cgm.generateRandomXML( ( FuGEBioMaterialGenericMaterialType ) materialXML );
-        } else {
-            materialXML = cgm.generateRandomXMLWithComponents( ( FuGEBioMaterialGenericMaterialType ) materialXML, genXML );
-        }
-        return materialXML;
-    }
-
-    // this can only be run if you can pass it an entire fuge object
-    public FuGEBioMaterialMaterialType generateRandomXMLWithLinksOut( FuGECollectionFuGEType frXML,
-                                                                      FuGEBioMaterialGenericMaterialType genXML ) {
-
-        // create fuge object
-        FuGEBioMaterialGenericMaterialType genericMaterialXML = ( FuGEBioMaterialGenericMaterialType ) generateRandomXML( new FuGEBioMaterialGenericMaterialType(), genXML );
-
-        // set the material attributes
-        genericMaterialXML = ( FuGEBioMaterialGenericMaterialType ) generateRandomSpecificXML(
-                genericMaterialXML, frXML );
-
-        return genericMaterialXML;
-    }
-
-    // This should be run at a time where the ontology collection and audit collection have already been run.
-    private FuGEBioMaterialMaterialType generateRandomSpecificXML( FuGEBioMaterialMaterialType materialXML,
-                                                                   FuGECollectionFuGEType frXML ) {
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            materialXML.getContactRole().add( ccr.generateRandomXMLwithLinksOut( frXML ) );
-        }
-
-        if ( frXML.getOntologyCollection() != null ) {
-            FuGEBioMaterialMaterialType.MaterialType materialTypeXML = new FuGEBioMaterialMaterialType.MaterialType();
-            materialTypeXML.setOntologyTermRef(
-                    frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-            materialXML.setMaterialType( materialTypeXML );
-
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGEBioMaterialMaterialType.Characteristics characteristicXML = new FuGEBioMaterialMaterialType.Characteristics();
-                characteristicXML.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                materialXML.getCharacteristics().add( characteristicXML );
-            }
-
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGEBioMaterialMaterialType.QualityControlStatistics qcsXML = new FuGEBioMaterialMaterialType.QualityControlStatistics();
-                qcsXML.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                materialXML.getQualityControlStatistics().add( qcsXML );
-            }
-        }
-        return materialXML;
     }
 
     private FuGEBioMaterialMaterialType marshalMaterialSpecific( FuGEBioMaterialMaterialType materialXML,

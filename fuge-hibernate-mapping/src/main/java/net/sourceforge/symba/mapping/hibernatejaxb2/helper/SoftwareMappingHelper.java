@@ -5,28 +5,26 @@ import net.sourceforge.fuge.common.protocol.GenericSoftware;
 import net.sourceforge.fuge.common.protocol.Software;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericSoftwareType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolSoftwareType;
 
 /**
  * Copyright Notice
- *
+ * <p/>
  * The MIT License
- *
+ * <p/>
  * Copyright (c) 2008 2007-8 Proteomics Standards Initiative / Microarray and Gene Expression Data Society
- *
+ * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p/>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * <p/>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,11 +32,11 @@ import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolSoftwareType;
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ * <p/>
  * Acknowledgements
- *  The authors wish to thank the Proteomics Standards Initiative for
- *  the provision of infrastructure and expertise in the form of the PSI
- *  Document Process that has been used to formalise this document.
+ * The authors wish to thank the Proteomics Standards Initiative for
+ * the provision of infrastructure and expertise in the form of the PSI
+ * Document Process that has been used to formalise this document.
  * <p/>
  * $LastChangedDate$
  * $LastChangedRevision$
@@ -61,7 +59,7 @@ public class SoftwareMappingHelper implements MappingHelper<Software, FuGECommon
      *
      * @param softwareXML the jaxb object to parse
      * @param software    the hibernate object to fill
-     * @param performer
+     * @param performer   the person to assign to the audit trail
      * @return the newly-filled hibernate object
      * @throws EntityServiceException if there is a problem with the connection to the database
      */
@@ -116,32 +114,5 @@ public class SoftwareMappingHelper implements MappingHelper<Software, FuGECommon
             return genericSoftwareXML;
         }
         return null; // shouldn't get here as there is currently only one type of Software allowed.
-    }
-
-    public FuGECommonProtocolSoftwareType generateRandomXML( FuGECommonProtocolSoftwareType softwareXML ) {
-
-        softwareXML = ( FuGECommonProtocolSoftwareType ) ci.generateRandomXML( softwareXML );
-        softwareXML.setVersion( String.valueOf( Math.random() ) );
-
-        return softwareXML;
-    }
-
-    // at this stage, frXML may not have the new equipment and software - the protocol collection may be the only one to have it
-    public FuGECommonProtocolSoftwareType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolSoftwareType softwareXML,
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-
-        softwareXML = generateRandomXML( softwareXML );
-
-        // get software attributes
-        softwareXML = ( FuGECommonProtocolSoftwareType ) cparam.generateRandomXMLWithLinksOut(
-                softwareXML, frXML );
-
-        // get generic software attributes
-        softwareXML = cgs.generateRandomXMLWithLinksOut( ( FuGECommonProtocolGenericSoftwareType ) softwareXML,
-                protocolCollectionXML, frXML );
-
-        return softwareXML;
     }
 }

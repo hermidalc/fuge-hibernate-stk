@@ -6,8 +6,6 @@ import net.sourceforge.fuge.common.protocol.GenericProtocolApplication;
 import net.sourceforge.fuge.common.protocol.Protocol;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProtocolCollectionType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericProtocolApplicationType;
 
 import java.util.HashSet;
@@ -49,7 +47,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class GenericProtocolApplicationMappingHelper implements MappingHelper<GenericProtocolApplication, FuGECommonProtocolGenericProtocolApplicationType> {
-    private final int NUMBER_ELEMENTS = 2;
 
     // @todo GenMatMeas has not been implemented, and there seems to be a problem somewhere in uml OR xsd such that the inputmaterials aren't properly working
     public GenericProtocolApplication unmarshal(
@@ -131,49 +128,6 @@ public class GenericProtocolApplicationMappingHelper implements MappingHelper<Ge
             FuGECommonProtocolGenericProtocolApplicationType.OutputMaterials godXML = new FuGECommonProtocolGenericProtocolApplicationType.OutputMaterials();
             godXML.setMaterialRef( material.getIdentifier() );
             genericProtocolApplicationXML.getOutputMaterials().add( godXML );
-        }
-
-        return genericProtocolApplicationXML;
-    }
-
-    // the method for generating random GPAs is too complex for this standard method, therefore it returns null
-    public FuGECommonProtocolGenericProtocolApplicationType generateRandomXML( FuGECommonProtocolGenericProtocolApplicationType gpaXML ) {
-        return gpaXML;
-    }
-
-    public FuGECommonProtocolGenericProtocolApplicationType generateRandomXML(
-            FuGECommonProtocolGenericProtocolApplicationType genericProtocolApplicationXML,
-            int ordinal,
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-
-        if ( !protocolCollectionXML.getProtocol().isEmpty() ) {
-            genericProtocolApplicationXML.setProtocolRef(
-                    protocolCollectionXML.getProtocol().get( ordinal ).getValue().getIdentifier() );
-        }
-
-        int output = ordinal + 1;
-        if ( ordinal == NUMBER_ELEMENTS - 1 )
-            output = 0;
-
-        if ( frXML.getDataCollection() != null ) {
-            // input data
-            FuGECommonProtocolGenericProtocolApplicationType.InputData gidXML = new FuGECommonProtocolGenericProtocolApplicationType.InputData();
-            gidXML.setDataRef( frXML.getDataCollection().getData().get( ordinal ).getValue().getIdentifier() );
-            genericProtocolApplicationXML.getInputData().add( gidXML );
-
-            // output data
-            FuGECommonProtocolGenericProtocolApplicationType.OutputData godXML = new FuGECommonProtocolGenericProtocolApplicationType.OutputData();
-            godXML.setDataRef( frXML.getDataCollection().getData().get( output ).getValue().getIdentifier() );
-            genericProtocolApplicationXML.getOutputData().add( godXML );
-        }
-
-        if ( frXML.getMaterialCollection() != null ) {
-            // output material
-            FuGECommonProtocolGenericProtocolApplicationType.OutputMaterials gomXML = new FuGECommonProtocolGenericProtocolApplicationType.OutputMaterials();
-            gomXML.setMaterialRef(
-                    frXML.getMaterialCollection().getMaterial().get( ordinal ).getValue().getIdentifier() );
-            genericProtocolApplicationXML.getOutputMaterials().add( gomXML );
         }
 
         return genericProtocolApplicationXML;

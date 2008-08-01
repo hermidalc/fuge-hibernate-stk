@@ -6,26 +6,25 @@ import net.sourceforge.fuge.bio.data.ExternalData;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioDataDataType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioDataExternalDataType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.common.audit.Person;
 
 /**
  * Copyright Notice
- *
+ * <p/>
  * The MIT License
- *
+ * <p/>
  * Copyright (c) 2008 2007-8 Proteomics Standards Initiative / Microarray and Gene Expression Data Society
- *
+ * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p/>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * <p/>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -33,11 +32,11 @@ import net.sourceforge.fuge.common.audit.Person;
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ * <p/>
  * Acknowledgements
- *  The authors wish to thank the Proteomics Standards Initiative for
- *  the provision of infrastructure and expertise in the form of the PSI
- *  Document Process that has been used to formalise this document.
+ * The authors wish to thank the Proteomics Standards Initiative for
+ * the provision of infrastructure and expertise in the form of the PSI
+ * Document Process that has been used to formalise this document.
  * <p/>
  * $LastChangedDate$
  * $LastChangedRevision$
@@ -58,9 +57,9 @@ public class DataMappingHelper implements MappingHelper<Data, FuGEBioDataDataTyp
      * <p/>
      * Does not perform any update to the database of the Data object (though child objects may be updated).
      *
-     * @param dataXML the jaxb object to parse
-     * @param data    the hibernate object to fill
-     * @param performer
+     * @param dataXML   the jaxb object to parse
+     * @param data      the hibernate object to fill
+     * @param performer the person to assign to the audit trail
      * @return the newly-filled hibernate object
      * @throws EntityServiceException if there is a problem with the connection to the database
      */
@@ -102,22 +101,4 @@ public class DataMappingHelper implements MappingHelper<Data, FuGEBioDataDataTyp
         }
         return null; // shouldn't get here as there is currently only one type of Data coded - will get here if InternalData is used in the xml.
     }
-
-    public FuGEBioDataDataType generateRandomXML( FuGEBioDataDataType dataXML ) {
-        // set the data attributes
-        dataXML = ( FuGEBioDataExternalDataType ) ci.generateRandomXML( dataXML );
-
-        return dataXML;
-    }
-
-    public FuGEBioDataDataType generateRandomXMLWithLinksOut( FuGEBioDataDataType dataXML, FuGECollectionFuGEType frXML ) {
-
-        FuGEBioDataExternalDataType externalDataXML = ( FuGEBioDataExternalDataType ) generateRandomXML( dataXML );
-
-        // set the externaldata attributes
-        externalDataXML = ced.generateRandomXMLWithLinksOut( externalDataXML, frXML );
-
-        return externalDataXML;
-    }
-
 }

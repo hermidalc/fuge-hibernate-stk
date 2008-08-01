@@ -45,7 +45,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class ParameterizableApplicationMappingHelper implements MappingHelper<ParameterizableApplication, FuGECommonProtocolParameterizableApplicationType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final IdentifiableMappingHelper ci;
 
@@ -112,32 +111,4 @@ public class ParameterizableApplicationMappingHelper implements MappingHelper<Pa
         return parameterizableApplicationXML;
     }
 
-    // currently all the code required to make the randomXML needs the protocolCollection passed as well.
-    public FuGECommonProtocolParameterizableApplicationType generateRandomXML( FuGECommonProtocolParameterizableApplicationType parameterizableApplicationXML ) {
-        return parameterizableApplicationXML;
-    }
-
-    public FuGECommonProtocolParameterizableApplicationType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolParameterizableApplicationType parameterizableApplicationXML,
-            FuGECollectionProtocolCollectionType protocolCollectionXML ) {
-
-        parameterizableApplicationXML = ( FuGECommonProtocolParameterizableApplicationType ) ci.generateRandomXML( parameterizableApplicationXML );
-
-        if ( !protocolCollectionXML.getEquipment().isEmpty() ) {
-            FuGECommonProtocolGenericEquipmentType eqXML = ( FuGECommonProtocolGenericEquipmentType ) protocolCollectionXML
-                    .getEquipment()
-                    .get( 0 )
-                    .getValue();
-            MeasurementMappingHelper measurementMappingHelper = new MeasurementMappingHelper();
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolParameterValueType pvalueXML = new FuGECommonProtocolParameterValueType();
-                pvalueXML = ( FuGECommonProtocolParameterValueType ) cd.generateRandomXML( pvalueXML );
-                pvalueXML.setParameterRef( eqXML.getGenericParameter().get( 0 ).getIdentifier() );
-                pvalueXML.setMeasurement( ( new ObjectFactory() ).createAtomicValue(
-                        ( FuGECommonMeasurementAtomicValueType ) measurementMappingHelper.generateRandomXML( new FuGECommonMeasurementAtomicValueType() ) ) );
-                parameterizableApplicationXML.getParameterValue().add( pvalueXML );
-            }
-        }
-        return parameterizableApplicationXML;
-    }
 }

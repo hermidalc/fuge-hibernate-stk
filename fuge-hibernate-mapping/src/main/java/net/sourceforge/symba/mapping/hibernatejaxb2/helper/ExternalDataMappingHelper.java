@@ -6,7 +6,6 @@ import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.common.description.Uri;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGEBioDataExternalDataType;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonDescriptionURIType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
@@ -120,41 +119,6 @@ public class ExternalDataMappingHelper implements MappingHelper<ExternalData, Fu
             // load jaxb object into describableXML
             externalFormatDocXML.setURI( uriXML );
             externalDataXML.setExternalFormatDocumentation( externalFormatDocXML );
-        }
-
-        return externalDataXML;
-    }
-
-    public FuGEBioDataExternalDataType generateRandomXML( FuGEBioDataExternalDataType externalDataXML ) {
-
-        // Location
-        externalDataXML.setLocation( "http://some.random.url/" + String.valueOf( Math.random() ) );
-
-        // external format documentation
-        FuGEBioDataExternalDataType.ExternalFormatDocumentation efdXML = new FuGEBioDataExternalDataType.ExternalFormatDocumentation();
-        FuGECommonDescriptionURIType uriXML = new FuGECommonDescriptionURIType();
-
-        // set jaxb object
-        uriXML = ( FuGECommonDescriptionURIType ) cd.generateRandomXML( uriXML );
-        uriXML.setLocation( "http://some.sortof.string/" + String.valueOf( Math.random() ) );
-
-        // load jaxb object into describableXML
-        efdXML.setURI( uriXML );
-        externalDataXML.setExternalFormatDocumentation( efdXML );
-
-        return externalDataXML;
-    }
-
-    public FuGEBioDataExternalDataType generateRandomXMLWithLinksOut( FuGEBioDataExternalDataType externalDataXML,
-                                                                      FuGECollectionFuGEType frXML ) {
-        externalDataXML = generateRandomXML( externalDataXML );
-
-        // FileFormat
-        if ( frXML.getOntologyCollection() != null ) {
-            FuGEBioDataExternalDataType.FileFormat fileformatXML = new FuGEBioDataExternalDataType.FileFormat();
-            fileformatXML.setOntologyTermRef(
-                    frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-            externalDataXML.setFileFormat( fileformatXML );
         }
 
         return externalDataXML;

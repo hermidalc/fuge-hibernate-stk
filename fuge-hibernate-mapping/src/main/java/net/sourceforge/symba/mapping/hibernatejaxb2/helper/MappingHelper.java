@@ -87,10 +87,4 @@ public interface MappingHelper<P, J> {
      *          the database
      */
     P unmarshal( J j, P p, Person performer ) throws EntityServiceException;
-
-    /**
-     * @param j the empty (or not!) object to fill and return
-     * @return the randomly-generated JAXB FuGE object
-     */
-    J generateRandomXML( J j );
 }

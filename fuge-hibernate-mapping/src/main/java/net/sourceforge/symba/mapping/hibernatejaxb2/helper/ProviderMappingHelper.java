@@ -6,7 +6,6 @@ import net.sourceforge.fuge.common.audit.ContactRole;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.common.protocol.Software;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionProviderType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -95,27 +94,5 @@ public class ProviderMappingHelper implements MappingHelper<Provider, FuGECollec
         }
 
         return providerXML;
-    }
-
-    public FuGECollectionProviderType generateRandomXML( FuGECollectionProviderType providerXML ) {
-
-        providerXML = ( FuGECollectionProviderType ) ci.generateRandomXML( providerXML );
-
-        return providerXML;
-    }
-
-    public FuGECollectionFuGEType generateRandomXMLWithLinksOut( FuGECollectionFuGEType frXML ) {
-        // create fuge object
-        FuGECollectionProviderType providerXML = generateRandomXML( new FuGECollectionProviderType() );
-
-        providerXML.setContactRole( ccr.generateRandomXMLwithLinksOut( frXML ) );
-
-        if ( frXML.getProtocolCollection() != null ) {
-            providerXML.setSoftwareRef(
-                    frXML.getProtocolCollection().getSoftware().get( 0 ).getValue().getIdentifier() );
-        }
-        frXML.setProvider( providerXML );
-
-        return frXML;
     }
 }

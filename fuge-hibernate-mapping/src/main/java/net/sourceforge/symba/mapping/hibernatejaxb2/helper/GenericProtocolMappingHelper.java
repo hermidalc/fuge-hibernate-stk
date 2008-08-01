@@ -47,7 +47,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class GenericProtocolMappingHelper implements MappingHelper<GenericProtocol, FuGECommonProtocolGenericProtocolType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final ActionMappingHelper ca;
     private final ParameterMappingHelper cp;
 
@@ -144,52 +143,6 @@ public class GenericProtocolMappingHelper implements MappingHelper<GenericProtoc
             genericProtocolXML.getSoftware().add( genSoftware );
         }
 
-        return genericProtocolXML;
-    }
-
-    // the only way to make random xml is via generateRandomXMLWithLinks, as all parts require input from elsewhere in the fuge document
-    public FuGECommonProtocolGenericProtocolType generateRandomXML( FuGECommonProtocolGenericProtocolType genericProtocolXML ) {
-        return genericProtocolXML;
-    }
-
-    public FuGECommonProtocolGenericProtocolType generateRandomXML(
-            FuGECommonProtocolGenericProtocolType genericProtocolXML,
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-
-        genericProtocolXML = generateRandomXML( genericProtocolXML );
-
-        ObjectFactory factory = new ObjectFactory();
-
-        // can only have generic actions.
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            genericProtocolXML.getAction().add(
-                    factory.createGenericAction( ( FuGECommonProtocolGenericActionType ) ca.generateRandomXMLWithLinksOut(
-                            new FuGECommonProtocolGenericActionType(), i, protocolCollectionXML, frXML ) ) );
-        }
-        // can only have generic parameters
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            genericProtocolXML.getGenericParameter().add(
-                    ( FuGECommonProtocolGenericParameterType ) cp
-                            .generateRandomXMLWithLinksOut( new FuGECommonProtocolGenericParameterType(), frXML ) );
-        }
-
-        if ( protocolCollectionXML != null ) {
-            // protocol to equipment
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolGenericProtocolType.Equipment equip = new FuGECommonProtocolGenericProtocolType.Equipment();
-                equip.setGenericEquipmentRef(
-                        protocolCollectionXML.getEquipment().get( i ).getValue().getIdentifier() );
-                genericProtocolXML.getEquipment().add( equip );
-            }
-            // software
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolGenericProtocolType.Software genSoftware = new FuGECommonProtocolGenericProtocolType.Software();
-                genSoftware.setGenericSoftwareRef(
-                        protocolCollectionXML.getSoftware().get( i ).getValue().getIdentifier() );
-                genericProtocolXML.getSoftware().add( genSoftware );
-            }
-        }
         return genericProtocolXML;
     }
 

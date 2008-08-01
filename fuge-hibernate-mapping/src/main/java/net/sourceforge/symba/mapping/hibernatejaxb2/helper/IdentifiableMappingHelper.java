@@ -6,7 +6,6 @@ import net.sourceforge.fuge.common.references.BibliographicReference;
 import net.sourceforge.fuge.common.references.Database;
 import net.sourceforge.fuge.common.references.DatabaseReference;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonIdentifiableType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonReferencesDatabaseReferenceType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -52,7 +51,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class IdentifiableMappingHelper implements MappingHelper<Identifiable, FuGECommonIdentifiableType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
 
     public IdentifiableMappingHelper() {
@@ -130,51 +128,6 @@ public class IdentifiableMappingHelper implements MappingHelper<Identifiable, Fu
             identifiableXML.getBibliographicReferences().add( brRefXML );
         }
         return identifiableXML;
-    }
-
-    // specifically for generating random values for use in testing. Must pass FuGE objects so other objects can be made.
-    // Only calls internal to this method may pass things other than FuGE objects.
-    public FuGECommonIdentifiableType generateRandomXML( FuGECommonIdentifiableType type ) {
-        ReferenceableCollectionMappingHelper crc = new ReferenceableCollectionMappingHelper();
-        type = ( FuGECommonIdentifiableType ) cd.generateRandomXML( type );
-        type.setIdentifier( String.valueOf( Math.random() ) );
-        type.setName( String.valueOf( Math.random() ) );
-
-        // this ensures that if smaller objects (like DatabaseReference) are being created, there is no unneccessary attempt
-        //  to create sub-objects, and additionally there will be no infinite recursion
-        if ( type instanceof FuGECollectionFuGEType ) {
-            FuGECollectionFuGEType fuGEType = ( FuGECollectionFuGEType ) type;
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonReferencesDatabaseReferenceType DatabaseReferenceXML = new FuGECommonReferencesDatabaseReferenceType();
-                DatabaseReferenceXML = ( FuGECommonReferencesDatabaseReferenceType ) cd
-                        .generateRandomXML( DatabaseReferenceXML );
-                DatabaseReferenceXML.setAccession( String.valueOf( Math.random() ) );
-                DatabaseReferenceXML.setAccessionVersion( String.valueOf( Math.random() ) );
-
-                // This is a reference to another object, so create that object before setting the reference
-                if ( fuGEType.getReferenceableCollection() == null ) {
-                    fuGEType = crc.generateRandomXMLwithLinksOut( fuGEType );
-                }
-                // get the first object and make it what is referred.
-                DatabaseReferenceXML
-                        .setDatabaseRef( fuGEType.getReferenceableCollection().getDatabase().get( i ).getIdentifier() );
-                fuGEType.getDatabaseReference().add( DatabaseReferenceXML );
-            }
-
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonIdentifiableType.BibliographicReferences brRefXML = new FuGECommonIdentifiableType.BibliographicReferences();
-                // This is a reference to another object, so create that object before setting the reference
-                if ( fuGEType.getReferenceableCollection() == null ) {
-                    fuGEType = crc.generateRandomXMLwithLinksOut( fuGEType );
-                }
-                // get the first object and make it what is referred.
-                brRefXML.setBibliographicReferenceRef(
-                        fuGEType.getReferenceableCollection().getBibliographicReference().get( i ).getIdentifier() );
-                fuGEType.getBibliographicReferences().add( brRefXML );
-            }
-            return fuGEType;
-        }
-        return type;
     }
 
     public void prettyPrint( String comment, Identifiable identifiable, PrintStream printStream ) {

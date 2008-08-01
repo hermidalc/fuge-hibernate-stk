@@ -49,7 +49,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class MaterialCollectionMappingHelper implements MappingHelper<MaterialCollection, FuGECollectionMaterialCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final MaterialMappingHelper cm;
 
@@ -125,41 +124,5 @@ public class MaterialCollectionMappingHelper implements MappingHelper<MaterialCo
             }
         }
         return matCollXML;
-    }
-
-    public FuGECollectionMaterialCollectionType generateRandomXML( FuGECollectionMaterialCollectionType matCollXML ) {
-
-        // set describable information
-        matCollXML = ( FuGECollectionMaterialCollectionType ) cd.generateRandomXML( matCollXML );
-
-        return matCollXML;
-    }
-
-    public FuGECollectionFuGEType generateRandomXMLWithLinksOut( FuGECollectionFuGEType frXML ) {
-        // create the jaxb material collection object
-        FuGECollectionMaterialCollectionType matCollXML = generateRandomXML( new FuGECollectionMaterialCollectionType() );
-
-        // set up the converter and the factory
-        ObjectFactory factory = new ObjectFactory();
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            // set jaxb object
-            if ( i > 0 ) {
-                matCollXML.getMaterial().add(
-                        factory.createGenericMaterial(
-                                ( FuGEBioMaterialGenericMaterialType ) cm.generateRandomXMLWithLinksOut(
-                                        frXML, ( FuGEBioMaterialGenericMaterialType ) matCollXML.getMaterial()
-                                        .get( 0 )
-                                        .getValue() ) ) );
-            } else {
-                matCollXML.getMaterial().add(
-                        factory.createGenericMaterial(
-                                ( FuGEBioMaterialGenericMaterialType ) cm.generateRandomXMLWithLinksOut(
-                                        frXML, null ) ) );
-            }
-        }
-
-        frXML.setMaterialCollection( matCollXML );
-        return frXML;
     }
 }

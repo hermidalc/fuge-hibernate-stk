@@ -61,9 +61,4 @@ public class BooleanValueMappingHelper implements MappingHelper<BooleanValue,FuG
 
         return valueXML;
     }
-
-    public FuGECommonMeasurementBooleanValueType generateRandomXML( FuGECommonMeasurementBooleanValueType valueXML ) {
-        valueXML.setValue( true );
-        return valueXML;
-    }
 }

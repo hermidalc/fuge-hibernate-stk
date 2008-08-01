@@ -49,7 +49,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class ReferenceableCollectionMappingHelper implements MappingHelper<ReferenceableCollection, FuGECollectionReferenceableCollectionType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final DescribableMappingHelper cd;
     private final IdentifiableMappingHelper ci;
     private final ContactRoleMappingHelper ccr;
@@ -195,60 +194,5 @@ public class ReferenceableCollectionMappingHelper implements MappingHelper<Refer
         }
 
         return refCollXML;
-    }
-
-    public FuGECollectionReferenceableCollectionType generateRandomXML( FuGECollectionReferenceableCollectionType refCollXML ) {
-
-        refCollXML = ( FuGECollectionReferenceableCollectionType ) cd.generateRandomXML( refCollXML );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGECommonReferencesBibliographicReferenceType bibRefXML = new FuGECommonReferencesBibliographicReferenceType();
-            bibRefXML = ( FuGECommonReferencesBibliographicReferenceType ) ci.generateRandomXML( bibRefXML );
-
-            bibRefXML.setAuthors( String.valueOf( Math.random() ) );
-            bibRefXML.setEditor( String.valueOf( Math.random() ) );
-            bibRefXML.setIssue( String.valueOf( Math.random() ) );
-            bibRefXML.setPages( String.valueOf( Math.random() ) );
-            bibRefXML.setPublication( String.valueOf( Math.random() ) );
-            bibRefXML.setPublisher( String.valueOf( Math.random() ) );
-            bibRefXML.setTitle( String.valueOf( Math.random() ) );
-            bibRefXML.setVolume( String.valueOf( Math.random() ) );
-            bibRefXML.setYear(
-                    ( int ) ( Math.random() *
-                            10 ) ); // int will not be null, though it may be zero. Assume we won't print if it's zero.
-
-            refCollXML.getBibliographicReference().add( bibRefXML );
-        }
-
-        return refCollXML;
-    }
-
-    public FuGECollectionFuGEType generateRandomXMLwithLinksOut( FuGECollectionFuGEType fuGEType ) {
-
-        AuditCollectionMappingHelper cac = new AuditCollectionMappingHelper();
-        OntologyCollectionMappingHelper coc = new OntologyCollectionMappingHelper();
-
-        FuGECollectionReferenceableCollectionType refCollXML = generateRandomXML( new FuGECollectionReferenceableCollectionType() );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGECommonReferencesDatabaseType dbXML = new FuGECommonReferencesDatabaseType();
-
-            dbXML = ( FuGECommonReferencesDatabaseType ) ci.generateRandomXML( dbXML );
-            dbXML.setURI( String.valueOf( Math.random() ) );
-            dbXML.setVersion( String.valueOf( Math.random() ) );
-            for ( int ii = 0; ii < NUMBER_ELEMENTS; ii++ ) {
-                if ( fuGEType.getAuditCollection() == null ) {
-                    fuGEType = cac.generateRandomXMLwithLinksOut( fuGEType );
-                }
-                if ( fuGEType.getOntologyCollection() == null ) {
-                    fuGEType.setOntologyCollection( coc.generateRandomXML( new FuGECollectionOntologyCollectionType() ) );
-                }
-                dbXML.getContactRole().add( ccr.generateRandomXMLwithLinksOut( fuGEType ) );
-            }
-            refCollXML.getDatabase().add( dbXML );
-        }
-        fuGEType.setReferenceableCollection( refCollXML );
-
-        return fuGEType;
     }
 }

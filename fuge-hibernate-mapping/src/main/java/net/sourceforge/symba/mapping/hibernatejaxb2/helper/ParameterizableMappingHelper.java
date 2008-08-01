@@ -5,7 +5,6 @@ import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.common.ontology.OntologyTerm;
 import net.sourceforge.fuge.common.protocol.Parameterizable;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECollectionFuGEType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonAuditContactRoleType;
 import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolParameterizableType;
 import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
@@ -49,7 +48,6 @@ import java.util.Set;
  * $HeadURL: $
  */
 public class ParameterizableMappingHelper implements MappingHelper<Parameterizable, FuGECommonProtocolParameterizableType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final ContactRoleMappingHelper ccr;
 
     public ParameterizableMappingHelper() {
@@ -97,34 +95,6 @@ public class ParameterizableMappingHelper implements MappingHelper<Parameterizab
             FuGECommonProtocolParameterizableType.Types parameterizableTypesXML = new FuGECommonProtocolParameterizableType.Types();
             parameterizableTypesXML.setOntologyTermRef( ontologyTerm.getIdentifier() );
             parameterizableXML.getTypes().add( parameterizableTypesXML );
-        }
-        return parameterizableXML;
-    }
-
-    public FuGECommonProtocolParameterizableType generateRandomXML( FuGECommonProtocolParameterizableType parameterizableXML ) {
-
-        IdentifiableMappingHelper ci = new IdentifiableMappingHelper();
-        parameterizableXML = ( FuGECommonProtocolParameterizableType ) ci.generateRandomXML( parameterizableXML );
-
-        return parameterizableXML;
-    }
-
-    public FuGECommonProtocolParameterizableType generateRandomXMLWithLinksOut(
-            FuGECommonProtocolParameterizableType parameterizableXML, FuGECollectionFuGEType frXML ) {
-
-        parameterizableXML = generateRandomXML( parameterizableXML );
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            parameterizableXML.getContactRole().add( ccr.generateRandomXMLwithLinksOut( frXML ) );
-        }
-
-        if ( frXML.getOntologyCollection() != null ) {
-            for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-                FuGECommonProtocolParameterizableType.Types parameterizableTypesXML = new FuGECommonProtocolParameterizableType.Types();
-                parameterizableTypesXML.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( i ).getValue().getIdentifier() );
-                parameterizableXML.getTypes().add( parameterizableTypesXML );
-            }
         }
         return parameterizableXML;
     }

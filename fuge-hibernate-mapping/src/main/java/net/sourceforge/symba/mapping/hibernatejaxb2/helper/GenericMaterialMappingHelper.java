@@ -80,26 +80,4 @@ public class GenericMaterialMappingHelper implements MappingHelper<GenericMateri
 
         return genericMaterialXML;
     }
-
-    // currently does nothing in this section, as the difference between GenericMaterial and Material is all in the components 
-    public FuGEBioMaterialGenericMaterialType generateRandomXML( FuGEBioMaterialGenericMaterialType genericMaterialXML ) {
-
-        return genericMaterialXML;
-    }
-
-    public FuGEBioMaterialGenericMaterialType generateRandomXMLWithComponents(
-            FuGEBioMaterialGenericMaterialType genericMaterialXML,
-            FuGEBioMaterialGenericMaterialType componentXML ) {
-
-        genericMaterialXML = generateRandomXML( genericMaterialXML );
-
-        // Components. These elements are references to GenericMaterial. Only generate one reference.
-        if ( componentXML != null ) {
-            FuGEBioMaterialGenericMaterialType.Components componentsXML = new FuGEBioMaterialGenericMaterialType.Components();
-            componentsXML.setGenericMaterialRef( componentXML.getIdentifier() );
-            genericMaterialXML.getComponents().add( componentsXML );
-        }
-        return genericMaterialXML;
-    }
-
 }

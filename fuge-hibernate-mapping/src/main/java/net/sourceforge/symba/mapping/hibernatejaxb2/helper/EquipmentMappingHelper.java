@@ -8,8 +8,6 @@ import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
 import net.sourceforge.fuge.util.generatedJAXB2.*;
 
-import javax.xml.bind.JAXBElement;
-
 /**
  * Copyright Notice
  *
@@ -46,7 +44,6 @@ import javax.xml.bind.JAXBElement;
  * $HeadURL: $
  */
 public class EquipmentMappingHelper implements MappingHelper<Equipment, FuGECommonProtocolEquipmentType> {
-    private final int NUMBER_ELEMENTS = 2;
     private final IdentifiableMappingHelper ci;
     private final ParameterizableMappingHelper cparam;
     private final GenericEquipmentMappingHelper cgeq;
@@ -129,71 +126,5 @@ public class EquipmentMappingHelper implements MappingHelper<Equipment, FuGEComm
             return genericEquipmentXML;
         }
         return null;  // shouldn't get here as there is currently only one type of Equipment allowed.
-    }
-
-    // you will not get a complete equipment with this method - just the very basics. Instead, use generateRandomXMLWithLinksOut
-    public FuGECommonProtocolEquipmentType generateRandomXML( FuGECommonProtocolEquipmentType genEquipmentXML ) {
-
-        // get equipment attributes
-        genEquipmentXML = ( FuGECommonProtocolGenericEquipmentType ) ci.generateRandomXML( genEquipmentXML );
-
-        return genEquipmentXML;
-    }
-
-    // this method is different from the others in that it will generate ALL equipment
-    // in one go, rather than just one piece of equipment. This is because software may not
-    // have been made yet, and so this method needs protocolCollection changeable so that it can add
-    // software if necessary.
-    public FuGECollectionProtocolCollectionType generateRandomXMLWithLinksOut(
-            FuGECollectionProtocolCollectionType protocolCollectionXML,
-            FuGECollectionFuGEType frXML ) {
-
-        for ( int i = 0; i < NUMBER_ELEMENTS; i++ ) {
-            FuGECommonProtocolGenericEquipmentType genEquipmentXML = ( FuGECommonProtocolGenericEquipmentType ) generateRandomXML( new FuGECommonProtocolGenericEquipmentType() );
-
-            genEquipmentXML = ( FuGECommonProtocolGenericEquipmentType ) cparam.generateRandomXMLWithLinksOut(
-                    genEquipmentXML, frXML );
-
-            if ( frXML.getOntologyCollection() != null ) {
-                FuGECommonProtocolEquipmentType.Make make = new FuGECommonProtocolEquipmentType.Make();
-                make.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-                genEquipmentXML.setMake( make );
-
-                FuGECommonProtocolEquipmentType.Model model = new FuGECommonProtocolEquipmentType.Model();
-                model.setOntologyTermRef(
-                        frXML.getOntologyCollection().getOntologyTerm().get( 0 ).getValue().getIdentifier() );
-                genEquipmentXML.setModel( model );
-            }
-
-            // software required for generic equipment attributes
-            if ( protocolCollectionXML.getSoftware() == null ) {
-                SoftwareMappingHelper csw = new SoftwareMappingHelper();
-                for ( int ii = 0; ii < NUMBER_ELEMENTS; ii++ ) {
-                    FuGECommonProtocolGenericSoftwareType genericSoftwareXML = new FuGECommonProtocolGenericSoftwareType();
-                    genericSoftwareXML = ( FuGECommonProtocolGenericSoftwareType ) csw.generateRandomXMLWithLinksOut( genericSoftwareXML, protocolCollectionXML, frXML );
-                    JAXBElement<? extends FuGECommonProtocolGenericSoftwareType> element = ( new ObjectFactory() ).createGenericSoftware(
-                            genericSoftwareXML );
-                    protocolCollectionXML.getSoftware().add( element );
-                }
-            }
-            // get generic equipment attributes
-            if ( i > 0 ) {
-                genEquipmentXML = cgeq.generateRandomXMLWithLinksOut(
-                        genEquipmentXML,
-                        ( FuGECommonProtocolGenericEquipmentType ) protocolCollectionXML.getEquipment()
-                                .get( 0 )
-                                .getValue(),
-                        frXML );
-            } else {
-                genEquipmentXML = cgeq.generateRandomXMLWithLinksOut( genEquipmentXML, null, frXML );
-            }
-
-            JAXBElement<? extends FuGECommonProtocolGenericEquipmentType> element = ( new ObjectFactory() ).createGenericEquipment(
-                    genEquipmentXML );
-            protocolCollectionXML.getEquipment().add( element );
-        }
-        return protocolCollectionXML;
-
     }
 }
