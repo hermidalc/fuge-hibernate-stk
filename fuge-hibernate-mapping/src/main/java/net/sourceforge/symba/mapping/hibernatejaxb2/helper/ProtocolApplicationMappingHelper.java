@@ -20,21 +20,21 @@ import java.util.GregorianCalendar;
 
 /**
  * Copyright Notice
- *
+ * <p/>
  * The MIT License
- *
+ * <p/>
  * Copyright (c) 2008 2007-8 Proteomics Standards Initiative / Microarray and Gene Expression Data Society
- *
+ * <p/>
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * <p/>
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * <p/>
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -42,18 +42,19 @@ import java.util.GregorianCalendar;
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- *
+ * <p/>
  * Acknowledgements
- *  The authors wish to thank the Proteomics Standards Initiative for
- *  the provision of infrastructure and expertise in the form of the PSI
- *  Document Process that has been used to formalise this document.
+ * The authors wish to thank the Proteomics Standards Initiative for
+ * the provision of infrastructure and expertise in the form of the PSI
+ * Document Process that has been used to formalise this document.
  * <p/>
  * $LastChangedDate$
  * $LastChangedRevision$
  * $Author$
  * $HeadURL: $
  */
-public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolApplication, FuGECommonProtocolProtocolApplicationType> {
+public class ProtocolApplicationMappingHelper implements
+        MappingHelper<ProtocolApplication, FuGECommonProtocolProtocolApplicationType> {
     private final IdentifiableMappingHelper ci;
     private final ParameterizableApplicationMappingHelper cparapp;
     private final DescribableMappingHelper cd;
@@ -68,7 +69,9 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
 
     // @todo Have not coded PartitionPair
     public ProtocolApplication unmarshal(
-            FuGECommonProtocolProtocolApplicationType protocolApplicationXML, ProtocolApplication protocolApplication, Person performer )
+            FuGECommonProtocolProtocolApplicationType protocolApplicationXML,
+            ProtocolApplication protocolApplication,
+            Person performer )
             throws EntityServiceException {
 
         // determine what sort of protocol application it is
@@ -82,7 +85,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
             genericProtocolApplication = ( GenericProtocolApplication ) cparapp
                     .unmarshal( protocolApplicationXML, genericProtocolApplication, performer );
 
-            genericProtocolApplication.setActivityDate( new java.sql.Timestamp( protocolApplicationXML.getActivityDate().toGregorianCalendar().getTimeInMillis() ) );
+            genericProtocolApplication.setActivityDate( new java.sql.Timestamp(
+                    protocolApplicationXML.getActivityDate().toGregorianCalendar().getTimeInMillis() ) );
 
             Set<SoftwareApplication> set = new HashSet<SoftwareApplication>();
             for ( FuGECommonProtocolSoftwareApplicationType typeXML : protocolApplicationXML
@@ -91,8 +95,10 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                         typeXML.getIdentifier(),
                         typeXML.getName(), "net.sourceforge.fuge.common.protocol.SoftwareApplication" );
                 application = ( SoftwareApplication ) ci.unmarshal( typeXML, application, performer );
-                application.setAppliedSoftware( ( Software ) entityService.getIdentifiable( typeXML.getSoftwareRef() ) );
-                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.SoftwareApplication", application, performer );
+                application
+                        .setAppliedSoftware( ( Software ) entityService.getIdentifiable( typeXML.getSoftwareRef() ) );
+                DatabaseObjectHelper
+                        .save( "net.sourceforge.fuge.common.protocol.SoftwareApplication", application, performer );
                 set.add( application );
             }
             genericProtocolApplication.setSoftwareApplications( set );
@@ -105,7 +111,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                         typeXML.getName(), "net.sourceforge.fuge.common.protocol.EquipmentApplication" );
                 application = ( EquipmentApplication ) ci.unmarshal( typeXML, application, performer );
                 application
-                        .setAppliedEquipment( ( Equipment ) entityService.getIdentifiable( typeXML.getEquipmentRef() ) );
+                        .setAppliedEquipment(
+                                ( Equipment ) entityService.getIdentifiable( typeXML.getEquipmentRef() ) );
 
                 if ( typeXML.getParameterValue() != null && typeXML.getParameterValue().size() > 0 ) {
 
@@ -113,40 +120,48 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                             typeXML, application, performer );
                 }
 
-                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.EquipmentApplication", application, performer );
+                DatabaseObjectHelper
+                        .save( "net.sourceforge.fuge.common.protocol.EquipmentApplication", application, performer );
                 set2.add( application );
             }
             genericProtocolApplication.setEquipmentApplications( set2 );
 
             Set<ActionApplication> set3 = new HashSet<ActionApplication>();
             for ( FuGECommonProtocolActionApplicationType typeXML : protocolApplicationXML.getActionApplication() ) {
-                ActionApplication application = ( ActionApplication ) entityService
-                        .createIdentifiable( typeXML.getIdentifier(), typeXML.getName(), "net.sourceforge.fuge.common.protocol.ActionApplication" );
+                ActionApplication application = ( ActionApplication ) DatabaseObjectHelper.getOrCreate(
+                        typeXML.getIdentifier(), typeXML.getName(),
+                        "net.sourceforge.fuge.common.protocol.ActionApplication" );
                 application = ( ActionApplication ) ci.unmarshal( typeXML, application, performer );
                 application.setAction( ( Action ) entityService.getIdentifiable( typeXML.getActionRef() ) );
                 if ( typeXML.getProtocolApplicationRef() != null ) {
                     application.setChildProtocolApplication(
-                            ( ProtocolApplication ) entityService.getIdentifiable( typeXML.getProtocolApplicationRef() ) );
+                            ( ProtocolApplication ) entityService
+                                    .getIdentifiable( typeXML.getProtocolApplicationRef() ) );
                 }
 
-                Description description = ( Description ) entityService.createDescribable( "net.sourceforge.fuge.common.description.Description" );
+                Description description = ( Description ) entityService
+                        .createDescribable( "net.sourceforge.fuge.common.description.Description" );
                 description = ( Description ) cd
                         .unmarshal( typeXML.getActionDeviation().getDescription(), description, performer );
                 description.setText( typeXML.getActionDeviation().getDescription().getText() );
-                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                DatabaseObjectHelper
+                        .save( "net.sourceforge.fuge.common.description.Description", description, performer );
                 application.setActionDeviation( description );
 
-                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.protocol.ActionApplication", application, performer );
+                DatabaseObjectHelper
+                        .save( "net.sourceforge.fuge.common.protocol.ActionApplication", application, performer );
                 set3.add( application );
             }
             genericProtocolApplication.setActionApplications( set3 );
 
             if ( protocolApplicationXML.getProtocolDeviation() != null ) {
-                Description description = ( Description ) entityService.createDescribable( "net.sourceforge.fuge.common.description.Description" );
+                Description description = ( Description ) entityService
+                        .createDescribable( "net.sourceforge.fuge.common.description.Description" );
                 description = ( Description ) cd.unmarshal(
                         protocolApplicationXML.getProtocolDeviation().getDescription(), description, performer );
                 description.setText( protocolApplicationXML.getProtocolDeviation().getDescription().getText() );
-                DatabaseObjectHelper.save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                DatabaseObjectHelper
+                        .save( "net.sourceforge.fuge.common.description.Description", description, performer );
                 genericProtocolApplication.setProtocolDeviation( description );
             }
 
@@ -168,7 +183,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
 
         // determine what sort of protocol application it is
         if ( protocolApplication instanceof GenericProtocolApplication ) {
-            FuGECommonProtocolGenericProtocolApplicationType genericProtocolApplicationXML = ( FuGECommonProtocolGenericProtocolApplicationType ) protocolApplicationXML;
+            FuGECommonProtocolGenericProtocolApplicationType genericProtocolApplicationXML =
+                    ( FuGECommonProtocolGenericProtocolApplicationType ) protocolApplicationXML;
 
             // get generic protocol application attributes now so that lazy loading is sorted
             genericProtocolApplicationXML = cgpa.marshal(
@@ -185,9 +201,11 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                 GregorianCalendar gc = new GregorianCalendar();
                 gc.setTime( protocolApplication.getActivityDate() );
                 try {
-                    genericProtocolApplicationXML.setActivityDate( DatatypeFactory.newInstance().newXMLGregorianCalendar( gc ) );
+                    genericProtocolApplicationXML
+                            .setActivityDate( DatatypeFactory.newInstance().newXMLGregorianCalendar( gc ) );
                 } catch ( DatatypeConfigurationException e ) {
-                    throw new EntityServiceException( "Error converting java.sql.Timestamp to XMLGregorianCalendar", e );
+                    throw new EntityServiceException( "Error converting java.sql.Timestamp to XMLGregorianCalendar",
+                            e );
                 }
             }
 
@@ -227,7 +245,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                     descXML = ( FuGECommonDescriptionDescriptionType ) cd
                             .marshal( descXML, application.getActionDeviation() );
                     descXML.setText( application.getActionDeviation().getText() );
-                    FuGECommonProtocolActionApplicationType.ActionDeviation deviation = new FuGECommonProtocolActionApplicationType.ActionDeviation();
+                    FuGECommonProtocolActionApplicationType.ActionDeviation deviation =
+                            new FuGECommonProtocolActionApplicationType.ActionDeviation();
                     deviation.setDescription( descXML );
 
                     typeXML.setActionDeviation( deviation );
@@ -237,7 +256,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
             }
 
             if ( protocolApplication.getProtocolDeviation() != null ) {
-                FuGECommonProtocolProtocolApplicationType.ProtocolDeviation pdXML = new FuGECommonProtocolProtocolApplicationType.ProtocolDeviation();
+                FuGECommonProtocolProtocolApplicationType.ProtocolDeviation pdXML =
+                        new FuGECommonProtocolProtocolApplicationType.ProtocolDeviation();
                 FuGECommonDescriptionDescriptionType descXML = new FuGECommonDescriptionDescriptionType();
                 descXML = ( FuGECommonDescriptionDescriptionType ) cd
                         .marshal( descXML, protocolApplication.getProtocolDeviation() );
@@ -262,7 +282,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
             FuGECollectionProtocolCollectionType protocolCollectionXML,
             FuGECollectionFuGEType frXML ) {
 
-        FuGECommonProtocolGenericProtocolApplicationType genericProtocolApplicationXML = new FuGECommonProtocolGenericProtocolApplicationType();
+        FuGECommonProtocolGenericProtocolApplicationType genericProtocolApplicationXML =
+                new FuGECommonProtocolGenericProtocolApplicationType();
 
         // get protocol application attributes
         genericProtocolApplicationXML = ( FuGECommonProtocolGenericProtocolApplicationType ) ci
@@ -271,7 +292,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                 .generateRandomXMLWithLinksOut( genericProtocolApplicationXML, protocolCollectionXML );
 
         try {
-            genericProtocolApplicationXML.setActivityDate( DatatypeFactory.newInstance().newXMLGregorianCalendar( new GregorianCalendar() ) );
+            genericProtocolApplicationXML.setActivityDate(
+                    DatatypeFactory.newInstance().newXMLGregorianCalendar( new GregorianCalendar() ) );
         } catch ( DatatypeConfigurationException e ) {
             throw new EntityServiceException( "Error creating XMLGregorianCalendar from current date", e );
         }
@@ -291,13 +313,15 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
             FuGECommonProtocolActionApplicationType type = new FuGECommonProtocolActionApplicationType();
             type = ( FuGECommonProtocolActionApplicationType ) ci.generateRandomXML( type );
 
-            FuGECommonProtocolGenericProtocolType gpType = ( FuGECommonProtocolGenericProtocolType ) protocolCollectionXML
-                    .getProtocol().get( ordinal ).getValue();
+            FuGECommonProtocolGenericProtocolType gpType =
+                    ( FuGECommonProtocolGenericProtocolType ) protocolCollectionXML
+                            .getProtocol().get( ordinal ).getValue();
             type.setActionRef( gpType.getAction().get( ordinal ).getValue().getIdentifier() );
             FuGECommonDescriptionDescriptionType descXML = new FuGECommonDescriptionDescriptionType();
             descXML = ( FuGECommonDescriptionDescriptionType ) cd.generateRandomXML( descXML );
             descXML.setText( String.valueOf( Math.random() ) );
-            FuGECommonProtocolActionApplicationType.ActionDeviation deviation = new FuGECommonProtocolActionApplicationType.ActionDeviation();
+            FuGECommonProtocolActionApplicationType.ActionDeviation deviation =
+                    new FuGECommonProtocolActionApplicationType.ActionDeviation();
             deviation.setDescription( descXML );
 
             type.setActionDeviation( deviation );
@@ -309,7 +333,8 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
             }
         }
 
-        FuGECommonProtocolProtocolApplicationType.ProtocolDeviation pdXML = new FuGECommonProtocolProtocolApplicationType.ProtocolDeviation();
+        FuGECommonProtocolProtocolApplicationType.ProtocolDeviation pdXML =
+                new FuGECommonProtocolProtocolApplicationType.ProtocolDeviation();
         FuGECommonDescriptionDescriptionType descXML = new FuGECommonDescriptionDescriptionType();
         descXML = ( FuGECommonDescriptionDescriptionType ) cd.generateRandomXML( descXML );
         descXML.setText( String.valueOf( Math.random() ) );
@@ -362,10 +387,10 @@ public class ProtocolApplicationMappingHelper implements MappingHelper<ProtocolA
                     // then print out a form button
                     printStream.println(
                             "<form action=\"downloadSingleFile.jsp\"><input type=\"hidden\" name=\"identifier\" value=\"" +
-                                    externalData.getLocation() + "\"/>" +
-                                    "<input type=\"hidden\" name=\"friendly\" value=\"" +
-                                    externalData.getName() + "\"/>" +
-                                    "<input type=\"submit\" value=\"Download This File\"/></form>" );
+                            externalData.getLocation() + "\"/>" +
+                            "<input type=\"hidden\" name=\"friendly\" value=\"" +
+                            externalData.getName() + "\"/>" +
+                            "<input type=\"submit\" value=\"Download This File\"/></form>" );
                 }
             }
         }
