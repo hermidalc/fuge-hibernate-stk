@@ -600,8 +600,8 @@
                 </jdbc.driver.jar>
                 <jdbc.driver>org.postgresql.Driver</jdbc.driver>
                 <jdbc.url>jdbc:postgresql://localhost:5432/testfuge</jdbc.url>
-                <jdbc.username>user</jdbc.username>
-                <jdbc.password>pass</jdbc.password>
+                <jdbc.username>symba</jdbc.username>
+                <jdbc.password>symba</jdbc.password>
                 <jdbc.exception.sorter>org.jboss.resource.adapter.jdbc.vendor.DummyExceptionSorter
                 </jdbc.exception.sorter>
                 <net.sourceforge.fuge.addDbAuditTrail>false</net.sourceforge.fuge.addDbAuditTrail>
