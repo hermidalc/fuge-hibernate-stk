@@ -505,6 +505,12 @@ Property/Column Name|Tagged Value|Comments
 
     * AE: ontologySource for OntologyTerm
 
+    * AE: rangeDescriptors for Range
+
+    * AE: measuredMaterial for GenericMaterialMeasurement
+
+    * AE: childProtocolApplication for ActionApplication
+
 * Change to Cardinalities
 
   The back cardinality (the side with the diamond in it) of GenericAction to Protocol (named childProtocol)

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/1.0.0/UML" xmi:id="_11_5_6250211_1201701365793_569653_238" name="ProfilesAndConstraints" metamodelReference="_m8qbA686EdiEh75YJ_3n8gmetamodelReferenceProfilesAndConstraints">
-  <eAnnotations xmi:id="_3PpIN2OgEd2HKJ8n6PhuVQ" source="attributes">
-    <details xmi:id="_3PpIOGOgEd2HKJ8n6PhuVQ" key="version" value="0"/>
+  <eAnnotations xmi:id="_-OXSaW3xEd2qypF68x2yig" source="attributes">
+    <details xmi:id="_-OXSam3xEd2qypF68x2yig" key="version" value="0"/>
   </eAnnotations>
-  <eAnnotations xmi:id="_3PpIOWOgEd2HKJ8n6PhuVQ" source="ePackages">
-    <contents xmi:type="ecore:EPackage" xmi:id="_3PpIOmOgEd2HKJ8n6PhuVQ" name="ProfilesAndConstraints_0" nsURI="http:///ProfilesAndConstraints_0_22eZ4GOgEd2HKJ8n6PhuVQ.profile.uml2" nsPrefix="ProfilesAndConstraints_0">
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_3PpIO2OgEd2HKJ8n6PhuVQ" name="ProfilesAndConstraints__AbstractAssociation">
-        <eAnnotations xmi:id="_3PpIPGOgEd2HKJ8n6PhuVQ" source="stereotype" references="_11_5_6250211_1201701368659_57460_464"/>
+  <eAnnotations xmi:id="_-OXSa23xEd2qypF68x2yig" source="ePackages">
+    <contents xmi:type="ecore:EPackage" xmi:id="_-OXSbG3xEd2qypF68x2yig" name="ProfilesAndConstraints_0" nsURI="http:///ProfilesAndConstraints_0_9-viAG3xEd2qypF68x2yig.profile.uml2" nsPrefix="ProfilesAndConstraints_0">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_-OXSbW3xEd2qypF68x2yig" name="ProfilesAndConstraints__AbstractAssociation">
+        <eAnnotations xmi:id="_-OXSbm3xEd2qypF68x2yig" source="stereotype" references="_11_5_6250211_1201701368659_57460_464"/>
       </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_3PpIPWOgEd2HKJ8n6PhuVQ" name="ProfilesAndConstraints__MapAssocToElement">
-        <eAnnotations xmi:id="_3PpIPmOgEd2HKJ8n6PhuVQ" source="stereotype" references="_11_5_6250211_1201701368661_155142_466"/>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_-OXSb23xEd2qypF68x2yig" name="ProfilesAndConstraints__MapAssocToElement">
+        <eAnnotations xmi:id="_-OXScG3xEd2qypF68x2yig" source="stereotype" references="_11_5_6250211_1201701368661_155142_466"/>
       </eClassifiers>
     </contents>
   </eAnnotations>
@@ -32,7 +32,7 @@
       <type xmi:type="uml:Class" href="pathmap://UML2_METAMODELS/UML2.metamodel.uml2#_m9C1la86EdiEh75YJ_3n8g"/>
     </ownedAttribute>
   </ownedMember>
-  <ownedMember xmi:type="uml:Extension" xmi:id="_11_5_6250211_1201701373116_864337_7283" memberEnd="_11_5_6250211_1201701373118_951100_7285 _11_5_6250211_1201701373116_874985_7284">
+  <ownedMember xmi:type="uml:Extension" xmi:id="_11_5_6250211_1201701373116_864337_7283" memberEnd="_11_5_6250211_1201701373116_874985_7284 _11_5_6250211_1201701373118_951100_7285">
     <ownedEnd xmi:type="uml:ExtensionEnd" xmi:id="_11_5_6250211_1201701373118_951100_7285" name="extension_AbstractAssociation" visibility="private" type="_11_5_6250211_1201701368659_57460_464" association="_11_5_6250211_1201701373116_864337_7283" aggregation="composite">
       <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_11_5_6250211_1201701373120_243618_7287" value="1"/>
       <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_11_5_6250211_1201701373119_721759_7286"/>

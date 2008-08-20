@@ -2,11 +2,13 @@ package net.sourceforge.symba.mapping.hibernatejaxb2.helper;
 
 import net.sourceforge.fuge.bio.data.Data;
 import net.sourceforge.fuge.bio.material.Material;
+import net.sourceforge.fuge.bio.material.GenericMaterialMeasurement;
 import net.sourceforge.fuge.common.protocol.GenericProtocolApplication;
 import net.sourceforge.fuge.common.protocol.Protocol;
 import net.sourceforge.fuge.common.audit.Person;
 import net.sourceforge.fuge.service.EntityServiceException;
-import net.sourceforge.fuge.util.generatedJAXB2.FuGECommonProtocolGenericProtocolApplicationType;
+import net.sourceforge.fuge.util.generatedJAXB2.*;
+import net.sourceforge.symba.mapping.hibernatejaxb2.DatabaseObjectHelper;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -75,13 +77,31 @@ public class GenericProtocolApplicationMappingHelper implements MappingHelper<Ge
         }
         genericProtocolApplication.setOutputData( outdatas );
 
-        // input material
+        // input complete material
         Set<Material> icmaterials = new HashSet<Material>();
         for ( FuGECommonProtocolGenericProtocolApplicationType.InputCompleteMaterials gicmXML : genericProtocolApplicationXML
                 .getInputCompleteMaterials() ) {
             icmaterials.add( ( Material ) entityService.getIdentifiable( gicmXML.getMaterialRef() ) );
         }
         genericProtocolApplication.setInputCompleteMaterials( icmaterials );
+
+        // input material (generic material measurement)
+        Set<GenericMaterialMeasurement> gmms = new HashSet<GenericMaterialMeasurement>();
+        DescribableMappingHelper dmh = new DescribableMappingHelper();
+        for ( FuGEBioMaterialGenericMaterialMeasurementType gmmXML : genericProtocolApplicationXML
+                .getGenericMaterialMeasurement() ) {
+            GenericMaterialMeasurement gmm = ( GenericMaterialMeasurement ) entityService
+                    .createDescribable( "net.sourceforge.fuge.bio.material.GenericMaterialMeasurement" );
+            gmm = ( GenericMaterialMeasurement ) dmh.unmarshal( gmmXML, gmm, performer );
+            gmm.setMeasuredMaterial( ( Material ) entityService.getIdentifiable( gmmXML.getMaterialRef() ) );
+            if ( gmmXML.getMeasurement() != null ) {
+                MeasurementMappingHelper mmh = new MeasurementMappingHelper();
+                gmm.setMeasurement( mmh.unmarshal( gmmXML.getMeasurement().getValue(), null, performer ) );
+            }
+            DatabaseObjectHelper.save( "net.sourceforge.fuge.bio.material.GenericMaterialMeasurement", gmm, performer );
+            gmms.add( gmm );
+        }
+        genericProtocolApplication.setInputMaterials( gmms );
 
         // output material
         Set<Material> materials = new HashSet<Material>();
@@ -121,6 +141,32 @@ public class GenericProtocolApplicationMappingHelper implements MappingHelper<Ge
             FuGECommonProtocolGenericProtocolApplicationType.InputCompleteMaterials gicmXML = new FuGECommonProtocolGenericProtocolApplicationType.InputCompleteMaterials();
             gicmXML.setMaterialRef( material.getIdentifier() );
             genericProtocolApplicationXML.getInputCompleteMaterials().add( gicmXML );
+        }
+
+        // input material (generic material measurement)
+        DescribableMappingHelper dmh = new DescribableMappingHelper();
+        MeasurementMappingHelper mmh = new MeasurementMappingHelper();
+        for ( GenericMaterialMeasurement gmm : genericProtocolApplication.getInputMaterials() ) {
+            FuGEBioMaterialGenericMaterialMeasurementType gmmXML = new FuGEBioMaterialGenericMaterialMeasurementType();
+            gmmXML = ( FuGEBioMaterialGenericMaterialMeasurementType ) dmh.marshal( gmmXML, gmm );
+            gmmXML.setMaterialRef( gmm.getMeasuredMaterial().getIdentifier() );
+            if ( gmm.getMeasurement() != null ) {
+                FuGECommonMeasurementMeasurementType measurementXML = mmh.marshal( null, gmm.getMeasurement() );
+                if ( measurementXML instanceof FuGECommonMeasurementAtomicValueType ) {
+                    gmmXML.setMeasurement( ( new ObjectFactory() ).createAtomicValue(
+                            ( FuGECommonMeasurementAtomicValueType ) measurementXML ) );
+                } else if ( measurementXML instanceof FuGECommonMeasurementBooleanValueType ) {
+                    gmmXML.setMeasurement( ( new ObjectFactory() ).createBooleanValue(
+                            ( FuGECommonMeasurementBooleanValueType ) measurementXML ) );
+                } else if ( measurementXML instanceof FuGECommonMeasurementComplexValueType ) {
+                    gmmXML.setMeasurement( ( new ObjectFactory() ).createComplexValue(
+                            ( FuGECommonMeasurementComplexValueType ) measurementXML ) );
+                } else if ( measurementXML instanceof FuGECommonMeasurementRangeType ) {
+                    gmmXML.setMeasurement(
+                            ( new ObjectFactory() ).createRange( ( FuGECommonMeasurementRangeType ) measurementXML ) );
+                }
+            }
+            genericProtocolApplicationXML.getGenericMaterialMeasurement().add( gmmXML );
         }
 
         // output material

@@ -85,8 +85,10 @@ public class ProtocolApplicationMappingHelper implements
             genericProtocolApplication = ( GenericProtocolApplication ) cparapp
                     .unmarshal( protocolApplicationXML, genericProtocolApplication, performer );
 
-            genericProtocolApplication.setActivityDate( new java.sql.Timestamp(
-                    protocolApplicationXML.getActivityDate().toGregorianCalendar().getTimeInMillis() ) );
+            if ( protocolApplicationXML.getActivityDate() != null ) {
+                genericProtocolApplication.setActivityDate( new java.sql.Timestamp(
+                        protocolApplicationXML.getActivityDate().toGregorianCalendar().getTimeInMillis() ) );
+            }
 
             Set<SoftwareApplication> set = new HashSet<SoftwareApplication>();
             for ( FuGECommonProtocolSoftwareApplicationType typeXML : protocolApplicationXML
@@ -139,15 +141,16 @@ public class ProtocolApplicationMappingHelper implements
                                     .getIdentifiable( typeXML.getProtocolApplicationRef() ) );
                 }
 
-                Description description = ( Description ) entityService
-                        .createDescribable( "net.sourceforge.fuge.common.description.Description" );
-                description = ( Description ) cd
-                        .unmarshal( typeXML.getActionDeviation().getDescription(), description, performer );
-                description.setText( typeXML.getActionDeviation().getDescription().getText() );
-                DatabaseObjectHelper
-                        .save( "net.sourceforge.fuge.common.description.Description", description, performer );
-                application.setActionDeviation( description );
-
+                if ( typeXML.getActionDeviation() != null ) {
+                    Description description = ( Description ) entityService
+                            .createDescribable( "net.sourceforge.fuge.common.description.Description" );
+                    description = ( Description ) cd
+                            .unmarshal( typeXML.getActionDeviation().getDescription(), description, performer );
+                    description.setText( typeXML.getActionDeviation().getDescription().getText() );
+                    DatabaseObjectHelper
+                            .save( "net.sourceforge.fuge.common.description.Description", description, performer );
+                    application.setActionDeviation( description );
+                }
                 DatabaseObjectHelper
                         .save( "net.sourceforge.fuge.common.protocol.ActionApplication", application, performer );
                 set3.add( application );

@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <uml:Profile xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:uml="http://www.eclipse.org/uml2/1.0.0/UML" xmi:id="_11_5_e240333_1154527189593_272453_14" name="xml" metamodelReference="_m8qbA686EdiEh75YJ_3n8gmetamodelReferencexml">
-  <eAnnotations xmi:id="_3Pev62OgEd2HKJ8n6PhuVQ" source="attributes">
-    <details xmi:id="_3Pev7GOgEd2HKJ8n6PhuVQ" key="version" value="0"/>
+  <eAnnotations xmi:id="_-OJ3AW3xEd2qypF68x2yig" source="attributes">
+    <details xmi:id="_-OJ3Am3xEd2qypF68x2yig" key="version" value="0"/>
   </eAnnotations>
-  <eAnnotations xmi:id="_3Pev7WOgEd2HKJ8n6PhuVQ" source="ePackages">
-    <contents xmi:type="ecore:EPackage" xmi:id="_3Pev7mOgEd2HKJ8n6PhuVQ" name="xml_0" nsURI="http:///xml_0_21tk4GOgEd2HKJ8n6PhuVQ.profile.uml2" nsPrefix="xml_0">
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_3Pev72OgEd2HKJ8n6PhuVQ" name="xml__XmlSchemaType">
-        <eAnnotations xmi:id="_3Pev8GOgEd2HKJ8n6PhuVQ" source="http://www.eclipse.org/emf/2002/GenModel">
-          <details xmi:id="_3Pev8WOgEd2HKJ8n6PhuVQ" key="documentation" value="Represents an XML Schema type."/>
+  <eAnnotations xmi:id="_-OJ3A23xEd2qypF68x2yig" source="ePackages">
+    <contents xmi:type="ecore:EPackage" xmi:id="_-OJ3BG3xEd2qypF68x2yig" name="xml_0" nsURI="http:///xml_0_9-zMYG3xEd2qypF68x2yig.profile.uml2" nsPrefix="xml_0">
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_-OJ3BW3xEd2qypF68x2yig" name="xml__XmlSchemaType">
+        <eAnnotations xmi:id="_-OJ3Bm3xEd2qypF68x2yig" source="http://www.eclipse.org/emf/2002/GenModel">
+          <details xmi:id="_-OJ3B23xEd2qypF68x2yig" key="documentation" value="Represents an XML Schema type."/>
         </eAnnotations>
-        <eAnnotations xmi:id="_3Pev8mOgEd2HKJ8n6PhuVQ" source="stereotype" references="_9_0_1fe00f9_1119337628453_799302_4"/>
+        <eAnnotations xmi:id="_-OJ3CG3xEd2qypF68x2yig" source="stereotype" references="_9_0_1fe00f9_1119337628453_799302_4"/>
       </eClassifiers>
-      <eClassifiers xmi:type="ecore:EClass" xmi:id="_3Pev82OgEd2HKJ8n6PhuVQ" name="xml__XmlAttribute">
-        <eAnnotations xmi:id="_3Pev9GOgEd2HKJ8n6PhuVQ" source="http://www.eclipse.org/emf/2002/GenModel">
-          <details xmi:id="_3Pev9WOgEd2HKJ8n6PhuVQ" key="documentation" value="Defines whether or not an attribute should be represented as an XML Schema attribute during generation time, if its either false, or not defined, then it will be assumed that the UML attribute should be represented as an XML Schema element instead."/>
+      <eClassifiers xmi:type="ecore:EClass" xmi:id="_-OJ3CW3xEd2qypF68x2yig" name="xml__XmlAttribute">
+        <eAnnotations xmi:id="_-OKeEG3xEd2qypF68x2yig" source="http://www.eclipse.org/emf/2002/GenModel">
+          <details xmi:id="_-OKeEW3xEd2qypF68x2yig" key="documentation" value="Defines whether or not an attribute should be represented as an XML Schema attribute during generation time, if its either false, or not defined, then it will be assumed that the UML attribute should be represented as an XML Schema element instead."/>
         </eAnnotations>
-        <eAnnotations xmi:id="_3Pev9mOgEd2HKJ8n6PhuVQ" source="stereotype" references="_9_0_1fe00f9_1119337628453_454940_3"/>
+        <eAnnotations xmi:id="_-OKeEm3xEd2qypF68x2yig" source="stereotype" references="_9_0_1fe00f9_1119337628453_454940_3"/>
       </eClassifiers>
     </contents>
   </eAnnotations>

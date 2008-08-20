@@ -88,7 +88,7 @@ public class DatabaseObjectHelper {
                 if ( name != null && name.length() > 0 ) {
                     return ENTITY_SERVICE.createIdentifiable( identifier, name, fullyQualifiedClassName );
                 } else {
-                    return ENTITY_SERVICE.createIdentifiable( identifier, "", fullyQualifiedClassName );
+                    return ENTITY_SERVICE.createIdentifiable( identifier, fullyQualifiedClassName );
                 }
             } else {
                 return identifiable;
@@ -100,7 +100,7 @@ public class DatabaseObjectHelper {
                         ID_MAKER.create( fullyQualifiedClassName ), name, fullyQualifiedClassName );
             } else {
                 return ENTITY_SERVICE.createIdentifiable(
-                        ID_MAKER.create( fullyQualifiedClassName ), "", fullyQualifiedClassName );
+                        ID_MAKER.create( fullyQualifiedClassName ), fullyQualifiedClassName );
             }
         }
     }

@@ -59,7 +59,7 @@ public class EntityServiceImpl
         // unit-testing the round-trip.
         ResourceBundle rb = ResourceBundle.getBundle( "fuge-hibernate" );
         addDbAuditTrail = rb.getString( "net.sourceforge.fuge.addDbAuditTrail" ) != null &&
-                rb.getString( "net.sourceforge.fuge.addDbAuditTrail" ).equals( "true" );
+                          rb.getString( "net.sourceforge.fuge.addDbAuditTrail" ).equals( "true" );
     }
 
     /**
@@ -100,8 +100,25 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#createIdentifiable(java.lang.String, java.lang.String, java.lang.String)
      */
-    protected net.sourceforge.fuge.common.Identifiable handleCreateIdentifiable( java.lang.String identifier, java.lang.String name, java.lang.String fullyQualifiedClassName )
+    protected net.sourceforge.fuge.common.Identifiable handleCreateIdentifiable( java.lang.String identifier,
+                                                                                 java.lang.String name,
+                                                                                 java.lang.String fullyQualifiedClassName )
             throws java.lang.Exception {
+        return createIdentifiableWithOptionalName( identifier, name, fullyQualifiedClassName );
+    }
+
+    /**
+     * @see net.sourceforge.fuge.service.EntityService#createIdentifiable(java.lang.String, java.lang.String)
+     */
+    protected net.sourceforge.fuge.common.Identifiable handleCreateIdentifiable( java.lang.String identifier,
+                                                                                 java.lang.String fullyQualifiedClassName )
+            throws java.lang.Exception {
+        return createIdentifiableWithOptionalName( identifier, null, fullyQualifiedClassName );
+    }
+
+    private net.sourceforge.fuge.common.Identifiable createIdentifiableWithOptionalName( java.lang.String identifier,
+                                                                                         java.lang.String name,
+                                                                                         java.lang.String fullyQualifiedClassName ) {
         net.sourceforge.fuge.common.Identifiable createdIdentifiable;
 
         try {
@@ -122,10 +139,12 @@ public class EntityServiceImpl
                     .getMethod( "setIdentifier", Class.forName( "java.lang.String" ) );
             setIdentifierMethod.invoke( createdIdentifiable, identifier );
 
-            // set the name
-            Method setNameMethod = Class.forName( fullyQualifiedClassName )
-                    .getMethod( "setName", Class.forName( "java.lang.String" ) );
-            setNameMethod.invoke( createdIdentifiable, name );
+            if ( name != null && name.trim().length() > 0 ) {
+                // set the name
+                Method setNameMethod = Class.forName( fullyQualifiedClassName )
+                        .getMethod( "setName", Class.forName( "java.lang.String" ) );
+                setNameMethod.invoke( createdIdentifiable, name );
+            }
 
         } catch ( NoSuchMethodException e ) {
             e.printStackTrace();
@@ -147,7 +166,8 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#save(java.lang.String, net.sourceforge.fuge.common.Describable)
      */
-    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable )
+    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName,
+                                                                  net.sourceforge.fuge.common.Describable describable )
             throws java.lang.Exception {
         if ( describable.getId() == null ) {
             return create( fullyQualifiedClassName, describable );
@@ -159,7 +179,9 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#save(java.lang.String, net.sourceforge.fuge.common.Describable, boolean)
      */
-    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, boolean addAudit )
+    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName,
+                                                                  net.sourceforge.fuge.common.Describable describable,
+                                                                  boolean addAudit )
             throws java.lang.Exception {
 
         if ( addAudit ) {
@@ -172,7 +194,9 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#save(java.lang.String, net.sourceforge.fuge.common.Describable, net.sourceforge.fuge.common.audit.Person)
      */
-    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, net.sourceforge.fuge.common.audit.Person performer )
+    protected net.sourceforge.fuge.common.Describable handleSave( java.lang.String fullyQualifiedClassName,
+                                                                  net.sourceforge.fuge.common.Describable describable,
+                                                                  net.sourceforge.fuge.common.audit.Person performer )
             throws java.lang.Exception {
 
         if ( describable.getId() == null ) {
@@ -185,7 +209,8 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#create(java.lang.String, net.sourceforge.fuge.common.Describable)
      */
-    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable )
+    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable )
             throws java.lang.Exception {
 
         // use the class for the object to save as the class to retrieve the update method from
@@ -204,7 +229,8 @@ public class EntityServiceImpl
             createMethod.invoke( daoObj, specificClass.cast( describable ) );
         }
         catch ( InvocationTargetException ex ) {
-            throw new EntityServiceException( "Error invoking the create method on " + fullyQualifiedClassName, ex.getTargetException() );
+            throw new EntityServiceException( "Error invoking the create method on " + fullyQualifiedClassName,
+                    ex.getTargetException() );
         }
 
         return describable;
@@ -213,7 +239,9 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#create(java.lang.String, net.sourceforge.fuge.common.Describable, boolean)
      */
-    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, boolean addAuditInfo )
+    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable,
+                                                                    boolean addAuditInfo )
             throws java.lang.Exception {
 
         if ( addAuditInfo ) {
@@ -226,12 +254,15 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#create(java.lang.String, net.sourceforge.fuge.common.Describable, net.sourceforge.fuge.common.audit.Person)
      */
-    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, net.sourceforge.fuge.common.audit.Person performer )
+    protected net.sourceforge.fuge.common.Describable handleCreate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable,
+                                                                    net.sourceforge.fuge.common.audit.Person performer )
             throws java.lang.Exception {
 
         if ( !( describable instanceof Audit ) ) {
             // Add the audit information
-            describable.setAuditTrail( getNewAuditTrail( ( Set<Audit> ) describable.getAuditTrail(), performer, AuditAction.creation ) );
+            describable.setAuditTrail(
+                    getNewAuditTrail( ( Set<Audit> ) describable.getAuditTrail(), performer, AuditAction.creation ) );
         }
 
         return create( fullyQualifiedClassName, describable );
@@ -240,7 +271,8 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#update(java.lang.String, net.sourceforge.fuge.common.Describable)
      */
-    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable )
+    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable )
             throws java.lang.Exception {
 
         // use the class for the object to save as the class to retrieve the update method from
@@ -259,7 +291,8 @@ public class EntityServiceImpl
             updateMethod.invoke( daoObj, specificClass.cast( describable ) );
         }
         catch ( InvocationTargetException ex ) {
-            throw new EntityServiceException( "Error invoking the update method on " + fullyQualifiedClassName, ex.getTargetException() );
+            throw new EntityServiceException( "Error invoking the update method on " + fullyQualifiedClassName,
+                    ex.getTargetException() );
         }
 
         return describable;
@@ -268,7 +301,9 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#update(java.lang.String, net.sourceforge.fuge.common.Describable, boolean)
      */
-    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, boolean addAuditInfo )
+    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable,
+                                                                    boolean addAuditInfo )
             throws java.lang.Exception {
 
         if ( addAuditInfo ) {
@@ -281,12 +316,15 @@ public class EntityServiceImpl
     /**
      * @see net.sourceforge.fuge.service.EntityService#update(java.lang.String, net.sourceforge.fuge.common.Describable, net.sourceforge.fuge.common.audit.Person)
      */
-    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName, net.sourceforge.fuge.common.Describable describable, net.sourceforge.fuge.common.audit.Person performer )
+    protected net.sourceforge.fuge.common.Describable handleUpdate( java.lang.String fullyQualifiedClassName,
+                                                                    net.sourceforge.fuge.common.Describable describable,
+                                                                    net.sourceforge.fuge.common.audit.Person performer )
             throws java.lang.Exception {
 
         if ( !( describable instanceof Audit ) ) {
             // Add the audit information
-            describable.setAuditTrail( getNewAuditTrail( ( Set<Audit> ) describable.getAuditTrail(), performer, AuditAction.modification ) );
+            describable.setAuditTrail( getNewAuditTrail( ( Set<Audit> ) describable.getAuditTrail(), performer,
+                    AuditAction.modification ) );
         }
 
         return update( fullyQualifiedClassName, describable );
@@ -302,7 +340,9 @@ public class EntityServiceImpl
      * @return the audit trail with the added audit information
      * @throws EntityServiceException if there is a problem connecting to the database
      */
-    private Set<Audit> getNewAuditTrail( Set<Audit> existingAuditTrail, Person performer, AuditAction auditAction ) throws EntityServiceException {
+    private Set<Audit> getNewAuditTrail( Set<Audit> existingAuditTrail,
+                                         Person performer,
+                                         AuditAction auditAction ) throws EntityServiceException {
 
         if ( addDbAuditTrail ) {
 
@@ -317,7 +357,7 @@ public class EntityServiceImpl
             save( "net.sourceforge.fuge.common.audit.Audit", auditInstance, null );
             existingAuditTrail.add( auditInstance );
         }
-        
+
         return existingAuditTrail;
     }
 
