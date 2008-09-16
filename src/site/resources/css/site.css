@@ -1,0 +1,56 @@
+/* $Revision$ $Date$ $Author$ */
+
+body {
+  font-family: helvetica, sans-serif, arial, serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+  background-image: none;
+  background: #ffffff;
+  color: #000000;
+}
+
+/* LINKS COLORS */
+/*A:link    { color: #000000; }*/
+A:active  { color: #003366; }
+A:visited { color: #555555; } 
+
+h1 {	
+  text-align: left;
+  font-family: helvetica, sans-serif, arial, serif;
+}
+
+h2 {
+  text-align: left
+  font-family: helvetica, sans-serif, arial, serif;
+  color: #000000;
+}
+
+h3 {
+  text-align: left
+  font-family: helvetica, sans-serif, arial, serif;
+  color: #000000;
+}
+
+hr {
+   width: 100%;
+   color: #000000;
+}
+
+font {
+ font-family: helvetica, sans-serif, arial, serif;
+ font-size: 10pt;
+ color: #000000;
+}
+
+font.title {
+ font-family: helvetica, sans-serif, arial, serif;
+ font-size: 15pt;
+ color: #000000;
+}
+
+font.footer {
+ font-family: helvetica, sans-serif, arial, serif;
+ font-size: 8pt;
+ color: #000000;
+}
+

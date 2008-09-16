@@ -13,6 +13,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>FuGE Hibernate STK</name>
+    <url>http://fuge.sourceforge.net/stks/hibernate-stk/</url>
     <description>The FuGE Hibernate STK ProjectThe Functional Genomics Experiment data model (FuGE) has been developed
         to facilitate convergence of data standards for high-throughput, comprehensive analyses in biology. FuGE models
         the components of an experimental activity that are common across different technologies, including protocols,

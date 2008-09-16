@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<document>
+    <properties>
+        <title>FuGE Hibernate Toolkit</title>
+        <author email="allysonlister.AT.users.DOT.sourceforge.DOT.net">Allyson Lister</author>        
+    </properties>
+    <body>
+        <!--<release version="current" description="Current work version">-->
+            <!--<action dev="Allyson Lister" type="add">-->
+                <!--A new cool feature.-->
+            <!--</action>-->
+        <!--</release>-->
+        <!--<release version="1.0" date="" description="First stable release">-->
+        <release version="1.0-SNAPSHOT" date="2008-09-16" description="Updated test release">
+            <action dev="Allyson Lister" type="add">
+                Added mapping code for dealing with hypotheses and conclusions stored in the InvestigationCollection.
+                Also added some more eager loading for various association ends that needed it. Details of these
+                associations are in the main documentation pages.
+            </action>
+            <action dev="Allyson Lister" type="add">
+                Added example classes for inputting/outputting XML.
+            </action>
+        </release>
+        <release version="1.0-SNAPSHOT" date="2008-07-18" description="First test release">
+            <action dev="Allyson Lister" type="add">
+                Created the subversion repository and this documentation. It is all still at an early stage, and
+                needs work. Please contact fuge-devel@lists.sourceforge.net if you have any suggestions or
+                comments.
+            </action>
+        </release>
+    </body>
+</document>
