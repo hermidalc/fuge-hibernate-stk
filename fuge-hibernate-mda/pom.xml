@@ -58,7 +58,9 @@
     </build>
     <properties>
 		<maven.andromda.config>${pom.basedir}/src/main/config</maven.andromda.config>
-        <model.uri>file:${project.build.sourceDirectory}/FuGE-v1-profile.uml2</model.uri>
+        <!-- Modified model.uri as per http://www.andromda.org/jira/browse/ANDROMDAPP-40
+        as some people were having the problem mentioned there. (Changed from file:${project.build.sourceDirectory}) -->
+        <model.uri>${pom.basedir}/src/main/uml/FuGE-v1-profile.uml2</model.uri>
         <!-- If you remove the empty filter element below, the aut-generated files will not be made-->
         <filter></filter>
         <validation>true</validation>
